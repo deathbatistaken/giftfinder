@@ -9,6 +9,7 @@ import com.gift.finder.data.repository.SavedGiftRepository
 import com.gift.finder.domain.model.GiftSuggestion
 import com.gift.finder.domain.model.Person
 import com.gift.finder.ui.navigation.Screen
+import com.gift.finder.utils.ExportManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -68,6 +69,15 @@ class WishlistViewModel @Inject constructor(
     fun removeGift(categoryId: String) {
         viewModelScope.launch {
             savedGiftRepository.removeGift(personId, categoryId)
+        }
+    }
+
+    fun getShareText(): String {
+        val state = _uiState.value
+        return if (state is WishlistUiState.Success) {
+            ExportManager.formatWishlist(state.person.name, state.savedGifts)
+        } else {
+            ""
         }
     }
 }
