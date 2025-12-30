@@ -27,6 +27,7 @@ import com.gift.finder.ui.theme.*
 import com.gift.finder.ui.viewmodels.GiftSuggestionsViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.ConfettiEffect
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -90,51 +91,88 @@ fun GiftRouletteScreen(
                 verticalArrangement = Arrangement.Center
             ) {
             if (showResult && result != null) {
-                // Show result
-                ResultCard(
-                    suggestion = result!!,
-                    onOpenStore = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(result!!.category.getStoreUrl()))
-                        context.startActivity(intent)
-                    },
-                    onSpinAgain = {
-                        showResult = false
-                        result = null
-                    }
-                )
+                // Show result with celebration
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    ConfettiEffect()
+                    ResultCard(
+                        suggestion = result!!,
+                        onOpenStore = {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(result!!.category.getStoreUrl()))
+                            context.startActivity(intent)
+                        },
+                        onSpinAgain = {
+                            showResult = false
+                            result = null
+                        }
+                    )
+                }
             } else {
-                // Roulette wheel
+                // Cinematic Roulette wheel
                 Box(
-                    modifier = Modifier
-                        .size(200.dp)
-                        .then(if (isSpinning) Modifier.rotate(rotation) else Modifier)
-                        .background(
-                            brush = Brush.sweepGradient(
-                                colors = listOf(
-                                    GiftPink,
-                                    GiftPurple,
-                                    GiftBlue,
-                                    GiftGreen,
-                                    GiftOrange,
-                                    GiftRed,
-                                    GiftPink
-                                )
-                            ),
-                            shape = CircleShape
-                        ),
+                    modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
+                    // Outer glow
                     Box(
                         modifier = Modifier
-                            .size(80.dp)
-                            .background(MaterialTheme.colorScheme.surface, CircleShape),
+                            .size(240.dp)
+                            .background(
+                                brush = Brush.radialGradient(
+                                    colors = listOf(
+                                        GiftPurple.copy(alpha = 0.3f),
+                                        Color.Transparent
+                                    )
+                                ),
+                                shape = CircleShape
+                            )
+                    )
+                    
+                    // The Wheel
+                    Box(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .then(if (isSpinning) Modifier.rotate(rotation * 5) else Modifier)
+                            .background(
+                                brush = Brush.sweepGradient(
+                                    colors = listOf(
+                                        GiftPink, GiftPurple, GiftBlue, GiftGreen, GiftOrange, GiftRed, GiftPink
+                                    )
+                                ),
+                                shape = CircleShape
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = "🎰",
-                            style = MaterialTheme.typography.displaySmall
+                        // Inner ring
+                        Box(
+                            modifier = Modifier
+                                .size(180.dp)
+                                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.2f), CircleShape)
                         )
+                        
+                        // Center icon
+                        Box(
+                            modifier = Modifier
+                                .size(80.dp)
+                                .background(MaterialTheme.colorScheme.surface, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "🎰",
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                        }
                     }
+                    
+                    // Pointer
+                    Icon(
+                        imageVector = androidx.compose.material.icons.filled.ArrowDropDown,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(48.dp)
+                            .align(Alignment.TopCenter)
+                            .offset(y = (-12).dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -142,12 +180,13 @@ fun GiftRouletteScreen(
                 Text(
                     text = if (isSpinning) stringResource(R.string.spinning) else stringResource(R.string.tap_to_spin),
                     style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.ExtraBold,
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Text(
                     text = stringResource(R.string.roulette_description),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp)
@@ -160,7 +199,7 @@ fun GiftRouletteScreen(
                         if (!isSpinning) {
                             isSpinning = true
                             scope.launch {
-                                delay(2000) // Spin for 2 seconds
+                                delay(3000) // Spin for 3 seconds for drama
                                 result = viewModel.getRandomGift()
                                 isSpinning = false
                                 showResult = true
@@ -168,9 +207,14 @@ fun GiftRouletteScreen(
                         }
                     },
                     enabled = !isSpinning,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    shape = RoundedCornerShape(28.dp)
                 ) {
-                    Text(stringResource(R.string.spin))
+                    Text(
+                        stringResource(R.string.spin).uppercase(),
+                        fontWeight = FontWeight.Black,
+                        style = MaterialTheme.typography.titleLarge
+                    )
                 }
             }
         }

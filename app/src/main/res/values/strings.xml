@@ -204,4 +204,9 @@
     <string name="rejection_already_have">Already Has This</string>
     <string name="rejection_not_interested">Not Interested</string>
     <string name="rejection_other">Other Reason</string>
+    <string name="discovery_mode">Discovery Mode</string>
+    <string name="grid_view">Grid View</string>
+    <string name="more_ideas">more ideas remaining</string>
+    <string name="interested">Interested</string>
+    <string name="not_interested_swipe">Not Interested</string>
 </resources>

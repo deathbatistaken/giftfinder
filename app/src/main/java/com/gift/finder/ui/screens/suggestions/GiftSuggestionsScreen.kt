@@ -10,8 +10,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.ThumbDown
+import androidx.compose.material.icons.filled.ViewCarousel
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -45,6 +47,8 @@ import com.gift.finder.ui.viewmodels.GiftSuggestionsViewModel
 import com.gift.finder.ui.viewmodels.SuggestionsUiState
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.SwipeableGiftCard
+import com.gift.finder.ui.components.premium.ConfettiEffect
 
 /**
  * Gift suggestions screen.
@@ -63,6 +67,7 @@ fun GiftSuggestionsScreen(
     val uiState by viewModel.uiState.collectAsState()
     val selectedStyle by viewModel.selectedStyle.collectAsState()
     val selectedBudget by viewModel.selectedBudget.collectAsState()
+    var isDiscoveryMode by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
     Scaffold(
@@ -79,6 +84,15 @@ fun GiftSuggestionsScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { isDiscoveryMode = !isDiscoveryMode }) {
+                        Icon(
+                            imageVector = if (isDiscoveryMode) Icons.Default.GridView else Icons.Default.ViewCarousel,
+                            contentDescription = stringResource(if (isDiscoveryMode) R.string.grid_view else R.string.discovery_mode),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
@@ -131,31 +145,87 @@ fun GiftSuggestionsScreen(
                             }
                         )
 
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(columns),
-                            contentPadding = PaddingValues(16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(state.suggestions) { suggestion ->
-                                GiftSuggestionCard(
-                                    suggestion = suggestion,
-                                    onReject = { reason -> 
-                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                        viewModel.rejectSuggestion(suggestion.category.id, reason) 
-                                    },
-                                    onOpenStore = {
-                                        if (!suggestion.isPremiumLocked) {
+                        if (isDiscoveryMode) {
+                            if (state.suggestions.isNotEmpty()) {
+                                // Discovery Mode Swipe Stack
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(24.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    val topSuggestion = state.suggestions.first()
+                                    SwipeableGiftCard(
+                                        suggestion = topSuggestion,
+                                        onSwipedLeft = { reason ->
+                                            viewModel.rejectSuggestion(topSuggestion.category.id, reason)
+                                        },
+                                        onSwipedRight = {
+                                            // Handle Save/Interest
                                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
-                                            context.startActivity(intent)
-                                        }
-                                    },
-                                    onUnlock = {
-                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                        onNavigateToPaywall()
+                                        },
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                    
+                                    if (state.suggestions.size > 1) {
+                                        Text(
+                                            text = "+${state.suggestions.size - 1} " + stringResource(R.string.more_ideas),
+                                            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
                                     }
-                                )
+                                }
+                            } else {
+                                // Empty state for Discovery
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Text("✨", style = MaterialTheme.typography.displayLarge)
+                                        Spacer(modifier = Modifier.height(16.dp))
+                                        Text(
+                                            stringResource(R.string.no_results),
+                                            style = MaterialTheme.typography.headlineSmall,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Text(
+                                            "Try changing your style or budget filters!",
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+                                }
+                            }
+                        } else {
+                            // Classic Grid View
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(columns),
+                                contentPadding = PaddingValues(16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                items(state.suggestions) { suggestion ->
+                                    GiftSuggestionCard(
+                                        suggestion = suggestion,
+                                        onReject = { reason -> 
+                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                            viewModel.rejectSuggestion(suggestion.category.id, reason) 
+                                        },
+                                        onOpenStore = {
+                                            if (!suggestion.isPremiumLocked) {
+                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
+                                                context.startActivity(intent)
+                                            }
+                                        },
+                                        onUnlock = {
+                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                            onNavigateToPaywall()
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
