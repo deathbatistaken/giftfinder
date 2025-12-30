@@ -40,6 +40,8 @@ class PreferencesManager @Inject constructor(
         private val KEY_THEME_MODE = stringPreferencesKey("theme_mode") // "system", "light", "dark"
         private val KEY_HAPTICS_ENABLED = booleanPreferencesKey("haptics_enabled")
         private val KEY_NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
+        private val KEY_COSMIC_AURA = stringPreferencesKey("cosmic_aura")
+        private val KEY_REMINDER_OFFSETS = stringPreferencesKey("reminder_offsets") // e.g. "0,3,7"
     }
 
     // Onboarding
@@ -111,6 +113,30 @@ class PreferencesManager @Inject constructor(
     suspend fun setNotificationsEnabled(enabled: Boolean) {
         dataStore.edit { prefs ->
             prefs[KEY_NOTIFICATIONS_ENABLED] = enabled
+        }
+    }
+
+    // Cosmic Aura
+    val cosmicAura: Flow<com.gift.finder.domain.model.CosmicAura> = dataStore.data.map { prefs ->
+        val id = prefs[KEY_COSMIC_AURA] ?: "nebula"
+        com.gift.finder.domain.model.CosmicAura.fromId(id)
+    }
+
+    suspend fun setCosmicAura(aura: com.gift.finder.domain.model.CosmicAura) {
+        dataStore.edit { prefs ->
+            prefs[KEY_COSMIC_AURA] = aura.id
+        }
+    }
+
+    // Reminder Offsets
+    val reminderOffsets: Flow<List<Int>> = dataStore.data.map { prefs ->
+        val offsetString = prefs[KEY_REMINDER_OFFSETS] ?: "0,3,7"
+        offsetString.split(",").filter { it.isNotBlank() }.map { it.toInt() }
+    }
+
+    suspend fun setReminderOffsets(offsets: List<Int>) {
+        dataStore.edit { prefs ->
+            prefs[KEY_REMINDER_OFFSETS] = offsets.joinToString(",")
         }
     }
 

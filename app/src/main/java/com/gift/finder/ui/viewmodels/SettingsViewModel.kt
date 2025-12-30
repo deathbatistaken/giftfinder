@@ -38,6 +38,12 @@ class SettingsViewModel @Inject constructor(
     val notificationsEnabled = preferencesManager.notificationsEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
+    val cosmicAura = preferencesManager.cosmicAura
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), com.gift.finder.domain.model.CosmicAura.NEBULA)
+
+    val reminderOffsets = preferencesManager.reminderOffsets
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf(0, 3, 7))
+
     val billingConnectionState: StateFlow<BillingConnectionState> = billingManager.billingConnectionState
 
     val purchaseState: StateFlow<PurchaseState> = billingManager.purchaseState
@@ -63,6 +69,18 @@ class SettingsViewModel @Inject constructor(
     fun setNotificationsEnabled(enabled: Boolean) {
         viewModelScope.launch {
             preferencesManager.setNotificationsEnabled(enabled)
+        }
+    }
+
+    fun setCosmicAura(aura: com.gift.finder.domain.model.CosmicAura) {
+        viewModelScope.launch {
+            preferencesManager.setCosmicAura(aura)
+        }
+    }
+
+    fun setReminderOffsets(offsets: List<Int>) {
+        viewModelScope.launch {
+            preferencesManager.setReminderOffsets(offsets)
         }
     }
 

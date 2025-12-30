@@ -27,10 +27,14 @@ class LocalNotificationManager @Inject constructor(
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     /**
-     * Schedule notifications for a special date.
+     * Schedule notifications for a special date with custom offsets.
      */
-    fun scheduleNotificationsForDate(specialDate: SpecialDate, personName: String) {
-        specialDate.notificationOffsets.forEach { daysBefore ->
+    fun scheduleNotificationsForDate(
+        specialDate: SpecialDate,
+        personName: String,
+        offsets: List<Int> = specialDate.notificationOffsets
+    ) {
+        offsets.forEach { daysBefore ->
             scheduleNotification(
                 specialDate = specialDate,
                 personName = personName,
@@ -43,8 +47,8 @@ class LocalNotificationManager @Inject constructor(
      * Cancel all notifications for a special date.
      */
     fun cancelNotificationsForDate(specialDateId: String) {
-        // Cancel notifications for standard offsets
-        listOf(0, 3, 7).forEach { daysBefore ->
+        // Cancel all possible standard offsets to be safe
+        listOf(0, 1, 3, 7, 14).forEach { daysBefore ->
             val requestCode = "${specialDateId}_$daysBefore".hashCode()
             val intent = Intent(context, NotificationReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(

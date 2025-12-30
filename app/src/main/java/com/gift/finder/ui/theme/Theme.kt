@@ -8,12 +8,14 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.gift.finder.domain.model.CosmicAura
 
 private val DarkColorScheme = darkColorScheme(
     primary = Primary,
@@ -67,10 +69,13 @@ private val LightColorScheme = lightColorScheme(
     outline = OutlineLight
 )
 
+val LocalCosmicAura = staticCompositionLocalOf { CosmicAura.NEBULA }
+
 @Composable
 fun GiftFinderTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
+    aura: CosmicAura = CosmicAura.NEBULA,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -92,9 +97,11 @@ fun GiftFinderTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(LocalCosmicAura provides aura) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }

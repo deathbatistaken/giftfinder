@@ -38,6 +38,8 @@ fun SettingsScreen(
     val themeMode by viewModel.themeMode.collectAsState()
     val hapticsEnabled by viewModel.hapticsEnabled.collectAsState()
     val notificationsEnabled by viewModel.notificationsEnabled.collectAsState()
+    val cosmicAura by viewModel.cosmicAura.collectAsState()
+    val reminderOffsets by viewModel.reminderOffsets.collectAsState()
     
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
@@ -151,6 +153,31 @@ fun SettingsScreen(
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
+
+                        Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+
+                        Text(
+                            text = "Cosmic Aura",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 4.dp)
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            com.gift.finder.domain.model.CosmicAura.entries.forEach { aura ->
+                                FilterChip(
+                                    selected = cosmicAura == aura,
+                                    onClick = { viewModel.setCosmicAura(aura) },
+                                    label = { Text(aura.emoji) }
+                                )
+                            }
+                        }
                     }
                 }
 
@@ -180,6 +207,41 @@ fun SettingsScreen(
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
+
+                        if (notificationsEnabled) {
+                            Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+                            
+                            Text(
+                                text = "Reminder Schedule",
+                                style = MaterialTheme.typography.labelLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 4.dp)
+                            )
+
+                            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+                                listOf(7 to "7 days before", 3 to "3 days before", 0 to "Same day").forEach { (days, label) ->
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                val newOffsets = reminderOffsets.toMutableList()
+                                                if (days in newOffsets) newOffsets.remove(days) else newOffsets.add(days)
+                                                viewModel.setReminderOffsets(newOffsets)
+                                            }
+                                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Checkbox(
+                                            checked = days in reminderOffsets,
+                                            onCheckedChange = null
+                                        )
+                                        Spacer(modifier = Modifier.width(12.dp))
+                                        Text(label, style = MaterialTheme.typography.bodyMedium)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

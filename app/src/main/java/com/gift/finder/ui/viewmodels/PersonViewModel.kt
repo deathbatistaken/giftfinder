@@ -202,8 +202,8 @@ class PersonViewModel @Inject constructor(
             dayOfMonth = dayOfMonth
         )
 
-        personRepository.addSpecialDate(specialDate)
-        notificationManager.scheduleNotificationsForDate(specialDate, currentPerson.name)
+        val offsets = preferencesManager.reminderOffsets.first()
+        notificationManager.scheduleNotificationsForDate(specialDate, currentPerson.name, offsets)
     }
 
     suspend fun deleteSpecialDate(specialDate: SpecialDate) {

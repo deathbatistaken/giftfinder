@@ -29,7 +29,10 @@ class MainActivity : ComponentActivity() {
         
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
-            GiftFinderTheme {
+            val mainViewModel: com.gift.finder.ui.viewmodels.MainViewModel = androidx.lifecycle.viewmodel.compose.hiltViewModel()
+            val aura by mainViewModel.cosmicAura.collectAsState(initial = com.gift.finder.domain.model.CosmicAura.NEBULA)
+            
+            GiftFinderTheme(aura = aura) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

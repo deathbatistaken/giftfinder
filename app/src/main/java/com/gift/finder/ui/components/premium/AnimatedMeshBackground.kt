@@ -10,15 +10,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import com.gift.finder.domain.model.CosmicAura
 import com.gift.finder.ui.theme.*
 
 @Composable
-fun AnimatedMeshBackground() {
+fun AnimatedMeshBackground(
+    aura: CosmicAura = LocalCosmicAura.current
+) {
     val infiniteTransition = rememberInfiniteTransition(label = "mesh")
     
     val color1 by infiniteTransition.animateColor(
-        initialValue = CosmicPurple.copy(alpha = 0.2f),
-        targetValue = GiftPurple.copy(alpha = 0.3f),
+        initialValue = aura.colors[0].copy(alpha = 0.2f),
+        targetValue = aura.colors[1].copy(alpha = 0.3f),
         animationSpec = infiniteRepeatable(
             animation = tween(4000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse
@@ -27,8 +30,8 @@ fun AnimatedMeshBackground() {
     )
 
     val color2 by infiniteTransition.animateColor(
-        initialValue = CosmicBlue.copy(alpha = 0.1f),
-        targetValue = GiftBlue.copy(alpha = 0.2f),
+        initialValue = aura.colors[2].copy(alpha = 0.1f),
+        targetValue = aura.colors[3].copy(alpha = 0.2f),
         animationSpec = infiniteRepeatable(
             animation = tween(6000, easing = LinearEasing),
             repeatMode = RepeatMode.Reverse

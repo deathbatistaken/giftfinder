@@ -21,7 +21,8 @@ class ScheduleNotificationsWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val specialDateDao: SpecialDateDao,
     private val personDao: PersonDao,
-    private val notificationManager: LocalNotificationManager
+    private val notificationManager: LocalNotificationManager,
+    private val preferencesManager: com.gift.finder.data.manager.PreferencesManager
 ) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): Result {
@@ -34,7 +35,8 @@ class ScheduleNotificationsWorker @AssistedInject constructor(
                 val person = personDao.getById(dateEntity.personId).first()
                 if (person != null) {
                     val specialDate = dateEntity.toDomain()
-                    notificationManager.scheduleNotificationsForDate(specialDate, person.name)
+                    val offsets = preferencesManager.reminderOffsets.first()
+                    notificationManager.scheduleNotificationsForDate(specialDate, person.name, offsets)
                 }
             }
             
