@@ -34,18 +34,21 @@ class PersonaEngine @Inject constructor(
     }
 
     private fun getAdjective(interests: List<String>): String {
-        val techKeywords = listOf("tech", "gadget", "software", "gaming", "pc", "coding")
-        val creativeKeywords = listOf("art", "music", "design", "painting", "creative", "craft")
-        val outdoorKeywords = listOf("nature", "hiking", "travel", "camping", "outdoor", "fitness")
-        val intellectualKeywords = listOf("reading", "science", "history", "learning", "books")
+        val techKeywords = listOf("tech", "gadget", "software", "gaming", "pc", "coding", "ai", "hardware")
+        val creativeKeywords = listOf("art", "music", "design", "painting", "creative", "craft", "photography", "cinema")
+        val outdoorKeywords = listOf("nature", "hiking", "travel", "camping", "outdoor", "fitness", "sport", "yoga")
+        val intellectualKeywords = listOf("reading", "science", "history", "learning", "books", "philosophy", "physics")
+        val lifestyleKeywords = listOf("cooking", "fashion", "decor", "wellness", "coffee", "wine", "dining")
 
         return when {
-            interests.any { i -> techKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Innovative"
-            interests.any { i -> creativeKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Artistic"
-            interests.any { i -> outdoorKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Adventurous"
-            interests.any { i -> intellectualKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Thoughtful"
-            interests.size > 3 -> "Versatile"
-            else -> "Passionate"
+            interests.any { i -> techKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Visionary"
+            interests.any { i -> creativeKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Inspired"
+            interests.any { i -> outdoorKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Fearless"
+            interests.any { i -> intellectualKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Erudite"
+            interests.any { i -> lifestyleKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Sophisticated"
+            interests.size > 5 -> "Eclectic"
+            interests.size > 3 -> "Dynamic"
+            else -> "Captivating"
         }
     }
 }

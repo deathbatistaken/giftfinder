@@ -14,20 +14,21 @@ object ExportManager {
         if (suggestions.isEmpty()) return "My wishlist for $personName is empty... for now! 🎁"
 
         val sb = StringBuilder()
-        sb.append("✨ Gift Portal for $personName ✨\n")
-        sb.append("Check out these curated gift ideas from GiftFinder 🎁\n\n")
+        sb.append("✨ GIFT PORTAL: $personName ✨\n")
+        sb.append("Curated ideas found via GiftFinder 🌠\n")
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n\n")
 
         suggestions.forEachIndexed { index, suggestion ->
             val emoji = suggestion.category.emoji
             val title = suggestion.category.title
-            val desc = suggestion.category.description
             
-            sb.append("${index + 1}. $emoji $title\n")
-            sb.append("   $desc\n")
-            sb.append("   🔗 Shop: ${suggestion.category.getStoreUrl()}\n\n")
+            sb.append("$emoji $title\n")
+            sb.append("🛒 Get it here: ${suggestion.category.getStoreUrl()}\n\n")
         }
 
-        sb.append("Shared via GiftFinder 🌠")
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n")
+        sb.append("Generated with ✨ GiftFinder ✨\n")
+        sb.append("Find the perfect gift for everyone.")
         return sb.toString()
     }
 }

@@ -10,7 +10,11 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import com.gift.finder.domain.manager.HapticEngine
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,6 +26,7 @@ import com.gift.finder.ui.theme.*
 import com.gift.finder.ui.viewmodels.SettingsViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.viewmodels.HapticViewModel
 
 /**
  * Settings screen.
@@ -29,10 +34,11 @@ import com.gift.finder.ui.components.premium.GlassCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    viewModel: SettingsViewModel = hiltViewModel(),
+    viewModel: com.gift.finder.ui.viewmodels.SettingsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToPaywall: () -> Unit,
-    onNavigateToBudgetTracker: () -> Unit = {}
+    onNavigateToBudgetTracker: () -> Unit = {},
+    hapticEngine: HapticEngine = hiltViewModel<com.gift.finder.ui.viewmodels.HapticViewModel>().hapticEngine
 ) {
     val subscriptionStatus by viewModel.subscriptionStatus.collectAsState()
     val themeMode by viewModel.themeMode.collectAsState()
@@ -148,7 +154,10 @@ fun SettingsScreen(
                             trailingContent = {
                                 Switch(
                                     checked = hapticsEnabled,
-                                    onCheckedChange = { viewModel.setHapticsEnabled(it) }
+                                    onCheckedChange = { 
+                                        scope.launch { hapticEngine.tap() }
+                                        viewModel.setHapticsEnabled(it) 
+                                    }
                                 )
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -164,17 +173,20 @@ fun SettingsScreen(
                             modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 4.dp)
                         )
 
-                        Row(
+                        LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 8.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            com.gift.finder.domain.model.CosmicAura.entries.forEach { aura ->
+                            items(com.gift.finder.domain.model.CosmicAura.entries) { aura ->
                                 FilterChip(
                                     selected = cosmicAura == aura,
-                                    onClick = { viewModel.setCosmicAura(aura) },
-                                    label = { Text(aura.emoji) }
+                                    onClick = { 
+                                        scope.launch { hapticEngine.tap() }
+                                        viewModel.setCosmicAura(aura) 
+                                    },
+                                    label = { Text("${aura.emoji} ${aura.title}") }
                                 )
                             }
                         }
@@ -202,7 +214,10 @@ fun SettingsScreen(
                             trailingContent = {
                                 Switch(
                                     checked = notificationsEnabled,
-                                    onCheckedChange = { viewModel.setNotificationsEnabled(it) }
+                                    onCheckedChange = { 
+                                        scope.launch { hapticEngine.tap() }
+                                        viewModel.setNotificationsEnabled(it) 
+                                    }
                                 )
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -225,6 +240,7 @@ fun SettingsScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .clickable {
+                                                scope.launch { hapticEngine.tap() }
                                                 val newOffsets = reminderOffsets.toMutableList()
                                                 if (days in newOffsets) newOffsets.remove(days) else newOffsets.add(days)
                                                 viewModel.setReminderOffsets(newOffsets)
