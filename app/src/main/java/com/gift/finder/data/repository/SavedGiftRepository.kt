@@ -35,4 +35,12 @@ class SavedGiftRepository @Inject constructor(
     suspend fun isGiftSaved(personId: Long, categoryId: String): Boolean {
         return savedGiftDao.isGiftSaved(personId, categoryId) > 0
     }
+
+    suspend fun getAllSavedGifts(): List<SavedGiftEntity> {
+        return savedGiftDao.getAllSavedGifts()
+    }
+
+    suspend fun deleteAll() {
+        savedGiftDao.deleteAll()
+    }
 }

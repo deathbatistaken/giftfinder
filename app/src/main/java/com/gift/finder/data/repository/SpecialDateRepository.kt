@@ -49,4 +49,12 @@ class SpecialDateRepository @Inject constructor(
                 .sortedBy { it.getDaysUntil() }
         }
     }
+
+    suspend fun getAllSpecialDatesSync(): List<SpecialDate> {
+        return specialDateDao.getAllSpecialDatesSync().map { it.toDomain() }
+    }
+
+    suspend fun deleteAll() {
+        specialDateDao.deleteAll()
+    }
 }

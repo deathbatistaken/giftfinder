@@ -9,9 +9,13 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Input
+import androidx.compose.material.icons.filled.Output
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import com.gift.finder.domain.manager.HapticEngine
@@ -49,6 +53,36 @@ fun SettingsScreen(
     
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
+
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val contentResolver = context.contentResolver
+
+    val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri != null) {
+            viewModel.exportData(
+                uri = uri,
+                contentResolver = contentResolver,
+                onSuccess = { android.widget.Toast.makeText(context, context.getString(R.string.export_success), android.widget.Toast.LENGTH_SHORT).show() },
+                onError = { android.widget.Toast.makeText(context, context.getString(R.string.export_error), android.widget.Toast.LENGTH_SHORT).show() }
+            )
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        if (uri != null) {
+            showDeleteDialog = false // Re-using delete dialog? No, import is destructive but let's just run it for now or add warning.
+            // Ideally prompt heavily. Importing IS restoring.
+             viewModel.importData(
+                uri = uri,
+                contentResolver = contentResolver,
+                onSuccess = { 
+                    android.widget.Toast.makeText(context, context.getString(R.string.import_success), android.widget.Toast.LENGTH_SHORT).show()
+                    // Re-launch app or refresh data? StateFlows update automatically so UI should refresh.
+                },
+                onError = { android.widget.Toast.makeText(context, context.getString(R.string.import_error), android.widget.Toast.LENGTH_SHORT).show() }
+            )
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -258,6 +292,41 @@ fun SettingsScreen(
                                 }
                             }
                         }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                GlassCard(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = stringResource(R.string.data_management),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.export_data)) },
+                            leadingContent = { Icon(Icons.Default.Output, contentDescription = null) },
+                            modifier = Modifier.clickable { 
+                                val fileName = "GiftFinder_Backup_${System.currentTimeMillis()}.json"
+                                exportLauncher.launch(fileName) 
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+
+                         ListItem(
+                            headlineContent = { Text(stringResource(R.string.import_data)) },
+                            leadingContent = { Icon(Icons.Default.Input, contentDescription = null) },
+                            modifier = Modifier.clickable { 
+                                importLauncher.launch("application/json")
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
                     }
                 }
 

@@ -247,4 +247,13 @@
     <string name="tag_books">Kitap</string>
     <string name="tag_gaming">Oyun</string>
     <string name="tag_wellness">Sağlık</string>
+
+    <!-- Backup -->
+    <string name="data_management">Veri Yönetimi</string>
+    <string name="export_data">Verileri Dosyaya Aktar</string>
+    <string name="import_data">Dosyadan Veri Yükle</string>
+    <string name="export_success">Veriler başarıyla dışa aktarıldı</string>
+    <string name="export_error">Dışa aktarma başarısız</string>
+    <string name="import_success">Veriler başarıyla yüklendi</string>
+    <string name="import_error">İçe aktarma başarısız</string>
 </resources>

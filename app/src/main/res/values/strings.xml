@@ -247,4 +247,13 @@
     <string name="tag_books">Books</string>
     <string name="tag_gaming">Gaming</string>
     <string name="tag_wellness">Wellness</string>
+
+    <!-- Backup -->
+    <string name="data_management">Data Management</string>
+    <string name="export_data">Export Data to File</string>
+    <string name="import_data">Import Data from File</string>
+    <string name="export_success">Data exported successfully</string>
+    <string name="export_error">Failed to export data</string>
+    <string name="import_success">Data imported successfully</string>
+    <string name="import_error">Failed to import data</string>
 </resources>

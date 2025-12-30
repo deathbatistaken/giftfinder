@@ -140,4 +140,12 @@ class PersonRepository @Inject constructor(
     fun getSpecialDateCount(personId: Long): Flow<Int> {
         return specialDateDao.getSpecialDateCountForPerson(personId)
     }
+
+    suspend fun getAllPersonsSync(): List<Person> {
+        return personDao.getPersonsSync().map { it.toDomain() }
+    }
+
+    suspend fun deleteAllPersons() {
+        personDao.deleteAll()
+    }
 }

@@ -23,4 +23,10 @@ interface SavedGiftDao {
     
     @Query("SELECT COUNT(*) FROM saved_gifts WHERE personId = :personId AND categoryId = :categoryId")
     suspend fun isGiftSaved(personId: Long, categoryId: String): Int
+
+    @Query("SELECT * FROM saved_gifts")
+    suspend fun getAllSavedGifts(): List<SavedGiftEntity>
+
+    @Query("DELETE FROM saved_gifts")
+    suspend fun deleteAll()
 }

@@ -39,4 +39,10 @@ interface PersonDao {
 
     @Query("UPDATE persons SET updatedAt = :timestamp WHERE id = :personId")
     suspend fun updateTimestamp(personId: Long, timestamp: Long = System.currentTimeMillis())
+
+    @Query("SELECT * FROM persons")
+    suspend fun getPersonsSync(): List<PersonEntity>
+
+    @Query("DELETE FROM persons")
+    suspend fun deleteAll()
 }

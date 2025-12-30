@@ -56,4 +56,10 @@ interface SpecialDateDao {
 
     @Query("SELECT * FROM special_dates WHERE isNotificationEnabled = 1")
     fun getWithNotificationsEnabled(): Flow<List<SpecialDateEntity>>
+
+    @Query("SELECT * FROM special_dates")
+    suspend fun getAllSpecialDatesSync(): List<SpecialDateEntity>
+
+    @Query("DELETE FROM special_dates")
+    suspend fun deleteAll()
 }

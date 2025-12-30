@@ -23,7 +23,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val preferencesManager: PreferencesManager,
     private val billingManager: BillingManager,
-    private val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase,
+    private val backupManager: com.gift.finder.data.manager.BackupManager
 ) : ViewModel() {
 
     val subscriptionStatus: StateFlow<SubscriptionStatus> = preferencesManager.subscriptionStatus
@@ -94,6 +95,34 @@ class SettingsViewModel @Inject constructor(
             appDatabase.clearAllTables()
             // Clear preferences
             preferencesManager.clearAllData()
+        }
+    }
+
+    fun exportData(uri: android.net.Uri, contentResolver: android.content.ContentResolver, onSuccess: () -> Unit, onError: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                contentResolver.openOutputStream(uri)?.use { output ->
+                    backupManager.exportData(output)
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onError()
+            }
+        }
+    }
+
+    fun importData(uri: android.net.Uri, contentResolver: android.content.ContentResolver, onSuccess: () -> Unit, onError: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                contentResolver.openInputStream(uri)?.use { input ->
+                    backupManager.importData(input)
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onError()
+            }
         }
     }
 
