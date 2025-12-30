@@ -14,6 +14,13 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import com.gift.finder.ui.screens.suggestions.GiftSuggestionsScreen
 import com.gift.finder.ui.screens.wishlist.WishlistScreen
 import com.gift.finder.ui.viewmodels.MainViewModel
+import com.gift.finder.ui.screens.onboarding.OnboardingScreen
+import com.gift.finder.ui.screens.paywall.PaywallScreen
+import com.gift.finder.ui.screens.person.AddPersonScreen
+import com.gift.finder.ui.screens.person.PersonDetailScreen
+import com.gift.finder.ui.screens.suggestions.GiftRouletteScreen
+import com.gift.finder.ui.screens.settings.SettingsScreen
+import com.gift.finder.ui.screens.home.HomeScreen
 
 /**
  * Main navigation host for the app.

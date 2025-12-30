@@ -37,11 +37,13 @@ class PaywallViewModel @Inject constructor(
     }
 
     fun purchaseWeekly(activity: Activity) {
-        billingManager.launchPurchase(activity, BillingManager.PRODUCT_WEEKLY)
+        val product = products.value.find { it.productId == BillingManager.PRODUCT_WEEKLY }
+        product?.let { billingManager.launchPurchase(activity, it) }
     }
 
     fun purchaseYearly(activity: Activity) {
-        billingManager.launchPurchase(activity, BillingManager.PRODUCT_YEARLY)
+        val product = products.value.find { it.productId == BillingManager.PRODUCT_YEARLY }
+        product?.let { billingManager.launchPurchase(activity, it) }
     }
 
     fun restorePurchases() {

@@ -24,6 +24,7 @@ class UpcomingEventWidgetReceiver : GlanceAppWidgetReceiver() {
     @InstallIn(SingletonComponent::class)
     interface WidgetEntryPoint {
         fun specialDateRepository(): SpecialDateRepository
+        fun personRepository(): com.gift.finder.data.repository.PersonRepository
     }
 
     override fun onUpdate(
@@ -41,12 +42,24 @@ class UpcomingEventWidgetReceiver : GlanceAppWidgetReceiver() {
             WidgetEntryPoint::class.java
         )
         val repository = entryPoint.specialDateRepository()
+        val personRepository = entryPoint.personRepository()
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 // Fetch strictly needed data
                 val upcomingDates = repository.getUpcomingDates(30).first()
                 val nextEvent = upcomingDates.firstOrNull()
+                
+                var personName = ""
+                var personEmoji = "🎁"
+                
+                if (nextEvent != null) {
+                    val person = personRepository.getPersonById(nextEvent.personId).first()
+                    if (person != null) {
+                        personName = person.name
+                        personEmoji = person.avatarEmoji
+                    }
+                }
 
                 val manager = GlanceAppWidgetManager(context)
                 val glanceIds = manager.getGlanceIds(UpcomingEventWidget::class.java)
@@ -54,11 +67,11 @@ class UpcomingEventWidgetReceiver : GlanceAppWidgetReceiver() {
                     glanceIds.forEach { glanceId ->
                     updateAppWidgetState(context, glanceId) { prefs ->
                         if (nextEvent != null) {
-                            prefs[stringPreferencesKey("eventName")] = nextEvent.type.name
-                            prefs[stringPreferencesKey("personName")] = nextEvent.personName
+                            prefs[stringPreferencesKey("eventName")] = nextEvent.dateType.displayKey // Using displayKey as simple string
+                            prefs[stringPreferencesKey("personName")] = personName
                             val days = nextEvent.getDaysUntil()
                             prefs[stringPreferencesKey("daysInfo")] = if (days == 0) context.getString(com.gift.finder.R.string.widget_today) else context.getString(com.gift.finder.R.string.widget_days_left, days)
-                            prefs[stringPreferencesKey("emoji")] = nextEvent.personEmoji
+                            prefs[stringPreferencesKey("emoji")] = personEmoji
                         } else {
                             prefs[stringPreferencesKey("eventName")] = context.getString(com.gift.finder.R.string.widget_no_events)
                             prefs[stringPreferencesKey("personName")] = ""

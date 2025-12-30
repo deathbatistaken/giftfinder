@@ -28,6 +28,8 @@ import com.gift.finder.ui.viewmodels.GiftSuggestionsViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.components.premium.ConfettiEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.filled.ArrowDropDown
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -107,6 +109,7 @@ fun GiftRouletteScreen(
                     )
                 }
             } else {
+                val aura = LocalCosmicAura.current
                 // Cinematic Roulette wheel
                 Box(
                     modifier = Modifier.fillMaxWidth(),
@@ -119,7 +122,7 @@ fun GiftRouletteScreen(
                             .background(
                                 brush = Brush.radialGradient(
                                     colors = listOf(
-                                        GiftPurple.copy(alpha = 0.3f),
+                                        aura.primaryColor.copy(alpha = 0.4f),
                                         Color.Transparent
                                     )
                                 ),
@@ -135,7 +138,11 @@ fun GiftRouletteScreen(
                             .background(
                                 brush = Brush.sweepGradient(
                                     colors = listOf(
-                                        GiftPink, GiftPurple, GiftBlue, GiftGreen, GiftOrange, GiftRed, GiftPink
+                                        aura.primaryColor, 
+                                        aura.primaryColor.copy(alpha = 0.5f), 
+                                        aura.primaryColor.copy(alpha = 0.8f),
+                                        aura.primaryColor.copy(alpha = 0.3f),
+                                        aura.primaryColor
                                     )
                                 ),
                                 shape = CircleShape
@@ -165,13 +172,13 @@ fun GiftRouletteScreen(
                     
                     // Pointer
                     Icon(
-                        imageVector = androidx.compose.material.icons.filled.ArrowDropDown,
+                        imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = null,
                         modifier = Modifier
                             .size(48.dp)
                             .align(Alignment.TopCenter)
                             .offset(y = (-12).dp),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = aura.primaryColor
                     )
                 }
 
@@ -216,10 +223,11 @@ fun GiftRouletteScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
-            }
-        }
-    }
-}
+            }  // else (roulette wheel)
+            }  // Column
+        }  // Box
+    }  // Scaffold
+}  // GiftRouletteScreen
 
 @Composable
 private fun ResultCard(

@@ -45,6 +45,9 @@ class SettingsViewModel @Inject constructor(
     val reminderOffsets = preferencesManager.reminderOffsets
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf(0, 3, 7))
 
+    val appLanguage = preferencesManager.appLanguage
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "en")
+
     val billingConnectionState: StateFlow<BillingConnectionState> = billingManager.billingConnectionState
 
     val purchaseState: StateFlow<PurchaseState> = billingManager.purchaseState
@@ -82,6 +85,12 @@ class SettingsViewModel @Inject constructor(
     fun setReminderOffsets(offsets: List<Int>) {
         viewModelScope.launch {
             preferencesManager.setReminderOffsets(offsets)
+        }
+    }
+
+    fun setAppLanguage(language: String) {
+        viewModelScope.launch {
+            preferencesManager.setAppLanguage(language)
         }
     }
 

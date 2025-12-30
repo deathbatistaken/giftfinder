@@ -88,6 +88,11 @@
     <!-- Settings -->
     <string name="appearance">Appearance</string>
     <string name="theme">Theme</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_system">System Default</string>
+    <string name="language">Language</string>
+    <string name="select_language">Select Language</string>
     <string name="haptic_feedback">Haptic Feedback</string>
     <string name="notifications">Notifications</string>
     <string name="reminder_notifications">Reminder Notifications</string>

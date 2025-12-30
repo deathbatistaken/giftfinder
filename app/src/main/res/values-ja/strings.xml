@@ -78,6 +78,11 @@
     
     <string name="appearance">外観</string>
     <string name="theme">テーマ</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_system">システムのデフォルト</string>
+    <string name="language">言語</string>
+    <string name="select_language">言語を選択</string>
     <string name="haptic_feedback">触覚フィードバック</string>
     <string name="notifications">通知</string>
     <string name="reminder_notifications">リマインダー通知</string>

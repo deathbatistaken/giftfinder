@@ -8,6 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.gift.finder.ui.navigation.GiftFinderNavHost
 import com.gift.finder.ui.theme.GiftFinderTheme
@@ -19,7 +24,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
  * Main Activity - Single Activity architecture with Compose navigation.
  */
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : androidx.appcompat.app.AppCompatActivity() {
     
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +34,38 @@ class MainActivity : ComponentActivity() {
         
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
-            val mainViewModel: com.gift.finder.ui.viewmodels.MainViewModel = androidx.lifecycle.viewmodel.compose.hiltViewModel()
-            val aura by mainViewModel.cosmicAura.collectAsState(initial = com.gift.finder.domain.model.CosmicAura.NEBULA)
+            val mainViewModel: com.gift.finder.ui.viewmodels.MainViewModel = androidx.hilt.navigation.compose.hiltViewModel()
             
-            GiftFinderTheme(aura = aura) {
+            val aura by mainViewModel.cosmicAura.collectAsState(initial = com.gift.finder.domain.model.CosmicAura.NEBULA)
+            val themeMode by mainViewModel.themeMode.collectAsState(initial = "system")
+            val appLanguage by mainViewModel.appLanguage.collectAsState(initial = "en")
+            
+            val isDarkTheme = when (themeMode) {
+                "light" -> false
+                "dark" -> true
+                else -> androidx.compose.foundation.isSystemInDarkTheme()
+            }
+            
+            // Sync theme with AppCompatDelegate
+            LaunchedEffect(themeMode) {
+                val mode = when (themeMode) {
+                    "light" -> AppCompatDelegate.MODE_NIGHT_NO
+                    "dark" -> AppCompatDelegate.MODE_NIGHT_YES
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+                AppCompatDelegate.setDefaultNightMode(mode)
+            }
+            
+            // Sync language with AppCompatDelegate
+            LaunchedEffect(appLanguage) {
+                val appLocales = LocaleListCompat.forLanguageTags(appLanguage)
+                AppCompatDelegate.setApplicationLocales(appLocales)
+            }
+            
+            GiftFinderTheme(
+                darkTheme = isDarkTheme,
+                aura = aura
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

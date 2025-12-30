@@ -47,12 +47,12 @@ class WishlistViewModel @Inject constructor(
                 if (person == null) {
                     WishlistUiState.Error("Person not found")
                 } else {
-                    val giftData = giftRepository.getGiftData()
+                    val categories = giftRepository.getGiftCategories()
                     val suggestions = savedGifts.mapNotNull { saved ->
-                        giftData.categories.find { it.id == saved.categoryId }?.let { category ->
+                        categories.find { it.id == saved.categoryId }?.let { category ->
                             GiftSuggestion(
                                 category = category,
-                                matchScore = 100, // Explicitly saved
+                                matchScore = 100.0, // Explicitly saved
                                 matchReasons = listOf("Saved to Wishlist"),
                                 isPremiumLocked = false
                             )

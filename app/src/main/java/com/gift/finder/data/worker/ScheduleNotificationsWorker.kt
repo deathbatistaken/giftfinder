@@ -32,7 +32,7 @@ class ScheduleNotificationsWorker @AssistedInject constructor(
             
             for (dateEntity in specialDates) {
                 // Get person name for notification
-                val person = personDao.getById(dateEntity.personId).first()
+                val person = personDao.getPersonById(dateEntity.personId).first()
                 if (person != null) {
                     val specialDate = dateEntity.toDomain()
                     val offsets = preferencesManager.reminderOffsets.first()

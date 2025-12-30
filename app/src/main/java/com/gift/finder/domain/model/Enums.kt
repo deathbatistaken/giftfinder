@@ -86,7 +86,8 @@ enum class SpecialDateType(val displayKey: String) {
 enum class RejectionReason(val displayKey: String) {
     TOO_EXPENSIVE("rejection_expensive"),
     NOT_THEIR_STYLE("rejection_not_style"),
-    ALREADY_HAVE("rejection_already_have"),
+    ALREADY_HAS("rejection_already_have"),
+    BOUGHT_BEFORE("rejection_bought_before"),
     NOT_INTERESTED("rejection_not_interested"),
     OTHER("rejection_other")
 }

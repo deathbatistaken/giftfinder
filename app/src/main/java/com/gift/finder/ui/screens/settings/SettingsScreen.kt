@@ -16,8 +16,11 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.graphics.Color
 import com.gift.finder.domain.manager.HapticEngine
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +34,7 @@ import com.gift.finder.ui.viewmodels.SettingsViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.viewmodels.HapticViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Settings screen.
@@ -53,9 +57,13 @@ fun SettingsScreen(
     
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
+    var showLanguageDialog by remember { mutableStateOf(false) }
+
+    val appLanguage by viewModel.appLanguage.collectAsState()
 
     val context = androidx.compose.ui.platform.LocalContext.current
     val contentResolver = context.contentResolver
+    val scope = rememberCoroutineScope()
 
     val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri != null) {
@@ -178,8 +186,31 @@ fun SettingsScreen(
 
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.theme)) },
-                            supportingContent = { Text(themeMode.replaceFirstChar { it.uppercase() }) },
+                            supportingContent = { 
+                                val themeText = when(themeMode) {
+                                    "light" -> stringResource(R.string.theme_light)
+                                    "dark" -> stringResource(R.string.theme_dark)
+                                    else -> stringResource(R.string.theme_system)
+                                }
+                                Text(themeText) 
+                            },
                             modifier = Modifier.clickable { showThemeDialog = true },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+
+                        val languageMap = mapOf(
+                            "en" to "English",
+                            "tr" to "Türkçe",
+                            "de" to "Deutsch",
+                            "fr" to "Français",
+                            "es" to "Español",
+                            "ja" to "日本語"
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.language)) },
+                            supportingContent = { Text(languageMap[appLanguage] ?: "English") },
+                            modifier = Modifier.clickable { showLanguageDialog = true },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
 
@@ -210,18 +241,42 @@ fun SettingsScreen(
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            contentPadding = PaddingValues(horizontal = 4.dp)
                         ) {
                             items(com.gift.finder.domain.model.CosmicAura.entries) { aura ->
-                                FilterChip(
-                                    selected = cosmicAura == aura,
-                                    onClick = { 
-                                        scope.launch { hapticEngine.tap() }
-                                        viewModel.setCosmicAura(aura) 
-                                    },
-                                    label = { Text("${aura.emoji} ${aura.title}") }
-                                )
+                                val isSelected = cosmicAura == aura
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    modifier = Modifier
+                                        .clickable {
+                                            scope.launch { hapticEngine.tap() }
+                                            viewModel.setCosmicAura(aura)
+                                        }
+                                        .width(80.dp)
+                                ) {
+                                    Surface(
+                                        modifier = Modifier.size(64.dp),
+                                        shape = CircleShape,
+                                        color = if (isSelected) aura.primaryColor else aura.primaryColor.copy(alpha = 0.2f),
+                                        border = androidx.compose.foundation.BorderStroke(
+                                            width = if (isSelected) 3.dp else 1.dp,
+                                            color = if (isSelected) Color.White else aura.primaryColor.copy(alpha = 0.5f)
+                                        )
+                                    ) {
+                                        Box(contentAlignment = Alignment.Center) {
+                                            Text(aura.emoji, style = MaterialTheme.typography.headlineSmall)
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        aura.title.split(" ").first(),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                                        color = if (isSelected) aura.primaryColor else MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
                             }
                         }
                     }
@@ -390,6 +445,7 @@ fun SettingsScreen(
                 modifier = Modifier.padding(16.dp)
             )
         }
+        }
     }
 
     if (showThemeDialog) {
@@ -399,6 +455,11 @@ fun SettingsScreen(
             text = {
                 Column {
                     listOf("system", "light", "dark").forEach { mode ->
+                        val modeText = when(mode) {
+                            "light" -> stringResource(R.string.theme_light)
+                            "dark" -> stringResource(R.string.theme_dark)
+                            else -> stringResource(R.string.theme_system)
+                        }
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -414,7 +475,47 @@ fun SettingsScreen(
                                 onClick = null
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(mode.replaceFirstChar { it.uppercase() })
+                            Text(modeText)
+                        }
+                    }
+                }
+            },
+            confirmButton = { }
+        )
+    }
+
+    if (showLanguageDialog) {
+        val languageMap = mapOf(
+            "en" to "English",
+            "tr" to "Türkçe",
+            "de" to "Deutsch",
+            "fr" to "Français",
+            "es" to "Español",
+            "ja" to "日本語"
+        )
+        
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(stringResource(R.string.select_language)) },
+            text = {
+                Column {
+                    languageMap.forEach { (code, name) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.setAppLanguage(code)
+                                    showLanguageDialog = false
+                                }
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = appLanguage == code,
+                                onClick = null
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(name)
                         }
                     }
                 }
@@ -447,8 +548,3 @@ fun SettingsScreen(
         )
     }
 }
-
-@Composable
-private fun Modifier.clickable(onClick: () -> Unit): Modifier = this.then(
-    Modifier.clickable(onClick = onClick)
-)

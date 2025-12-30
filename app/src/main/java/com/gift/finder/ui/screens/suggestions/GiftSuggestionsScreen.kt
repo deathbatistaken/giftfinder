@@ -7,13 +7,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.animation.core.*
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ViewCarousel
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -37,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
 import com.gift.finder.R
 import com.gift.finder.domain.model.BudgetRange
 import com.gift.finder.domain.model.GiftStyle
@@ -49,6 +54,7 @@ import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.components.premium.SwipeableGiftCard
 import com.gift.finder.ui.components.premium.ConfettiEffect
+import kotlinx.coroutines.launch
 
 /**
  * Gift suggestions screen.
@@ -72,6 +78,7 @@ fun GiftSuggestionsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    var showConfetti by remember { mutableStateOf(false) }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -115,14 +122,71 @@ fun GiftSuggestionsScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
             AnimatedMeshBackground()
+            if (showConfetti) {
+                Box(modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
+                    ConfettiEffect()
+                }
+            }
             
             when (val state = uiState) {
                 is SuggestionsUiState.Loading -> {
+                    val aura = LocalCosmicAura.current
+                    val infiniteTransition = rememberInfiniteTransition(label = "crystal_ball")
+                    val pulseScale by infiniteTransition.animateFloat(
+                        initialValue = 0.8f,
+                        targetValue = 1.2f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(1500, easing = LinearEasing),
+                            repeatMode = RepeatMode.Reverse
+                        ),
+                        label = "pulse"
+                    )
+                    val rotation by infiniteTransition.animateFloat(
+                        initialValue = 0f,
+                        targetValue = 360f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(3000, easing = LinearEasing),
+                            repeatMode = RepeatMode.Restart
+                        ),
+                        label = "rotation"
+                    )
+
                     Box(
                         modifier = Modifier.fillMaxSize().padding(padding),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator()
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Box(
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .graphicsLayer {
+                                        scaleX = pulseScale
+                                        scaleY = pulseScale
+                                        rotationZ = rotation
+                                    }
+                                    .background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(
+                                                aura.primaryColor.copy(alpha = 0.8f),
+                                                aura.primaryColor.copy(alpha = 0.2f),
+                                                Color.Transparent
+                                            )
+                                        ),
+                                        shape = CircleShape
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text("🔮", style = MaterialTheme.typography.displayMedium)
+                            }
+                            Spacer(modifier = Modifier.height(24.dp))
+                            Text(
+                                "CONSULTING THE STARS...",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = aura.primaryColor,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified
+                            )
+                        }
                     }
                 }
 
@@ -218,30 +282,39 @@ fun GiftSuggestionsScreen(
                                 verticalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 items(state.suggestions) { suggestion ->
-                                    GiftSuggestionCard(
-                                        suggestion = suggestion,
-                                        onReject = { reason -> 
-                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                            viewModel.rejectSuggestion(suggestion.category.id, reason) 
-                                        },
-                                            if (!suggestion.isPremiumLocked) {
+                                    androidx.compose.animation.AnimatedVisibility(
+                                        visible = true,
+                                        enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.expandVertically()
+                                    ) {
+                                        GiftSuggestionCard(
+                                            suggestion = suggestion,
+                                            onReject = { reason -> 
                                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                                viewModel.saveToWishlist(suggestion.category.id)
-                                                scope.launch {
-                                                    snackbarHostState.showSnackbar(
-                                                        message = "Saved to Wishlist ✨",
-                                                        duration = SnackbarDuration.Short
-                                                    )
+                                                viewModel.rejectSuggestion(suggestion.category.id, reason) 
+                                            },
+                                            onOpenStore = {
+                                                if (!suggestion.isPremiumLocked) {
+                                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                    viewModel.saveToWishlist(suggestion.category.id)
+                                                    showConfetti = true
+                                                    scope.launch {
+                                                        snackbarHostState.showSnackbar(
+                                                            message = "Saved to Wishlist ✨",
+                                                            duration = SnackbarDuration.Short
+                                                        )
+                                                        delay(3000)
+                                                        showConfetti = false
+                                                    }
+                                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
+                                                    context.startActivity(intent)
                                                 }
-                                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
-                                                context.startActivity(intent)
+                                            },
+                                            onUnlock = {
+                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                onNavigateToPaywall()
                                             }
-                                        },
-                                        onUnlock = {
-                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                            onNavigateToPaywall()
-                                        }
-                                    )
+                                        )
+                                    }
                                 }
                             }
                         }

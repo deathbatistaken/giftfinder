@@ -81,3 +81,7 @@ val BudgetLow = Color(0xFF2BCBBA)
 val BudgetMedium = Color(0xFFFDCB6E)
 val BudgetHigh = Color(0xFFE17055)
 val BudgetLuxury = Color(0xFF6C5CE7)
+
+// Widget colors
+val DarkSlate = Color(0xFF1E1E2E)
+val NeonPurple = Color(0xFF9B59B6)

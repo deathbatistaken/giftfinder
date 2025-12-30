@@ -4,6 +4,8 @@ import android.content.Context
 import com.gift.finder.data.manager.BillingManager
 import com.gift.finder.data.manager.LocalNotificationManager
 import com.gift.finder.data.manager.PreferencesManager
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +19,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return GsonBuilder().create()
+    }
 
     @Provides
     @Singleton

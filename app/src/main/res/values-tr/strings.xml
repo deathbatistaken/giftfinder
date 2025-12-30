@@ -26,7 +26,7 @@
     <string name="onboarding_desc_4">İlgi alanlarına göre saniyeler içinde kişiselleştirilmiş öneriler al.</string>
     
     <!-- Paywall -->
-    <string name="paywall_title">GiftFinder Pro'nun Kilidini Aç</string>
+    <string name="paywall_title">GiftFinder Pro\'nun Kilidini Aç</string>
     <string name="paywall_subtitle">Her zaman mükemmel hediyeyi bul</string>
     <string name="feature_unlimited_persons">Sınırsız kişi takip et</string>
     <string name="feature_unlimited_dates">Sınırsız özel gün</string>
@@ -88,6 +88,11 @@
     <!-- Settings -->
     <string name="appearance">Görünüm</string>
     <string name="theme">Tema</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="theme_system">Sistem Varsayılanı</string>
+    <string name="language">Dil</string>
+    <string name="select_language">Dil Seçin</string>
     <string name="haptic_feedback">Dokunsal Geri Bildirim</string>
     <string name="notifications">Bildirimler</string>
     <string name="reminder_notifications">Hatırlatıcı Bildirimleri</string>
@@ -96,7 +101,7 @@
     <string name="delete_all_data">Tüm Verileri Sil</string>
     <string name="delete_data_warning">Tüm kişilerini, özel günlerini ve tercihlerini kalıcı olarak silecek. Bu işlem geri alınamaz.</string>
     <string name="version">Sürüm</string>
-    <string name="upgrade_to_pro">Pro'ya Yükselt</string>
+    <string name="upgrade_to_pro">Pro\'ya Yükselt</string>
     <string name="unlock_all_features">Sınırsız kişi ve öneri kilidini aç</string>
     <string name="subscription_active">Abonelik Aktif</string>
     <string name="pro_member">Pro Üye</string>

@@ -17,4 +17,6 @@ class MainViewModel @Inject constructor(
     val isOnboardingCompleted: Flow<Boolean> = preferencesManager.isOnboardingCompleted
     val subscriptionStatus = preferencesManager.subscriptionStatus
     val cosmicAura = preferencesManager.cosmicAura
+    val themeMode = preferencesManager.themeMode
+    val appLanguage = preferencesManager.appLanguage
 }

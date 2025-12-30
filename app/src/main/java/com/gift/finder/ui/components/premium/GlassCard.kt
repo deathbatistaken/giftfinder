@@ -1,5 +1,6 @@
 package com.gift.finder.ui.components.premium
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,6 +25,7 @@ fun GlassCard(
     modifier: Modifier = Modifier,
     cornerRadius: Dp = 24.dp,
     borderWidth: Dp = 1.dp,
+    border: BorderStroke? = null,
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -53,15 +55,21 @@ fun GlassCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(
-                    width = borderWidth,
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            GlassBorder.copy(alpha = 0.6f),
-                            GlassBorder.copy(alpha = 0.1f)
+                .then(
+                    if (border != null) {
+                        Modifier.border(border, RoundedCornerShape(cornerRadius))
+                    } else {
+                        Modifier.border(
+                            width = borderWidth,
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    GlassBorder.copy(alpha = 0.6f),
+                                    GlassBorder.copy(alpha = 0.1f)
+                                )
+                            ),
+                            shape = RoundedCornerShape(cornerRadius)
                         )
-                    ),
-                    shape = RoundedCornerShape(cornerRadius)
+                    }
                 )
                 .padding(16.dp),
             content = content

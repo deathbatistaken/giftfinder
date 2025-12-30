@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
 import com.gift.finder.domain.model.Person
@@ -67,6 +69,7 @@ fun SearchScreen(
         stringResource(R.string.tag_wellness)
     )
 
+    val aura = LocalCosmicAura.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -77,7 +80,7 @@ fun SearchScreen(
                         placeholder = { Text(stringResource(R.string.search_placeholder)) },
                         modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
                         singleLine = true,
-                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = aura.primaryColor) },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
                                 IconButton(onClick = { viewModel.onQueryChange("") }) {
@@ -86,7 +89,7 @@ fun SearchScreen(
                             }
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            focusedBorderColor = aura.primaryColor,
                             unfocusedBorderColor = Color.Transparent,
                             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                             focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
@@ -125,7 +128,14 @@ fun SearchScreen(
                             },
                             label = { Text(tag) },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer
+                                selectedContainerColor = aura.primaryColor.copy(alpha = 0.2f),
+                                selectedLabelColor = aura.primaryColor
+                            ),
+                            border = FilterChipDefaults.filterChipBorder(
+                                enabled = true,
+                                selected = selectedTag == tag,
+                                borderColor = aura.primaryColor.copy(alpha = 0.3f),
+                                selectedBorderColor = aura.primaryColor
                             )
                         )
                     }
@@ -173,7 +183,7 @@ fun SearchScreen(
                             ) {
                                 if (state.persons.isNotEmpty()) {
                                     item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
-                                        Text("People", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                        Text("PEOPLE", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor)
                                     }
                                     items(state.persons) { person ->
                                         SearchResultCard(
@@ -187,7 +197,7 @@ fun SearchScreen(
                                 }
                                 if (state.categories.isNotEmpty()) {
                                     item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
-                                        Text("Gift Ideas", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 16.dp))
+                                        Text("GIFT IDEAS", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor, modifier = Modifier.padding(top = 16.dp))
                                     }
                                     items(state.categories) { category ->
                                         GiftCategoryResultCard(
@@ -209,33 +219,37 @@ fun SearchScreen(
     }
 }
 
+@Composable
 private fun GiftCategoryResultCard(
     category: GiftCategory,
     onClick: () -> Unit
 ) {
+    val aura = LocalCosmicAura.current
     GlassCard(
         modifier = Modifier.fillMaxWidth(),
-        onClick = onClick
+        onClick = onClick,
+        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.2f))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Surface(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(56.dp),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.secondaryContainer
+                color = aura.primaryColor.copy(alpha = 0.15f),
+                border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(category.emoji, style = MaterialTheme.typography.titleLarge)
                 }
             }
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
                     text = category.title,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = category.description,
@@ -254,29 +268,32 @@ private fun SearchResultCard(
     person: Person,
     onClick: () -> Unit
 ) {
+    val aura = LocalCosmicAura.current
     GlassCard(
         modifier = Modifier.fillMaxWidth(),
-        onClick = onClick
+        onClick = onClick,
+        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.2f))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Surface(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(56.dp),
                 shape = CircleShape,
-                color = MaterialTheme.colorScheme.primaryContainer
+                color = aura.primaryColor.copy(alpha = 0.15f),
+                border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(person.avatarEmoji, style = MaterialTheme.typography.titleLarge)
                 }
             }
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(
                     text = person.name,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Bold
                 )
                 if (person.interests.isNotEmpty()) {
                     Text(

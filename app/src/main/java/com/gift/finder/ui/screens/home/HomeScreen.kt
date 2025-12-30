@@ -18,7 +18,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.GridItemOffsets
+
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
 import com.gift.finder.domain.model.Person
@@ -273,12 +274,36 @@ private fun PersonCard(
     onClick: () -> Unit
 ) {
     val haptic = LocalHapticFeedback.current
+    val aura = LocalCosmicAura.current
     GlassCard(
         onClick = {
             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             onClick()
         },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(
+                Modifier.background(
+                    brush = Brush.radialGradient(
+                        colors = listOf(
+                            aura.primaryColor.copy(alpha = 0.15f),
+                            Color.Transparent
+                        ),
+                        center = androidx.compose.ui.geometry.Offset(0f, 0f),
+                        radius = 200f
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                )
+            ),
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            Brush.linearGradient(
+                colors = listOf(
+                    aura.primaryColor.copy(alpha = 0.5f),
+                    aura.primaryColor.copy(alpha = 0.1f)
+                )
+            )
+        )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

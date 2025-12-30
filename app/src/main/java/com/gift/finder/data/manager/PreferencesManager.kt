@@ -42,6 +42,7 @@ class PreferencesManager @Inject constructor(
         private val KEY_NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
         private val KEY_COSMIC_AURA = stringPreferencesKey("cosmic_aura")
         private val KEY_REMINDER_OFFSETS = stringPreferencesKey("reminder_offsets") // e.g. "0,3,7"
+        private val KEY_APP_LANGUAGE = stringPreferencesKey("app_language") // "en", "tr", etc.
     }
 
     // Onboarding
@@ -137,6 +138,17 @@ class PreferencesManager @Inject constructor(
     suspend fun setReminderOffsets(offsets: List<Int>) {
         dataStore.edit { prefs ->
             prefs[KEY_REMINDER_OFFSETS] = offsets.joinToString(",")
+        }
+    }
+
+    // Language
+    val appLanguage: Flow<String> = dataStore.data.map { prefs ->
+        prefs[KEY_APP_LANGUAGE] ?: "en"
+    }
+
+    suspend fun setAppLanguage(language: String) {
+        dataStore.edit { prefs ->
+            prefs[KEY_APP_LANGUAGE] = language
         }
     }
 

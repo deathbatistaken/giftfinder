@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
 import com.gift.finder.domain.model.SpecialDate
@@ -139,39 +140,50 @@ private fun CalendarDateCard(
     personEmoji: String,
     daysUntil: Int
 ) {
+    val aura = LocalCosmicAura.current
     val urgencyColor = when {
         daysUntil <= 0 -> GiftRed
         daysUntil <= 3 -> GiftOrange
-        daysUntil <= 7 -> GiftBlue
-        else -> GiftGreen
+        else -> aura.primaryColor
     }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-            // Date circle
-            Column(
-                modifier = Modifier
-                    .size(56.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(urgencyColor.copy(alpha = 0.1f)),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = specialDate.dayOfMonth.toString(),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = urgencyColor
-                )
-                Text(
-                    text = SimpleDateFormat("MMM", Locale.getDefault()).format(
-                        Calendar.getInstance().apply { set(Calendar.MONTH, specialDate.month - 1) }.time
-                    ),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = urgencyColor
-                )
+            // Date circle with Halo if urgent
+            Box(contentAlignment = Alignment.Center) {
+                if (daysUntil <= 3) {
+                    Surface(
+                        modifier = Modifier.size(64.dp),
+                        shape = CircleShape,
+                        color = urgencyColor.copy(alpha = 0.15f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, urgencyColor.copy(alpha = 0.3f))
+                    ) {}
+                }
+                
+                Column(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(urgencyColor.copy(alpha = 0.1f)),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = specialDate.dayOfMonth.toString(),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = urgencyColor
+                    )
+                    Text(
+                        text = SimpleDateFormat("MMM", Locale.getDefault()).format(
+                            Calendar.getInstance().apply { set(Calendar.MONTH, specialDate.month - 1) }.time
+                        ),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = urgencyColor
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -195,8 +207,9 @@ private fun CalendarDateCard(
 
             // Countdown chip
             Surface(
-                color = urgencyColor.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(16.dp)
+                color = urgencyColor.copy(alpha = 0.2f),
+                shape = RoundedCornerShape(12.dp),
+                border = androidx.compose.foundation.BorderStroke(1.dp, urgencyColor.copy(alpha = 0.4f))
             ) {
                 Text(
                     text = when (daysUntil) {
@@ -206,7 +219,7 @@ private fun CalendarDateCard(
                     },
                     style = MaterialTheme.typography.labelMedium,
                     color = urgencyColor,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                 )
             }

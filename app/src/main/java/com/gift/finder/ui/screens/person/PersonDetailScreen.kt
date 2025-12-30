@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
@@ -172,68 +173,105 @@ private fun PersonDetailContent(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Header
+        // Persona Card
         item {
-            GlassCard(modifier = Modifier.fillMaxWidth()) {
+            val aura = LocalCosmicAura.current
+            GlassCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(
+                        Modifier.background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    aura.primaryColor.copy(alpha = 0.1f),
+                                    Color.Transparent
+                                )
+                            ),
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                    ),
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    Brush.linearGradient(
+                        colors = listOf(
+                            aura.primaryColor.copy(alpha = 0.4f),
+                            Color.Transparent,
+                            aura.primaryColor.copy(alpha = 0.2f)
+                        )
+                    )
+                )
+            ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    // Avatar with Halo
                     Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.padding(top = 8.dp)
                     ) {
+                        Surface(
+                            modifier = Modifier.size(108.dp),
+                            shape = CircleShape,
+                            color = aura.primaryColor.copy(alpha = 0.15f),
+                            border = androidx.compose.foundation.BorderStroke(2.dp, aura.primaryColor.copy(alpha = 0.3f))
+                        ) {}
                         Text(person.avatarEmoji, style = MaterialTheme.typography.displayMedium)
                     }
+                    
                     Spacer(modifier = Modifier.height(16.dp))
+                    
                     Text(
                         person.name,
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.ExtraBold,
                         color = MaterialTheme.colorScheme.primary
                     )
+                    
                     val relationshipStringId = remember(person.relationshipType) {
                         val field = R.string::class.java.getField(person.relationshipType.displayKey)
                         field.getInt(null)
                     }
                     Text(
-                        stringResource(relationshipStringId),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        stringResource(relationshipStringId).uppercase(),
+                        style = MaterialTheme.typography.labelMedium,
+                        letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                     )
 
                     if (personaSummary != null) {
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             personaSummary,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.secondary,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontStyle = FontStyle.Italic,
-                            modifier = Modifier.graphicsLayer { alpha = 0.8f }
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            modifier = Modifier
+                                .padding(horizontal = 24.dp)
+                                .graphicsLayer { alpha = 0.9f }
                         )
                     }
 
                     if (dominantArchetype != null) {
-                        Spacer(modifier = Modifier.height(12.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
                         Surface(
-                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
-                            shape = RoundedCornerShape(16.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                            color = aura.primaryColor.copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(12.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.4f))
                         ) {
                             Row(
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(dominantArchetype.emoji, style = MaterialTheme.typography.bodySmall)
-                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(dominantArchetype.emoji, style = MaterialTheme.typography.titleSmall)
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     dominantArchetype.title,
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary
+                                    style = MaterialTheme.typography.labelLarge,
+                                    fontWeight = FontWeight.ExtraBold,
+                                    color = aura.primaryColor
                                 )
                             }
                         }

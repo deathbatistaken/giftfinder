@@ -10,36 +10,42 @@ enum class CosmicAura(
     val id: String,
     val title: String,
     val colors: List<Color>,
+    val primaryColor: Color,
     val emoji: String
 ) {
     NEBULA(
         id = "nebula",
         title = "Nebula Purple",
         colors = listOf(CosmicPurple, GiftPurple, Color(0xFF9B59B6), Color(0xFFE056FD)),
+        primaryColor = GiftPurple,
         emoji = "🌌"
     ),
     SUPERNOVA(
         id = "supernova",
         title = "Supernova Red",
         colors = listOf(GiftRed, GiftOrange, Color(0xFFFF4757), Color(0xFFEA2027)),
+        primaryColor = GiftRed,
         emoji = "💥"
     ),
     DEEP_SPACE(
         id = "deep_space",
         title = "Deep Space Blue",
         colors = listOf(CosmicBlue, GiftBlue, Color(0xFF1E90FF), Color(0xFF4834D4)),
+        primaryColor = GiftBlue,
         emoji = "☄️"
     ),
     AURORA(
         id = "aurora",
         title = "Aurora Green",
         colors = listOf(GiftGreen, Color(0xFF26DE81), Color(0xFF20BF6B), Color(0xFF05C46B)),
+        primaryColor = GiftGreen,
         emoji = "🌠"
     ),
     GOLDEN_GALAXY(
         id = "golden",
         title = "Golden Galaxy",
         colors = listOf(LuxuryGoldStart, LuxuryGoldMid, LuxuryGoldEnd, Color(0xFFF1C40F)),
+        primaryColor = LuxuryGoldStart,
         emoji = "✨"
     );
 

@@ -78,6 +78,11 @@
     
     <string name="appearance">Erscheinung</string>
     <string name="theme">Design</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="theme_system">Systemstandard</string>
+    <string name="language">Sprache</string>
+    <string name="select_language">Sprache auswählen</string>
     <string name="haptic_feedback">Haptisches Feedback</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="reminder_notifications">Erinnerungsbenachrichtigungen</string>

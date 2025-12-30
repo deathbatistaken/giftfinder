@@ -78,6 +78,7 @@ fun RejectionReasonDialog(
 private fun getRejectionEmoji(reason: RejectionReason): String {
     return when (reason) {
         RejectionReason.TOO_EXPENSIVE -> "💸"
+        RejectionReason.NOT_THEIR_STYLE -> "👔"
         RejectionReason.ALREADY_HAS -> "📦"
         RejectionReason.NOT_INTERESTED -> "🙅"
         RejectionReason.BOUGHT_BEFORE -> "🔄"
@@ -88,6 +89,7 @@ private fun getRejectionEmoji(reason: RejectionReason): String {
 private fun getRejectionTitle(reason: RejectionReason): String {
     return when (reason) {
         RejectionReason.TOO_EXPENSIVE -> "Too Expensive"
+        RejectionReason.NOT_THEIR_STYLE -> "Not Their Style"
         RejectionReason.ALREADY_HAS -> "Already Has It"
         RejectionReason.NOT_INTERESTED -> "Not Interested"
         RejectionReason.BOUGHT_BEFORE -> "Bought Before"
@@ -98,8 +100,9 @@ private fun getRejectionTitle(reason: RejectionReason): String {
 private fun getRejectionDescription(reason: RejectionReason): String {
     return when (reason) {
         RejectionReason.TOO_EXPENSIVE -> "Out of my budget range"
+        RejectionReason.NOT_THEIR_STYLE -> "Doesn't fit their taste"
         RejectionReason.ALREADY_HAS -> "They already own this"
-        RejectionReason.NOT_INTERESTED -> "Not their style"
+        RejectionReason.NOT_INTERESTED -> "Not interested in this"
         RejectionReason.BOUGHT_BEFORE -> "I gave this previously"
         RejectionReason.OTHER -> "Something else"
     }

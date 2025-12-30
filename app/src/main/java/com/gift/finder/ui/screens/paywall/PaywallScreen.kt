@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.billingclient.api.ProductDetails
 import com.gift.finder.R
@@ -45,6 +47,7 @@ fun PaywallScreen(
     val billingState by viewModel.billingConnectionState.collectAsState()
     val purchaseState by viewModel.purchaseState.collectAsState()
     val context = LocalContext.current
+    val aura = LocalCosmicAura.current
 
     LaunchedEffect(purchaseState) {
         if (purchaseState is PurchaseState.Success) {
@@ -79,17 +82,27 @@ fun PaywallScreen(
                     .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-            // Header
-            Text(
-                text = "🎁",
-                style = MaterialTheme.typography.displayLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+            // Header with Halo
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.padding(bottom = 24.dp)
+            ) {
+                Surface(
+                    modifier = Modifier.size(120.dp),
+                    shape = CircleShape,
+                    color = aura.primaryColor.copy(alpha = 0.15f),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
+                ) {}
+                Text(
+                    text = "🎁",
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
 
             Text(
                 text = stringResource(R.string.paywall_title),
                 style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -103,7 +116,7 @@ fun PaywallScreen(
             )
 
             // Features
-            FeatureList()
+            FeatureList(auraColor = aura.primaryColor)
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -114,6 +127,7 @@ fun PaywallScreen(
                         SubscriptionOption(
                             product = product,
                             isRecommended = product.productId == BillingManager.PRODUCT_YEARLY,
+                            auraColor = aura.primaryColor,
                             onClick = {
                                 (context as? Activity)?.let { activity ->
                                     // billingManager.launchPurchase would be called here
@@ -124,11 +138,11 @@ fun PaywallScreen(
                     }
                 }
                 is BillingConnectionState.Connecting -> {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = aura.primaryColor)
                 }
                 else -> {
                     // Fallback UI for demo
-                    DemoSubscriptionOptions()
+                    DemoSubscriptionOptions(auraColor = aura.primaryColor)
                 }
             }
 
@@ -136,7 +150,7 @@ fun PaywallScreen(
 
             // Restore purchases
             TextButton(onClick = { viewModel.restorePurchases() }) {
-                Text(stringResource(R.string.restore_purchases))
+                Text(stringResource(R.string.restore_purchases), color = aura.primaryColor)
             }
 
             // Terms
@@ -153,7 +167,7 @@ fun PaywallScreen(
 }
 
 @Composable
-private fun FeatureList() {
+private fun FeatureList(auraColor: Color) {
     val features = listOf(
         R.string.feature_unlimited_persons,
         R.string.feature_unlimited_dates,
@@ -173,13 +187,14 @@ private fun FeatureList() {
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = null,
-                    tint = GiftGreen,
+                    tint = auraColor,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = stringResource(featureRes),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium
                 )
             }
         }
@@ -190,6 +205,7 @@ private fun FeatureList() {
 private fun SubscriptionOption(
     product: ProductDetails,
     isRecommended: Boolean,
+    auraColor: Color,
     onClick: () -> Unit
 ) {
     val price = product.subscriptionOfferDetails?.firstOrNull()?.pricingPhases
@@ -197,7 +213,11 @@ private fun SubscriptionOption(
 
     GlassCard(
         onClick = onClick,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = if (isRecommended) 
+            androidx.compose.foundation.BorderStroke(2.dp, auraColor) 
+        else 
+            androidx.compose.foundation.BorderStroke(1.dp, auraColor.copy(alpha = 0.2f))
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             if (isRecommended) {
@@ -205,14 +225,15 @@ private fun SubscriptionOption(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(8.dp),
-                    color = MaterialTheme.colorScheme.primary,
+                    color = auraColor,
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.best_value),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
@@ -222,14 +243,14 @@ private fun SubscriptionOption(
                     text = product.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = if (isRecommended) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                    color = if (isRecommended) auraColor else MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = price,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.ExtraBold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = auraColor
                 )
             }
         }
@@ -237,7 +258,7 @@ private fun SubscriptionOption(
 }
 
 @Composable
-private fun DemoSubscriptionOptions() {
+private fun DemoSubscriptionOptions(auraColor: Color) {
     // Demo options when billing is not available
     listOf(
         Triple(stringResource(R.string.yearly_plan), "$29.99/year", true),
@@ -245,7 +266,11 @@ private fun DemoSubscriptionOptions() {
     ).forEach { (name, price, isRecommended) ->
         GlassCard(
             onClick = { },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            border = if (isRecommended) 
+                androidx.compose.foundation.BorderStroke(2.dp, auraColor) 
+            else 
+                androidx.compose.foundation.BorderStroke(1.dp, auraColor.copy(alpha = 0.2f))
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 if (isRecommended) {
@@ -253,14 +278,15 @@ private fun DemoSubscriptionOptions() {
                         modifier = Modifier
                             .align(Alignment.TopEnd)
                             .padding(8.dp),
-                        color = MaterialTheme.colorScheme.primary,
+                        color = auraColor,
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
                             text = stringResource(R.string.best_value),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
@@ -270,14 +296,14 @@ private fun DemoSubscriptionOptions() {
                         text = name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = if (isRecommended) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                        color = if (isRecommended) auraColor else MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = price,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.ExtraBold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = auraColor
                     )
                 }
             }

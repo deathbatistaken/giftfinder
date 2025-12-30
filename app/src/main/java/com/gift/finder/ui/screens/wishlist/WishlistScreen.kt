@@ -25,6 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
@@ -32,6 +34,7 @@ import com.gift.finder.domain.model.GiftSuggestion
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.theme.GiftGreen
+import com.gift.finder.ui.theme.LocalCosmicAura
 import com.gift.finder.ui.viewmodels.WishlistUiState
 import com.gift.finder.ui.viewmodels.WishlistViewModel
 import com.gift.finder.utils.ExportManager
@@ -51,6 +54,7 @@ fun WishlistScreen(
     val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
 
+    val aura = LocalCosmicAura.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -59,7 +63,7 @@ fun WishlistScreen(
                         "Wishlist",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.ExtraBold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = aura.primaryColor
                     ) 
                 },
                 navigationIcon = {
@@ -78,7 +82,7 @@ fun WishlistScreen(
                             }
                             context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_header, currentState.person.name)))
                         }) {
-                            Icon(Icons.Default.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.primary)
+                            Icon(Icons.Default.Share, contentDescription = "Share", tint = aura.primaryColor)
                         }
                     }
                 },
@@ -93,22 +97,35 @@ fun WishlistScreen(
             when (val state = uiState) {
                 is WishlistUiState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(color = aura.primaryColor)
                     }
                 }
                 is WishlistUiState.Success -> {
                     if (state.savedGifts.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("🔖", style = MaterialTheme.typography.displayLarge)
-                                Spacer(modifier = Modifier.height(16.dp))
+                                // Empty Halo
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.padding(bottom = 16.dp)
+                                ) {
+                                    Surface(
+                                        modifier = Modifier.size(100.dp),
+                                        shape = CircleShape,
+                                        color = aura.primaryColor.copy(alpha = 0.15f),
+                                        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
+                                    ) {}
+                                    Text("🔖", style = MaterialTheme.typography.displayLarge)
+                                }
+                                
                                 Text(
                                     "Wishlist is Empty",
                                     style = MaterialTheme.typography.headlineSmall,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.ExtraBold,
+                                    color = aura.primaryColor
                                 )
                                 Text(
-                                    "Swipe right on gift ideas to save them here!",
+                                    "Save your favorite cosmic gift ideas here!",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     textAlign = TextAlign.Center,
@@ -161,8 +178,10 @@ private fun WishlistGiftCard(
     onRemove: () -> Unit,
     onShop: () -> Unit
 ) {
+    val aura = LocalCosmicAura.current
     GlassCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.2f))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -182,19 +201,20 @@ private fun WishlistGiftCard(
                     )
                 }
                 IconButton(onClick = onRemove) {
-                    Icon(Icons.Default.Delete, contentDescription = "Remove", tint = MaterialTheme.colorScheme.error)
+                    Icon(Icons.Default.Delete, contentDescription = "Remove", tint = MaterialTheme.colorScheme.error.copy(alpha = 0.6f))
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))
             Button(
                 onClick = onShop,
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = GiftGreen)
+                colors = ButtonDefaults.buttonColors(containerColor = aura.primaryColor),
+                shape = RoundedCornerShape(24.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.ShoppingCart, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Shop on Amazon")
+                    Text("Shop now".uppercase(), fontWeight = FontWeight.ExtraBold)
                 }
             }
         }

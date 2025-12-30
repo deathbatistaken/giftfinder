@@ -3,6 +3,9 @@ package com.gift.finder.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.gift.finder.data.local.dao.GiftHistoryDao
+import com.gift.finder.data.local.dao.PersonDao
+import com.gift.finder.data.local.dao.RejectedGiftDao
 import com.gift.finder.data.local.dao.SavedGiftDao
 import com.gift.finder.data.local.dao.SpecialDateDao
 import com.gift.finder.data.local.entities.GiftHistoryEntity
@@ -23,7 +26,7 @@ import com.gift.finder.data.local.entities.SpecialDateEntity
         SavedGiftEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

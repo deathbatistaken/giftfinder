@@ -10,10 +10,25 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.gift.finder.R
+import com.gift.finder.ui.theme.*
 import com.gift.finder.ui.viewmodels.BudgetTrackerViewModel
+import com.gift.finder.ui.viewmodels.BudgetTrackerUiState
+import com.gift.finder.ui.viewmodels.BudgetPeriod
 import com.gift.finder.ui.viewmodels.PersonSpending
+import com.gift.finder.domain.model.GiftHistoryItem
 import com.gift.finder.ui.components.premium.CinematicRadialChart
 import com.gift.finder.ui.components.premium.AnimatedSpendingBar
+import com.gift.finder.ui.components.premium.AnimatedMeshBackground
+import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.utils.toFormattedDate
 import java.text.NumberFormat
 import java.util.Locale
@@ -88,6 +103,13 @@ fun BudgetTrackerScreen(
                     }
 
                     // Top spending
+                    if (state.topSpending.isNotEmpty()) {
+                        item {
+                            Text(
+                                stringResource(R.string.top_spending),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold
+                            )
                         }
                         items(state.topSpending) { spending ->
                             SpendingCard(spending = spending)
@@ -192,6 +214,7 @@ private fun SummaryCards(
     giftCount: Int,
     avgPerPerson: Double
 ) {
+    val aura = LocalCosmicAura.current
     val currencyFormat = NumberFormat.getCurrencyInstance(Locale.US)
 
     Row(
@@ -200,7 +223,8 @@ private fun SummaryCards(
     ) {
         // Total spent
         GlassCard(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("💰", style = MaterialTheme.typography.headlineSmall)
@@ -209,7 +233,7 @@ private fun SummaryCards(
                     currencyFormat.format(totalSpent),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = aura.primaryColor
                 )
                 Text(
                     stringResource(R.string.total_spent),
@@ -221,7 +245,8 @@ private fun SummaryCards(
 
         // Gift count
         GlassCard(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            border = androidx.compose.foundation.BorderStroke(1.dp, GiftGreen.copy(alpha = 0.3f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("🎁", style = MaterialTheme.typography.headlineSmall)
@@ -245,7 +270,8 @@ private fun SummaryCards(
 
     // Average per person
     GlassCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = androidx.compose.foundation.BorderStroke(1.dp, GiftBlue.copy(alpha = 0.3f))
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
