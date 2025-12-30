@@ -10,23 +10,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.gift.finder.R
-import com.gift.finder.domain.model.GiftHistoryItem
-import com.gift.finder.ui.theme.*
-import com.gift.finder.ui.components.premium.AnimatedMeshBackground
-import com.gift.finder.ui.components.premium.GlassCard
-import com.gift.finder.ui.viewmodels.BudgetPeriod
-import com.gift.finder.ui.viewmodels.BudgetTrackerUiState
 import com.gift.finder.ui.viewmodels.BudgetTrackerViewModel
 import com.gift.finder.ui.viewmodels.PersonSpending
+import com.gift.finder.ui.components.premium.CinematicRadialChart
+import com.gift.finder.ui.components.premium.AnimatedSpendingBar
 import com.gift.finder.utils.toFormattedDate
 import java.text.NumberFormat
 import java.util.Locale
@@ -101,16 +88,47 @@ fun BudgetTrackerScreen(
                     }
 
                     // Top spending
-                    if (state.topSpending.isNotEmpty()) {
+                        }
+                        items(state.topSpending) { spending ->
+                            SpendingCard(spending = spending)
+                        }
+                    }
+
+                    // Analytics View
+                    if (state.totalSpent > 0) {
                         item {
                             Text(
-                                stringResource(R.string.top_spending),
+                                "Visual Analysis",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
-                        items(state.topSpending) { spending ->
-                            SpendingCard(spending = spending)
+                        item {
+                            GlassCard(modifier = Modifier.fillMaxWidth()) {
+                                Column(
+                                    modifier = Modifier.padding(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    val currencyFormat = NumberFormat.getCurrencyInstance(Locale.US)
+                                    CinematicRadialChart(
+                                        portions = state.portions,
+                                        centerText = currencyFormat.format(state.totalSpent),
+                                        modifier = Modifier.size(200.dp).padding(16.dp),
+                                        strokeWidth = 20.dp
+                                    )
+                                    Spacer(modifier = Modifier.height(24.dp))
+                                    state.topSpending.take(3).forEach { spending ->
+                                        val portion = state.portions.find { it.label == spending.person.name }
+                                        AnimatedSpendingBar(
+                                            label = spending.person.name,
+                                            value = (spending.amount / state.totalSpent).toFloat(),
+                                            amountText = currencyFormat.format(spending.amount),
+                                            color = portion?.color ?: GiftPurple,
+                                            modifier = Modifier.padding(vertical = 4.dp)
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
 

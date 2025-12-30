@@ -35,6 +35,7 @@ class PersonViewModel @Inject constructor(
     private val giftRepository: GiftRepository,
     private val notificationManager: LocalNotificationManager,
     private val preferencesManager: PreferencesManager,
+    private val archetypeManager: com.gift.finder.domain.manager.ArchetypeManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -56,6 +57,18 @@ class PersonViewModel @Inject constructor(
             loadPerson(personId)
         } else {
             _uiState.value = PersonUiState.New
+        }
+    }
+
+    val dominantArchetype = _uiState.asStateFlow().let {
+        MutableStateFlow<Archetype?>(null).apply {
+            viewModelScope.launch {
+                it.collect { state ->
+                    if (state is PersonUiState.Loaded) {
+                        value = archetypeManager.findDominantArchetype(state.person)
+                    }
+                }
+            }
         }
     }
 

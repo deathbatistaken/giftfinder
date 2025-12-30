@@ -45,6 +45,7 @@ fun PersonDetailScreen(
     onNavigateToWishlist: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val dominantArchetype by viewModel.dominantArchetype.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -89,8 +90,10 @@ fun PersonDetailScreen(
                     PersonDetailContent(
                         modifier = Modifier.fillMaxSize().padding(padding),
                         person = state.person,
+                        dominantArchetype = dominantArchetype,
                         onNavigateToSuggestions = onNavigateToSuggestions,
                         onNavigateToRoulette = onNavigateToRoulette,
+                        onNavigateToWishlist = onNavigateToWishlist,
                         onNavigateToWishlist = onNavigateToWishlist,
                         onDeleteSpecialDate = { specialDate ->
                             scope.launch { viewModel.deleteSpecialDate(specialDate) }
@@ -138,6 +141,7 @@ fun PersonDetailScreen(
 private fun PersonDetailContent(
     modifier: Modifier = Modifier,
     person: Person,
+    dominantArchetype: com.gift.finder.domain.model.Archetype?,
     onNavigateToSuggestions: () -> Unit,
     onNavigateToRoulette: () -> Unit,
     onNavigateToWishlist: () -> Unit,
@@ -175,6 +179,29 @@ private fun PersonDetailContent(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    
+                    if (dominantArchetype != null) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Surface(
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                            shape = RoundedCornerShape(16.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(dominantArchetype.emoji, style = MaterialTheme.typography.bodySmall)
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    dominantArchetype.title,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }

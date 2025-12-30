@@ -65,12 +65,25 @@ class BudgetTrackerViewModel @Inject constructor(
                     .take(5)
                     .map { PersonSpending(it, spendingByPerson[it.id] ?: 0.0) }
 
+                val portions = topSpending.map { spending ->
+                    com.gift.finder.ui.components.premium.RadialPortion(
+                        percentage = if (totalSpent > 0) (spending.amount / totalSpent).toFloat() else 0f,
+                        color = when (topSpending.indexOf(spending) % 3) {
+                            0 -> com.gift.finder.ui.theme.GiftPurple
+                            1 -> com.gift.finder.ui.theme.GiftBlue
+                            else -> com.gift.finder.ui.theme.GiftGreen
+                        },
+                        label = spending.person.name
+                    )
+                }
+
                 BudgetTrackerUiState.Success(
                     totalSpent = totalSpent,
                     giftCount = allGifts.size,
                     avgPerPerson = avgPerPerson,
                     topSpending = topSpending,
-                    recentGifts = allGifts.sortedByDescending { it.purchaseDate }.take(10)
+                    recentGifts = allGifts.sortedByDescending { it.purchaseDate }.take(10),
+                    portions = portions
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -115,7 +128,8 @@ sealed class BudgetTrackerUiState {
         val giftCount: Int,
         val avgPerPerson: Double,
         val topSpending: List<PersonSpending>,
-        val recentGifts: List<GiftHistoryItem>
+        val recentGifts: List<GiftHistoryItem>,
+        val portions: List<com.gift.finder.ui.components.premium.RadialPortion>
     ) : BudgetTrackerUiState()
 }
 
