@@ -28,9 +28,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
 import com.gift.finder.domain.model.Person
 import com.gift.finder.ui.theme.*
-import com.gift.finder.ui.viewmodels.HomeViewModel
+import com.gift.finder.ui.viewmodels.SearchViewModel
+import com.gift.finder.ui.viewmodels.SearchUiState
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.domain.model.GiftCategory
+import androidx.compose.animation.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.text.style.TextOverflow
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 
 /**
  * Search screen for finding people and gifts.
@@ -39,24 +48,17 @@ import com.gift.finder.ui.components.premium.GlassCard
 @Composable
 fun SearchScreen(
     windowSizeClass: WindowSizeClass,
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: SearchViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToPersonDetail: (Long) -> Unit
 ) {
-    val persons by viewModel.persons.collectAsState()
-    var searchQuery by remember { mutableStateOf("") }
+    val uiState by viewModel.searchUiState.collectAsState()
+    val searchQuery by viewModel.searchQuery.collectAsState()
+    val selectedTag by viewModel.selectedTag.collectAsState()
     val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
 
-    val filteredPersons = remember(searchQuery, persons) {
-        if (searchQuery.isBlank()) {
-            emptyList()
-        } else {
-            persons.filter { person ->
-                person.name.contains(searchQuery, ignoreCase = true) ||
-                        person.interests.any { it.contains(searchQuery, ignoreCase = true) }
-            }
-        }
-    }
+    val quickTags = listOf("Tech", "Art", "Outdoor", "Books", "Gaming", "Wellness")
 
     Scaffold(
         topBar = {
@@ -64,14 +66,14 @@ fun SearchScreen(
                 title = {
                     OutlinedTextField(
                         value = searchQuery,
-                        onValueChange = { searchQuery = it },
+                        onValueChange = { viewModel.onQueryChange(it) },
                         placeholder = { Text(stringResource(R.string.search_placeholder)) },
                         modifier = Modifier.fillMaxWidth().padding(end = 8.dp),
                         singleLine = true,
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
-                                IconButton(onClick = { searchQuery = "" }) {
+                                IconButton(onClick = { viewModel.onQueryChange("") }) {
                                     Icon(Icons.Default.Close, contentDescription = stringResource(R.string.close))
                                 }
                             }
@@ -101,57 +103,97 @@ fun SearchScreen(
             AnimatedMeshBackground()
             
             Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-                if (searchQuery.isEmpty()) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("🔍", style = MaterialTheme.typography.displayMedium)
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                stringResource(R.string.search_hint),
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                // Quick Tags
+                LazyRow(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(quickTags) { tag ->
+                        FilterChip(
+                            selected = selectedTag == tag,
+                            onClick = { 
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                viewModel.onTagSelect(if (selectedTag == tag) null else tag) 
+                            },
+                            label = { Text(tag) },
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer
                             )
-                        }
+                        )
                     }
-                } else if (filteredPersons.isEmpty()) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("😕", style = MaterialTheme.typography.displayMedium)
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                stringResource(R.string.no_results),
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
-                    }
-                } else {
-                    val columns = when (windowSizeClass.widthSizeClass) {
-                        WindowWidthSizeClass.Compact -> 1
-                        WindowWidthSizeClass.Medium -> 2
-                        WindowWidthSizeClass.Expanded -> 3
-                        else -> 1
-                    }
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(columns),
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        items(filteredPersons) { person ->
-                            SearchResultCard(
-                                person = person,
-                                onClick = { 
-                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    onNavigateToPersonDetail(person.id) 
+                }
+
+                AnimatedContent(
+                    targetState = uiState,
+                    transitionSpec = {
+                        fadeIn() togetherWith fadeOut()
+                    },
+                    label = "SearchAnimations"
+                ) { state ->
+                    when (state) {
+                        is SearchUiState.Idle -> {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text("🔍", style = MaterialTheme.typography.displayMedium)
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Text(stringResource(R.string.search_hint), color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
-                            )
+                            }
+                        }
+                        is SearchUiState.NoResults -> {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text("😕", style = MaterialTheme.typography.displayMedium)
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Text(stringResource(R.string.no_results))
+                                }
+                            }
+                        }
+                        is SearchUiState.Success -> {
+                            val columns = when (windowSizeClass.widthSizeClass) {
+                                WindowWidthSizeClass.Compact -> 1
+                                WindowWidthSizeClass.Medium -> 2
+                                WindowWidthSizeClass.Expanded -> 3
+                                else -> 1
+                            }
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(columns),
+                                modifier = Modifier.fillMaxSize(),
+                                contentPadding = PaddingValues(16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                            ) {
+                                if (state.persons.isNotEmpty()) {
+                                    item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
+                                        Text("People", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                                    }
+                                    items(state.persons) { person ->
+                                        SearchResultCard(
+                                            person = person,
+                                            onClick = { 
+                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                onNavigateToPersonDetail(person.id) 
+                                            }
+                                        )
+                                    }
+                                }
+                                if (state.categories.isNotEmpty()) {
+                                    item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
+                                        Text("Gift Ideas", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 16.dp))
+                                    }
+                                    items(state.categories) { category ->
+                                        GiftCategoryResultCard(
+                                            category = category,
+                                            onClick = {
+                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(category.getStoreUrl()))
+                                                context.startActivity(intent)
+                                            }
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -160,6 +202,47 @@ fun SearchScreen(
     }
 }
 
+private fun GiftCategoryResultCard(
+    category: GiftCategory,
+    onClick: () -> Unit
+) {
+    GlassCard(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Surface(
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                color = MaterialTheme.colorScheme.secondaryContainer
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text(category.emoji, style = MaterialTheme.typography.titleLarge)
+                }
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+            Column {
+                Text(
+                    text = category.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    text = category.description,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun SearchResultCard(
     person: Person,
     onClick: () -> Unit
@@ -192,7 +275,9 @@ private fun SearchResultCard(
                     Text(
                         text = person.interests.take(3).joinToString(", "),
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
