@@ -17,14 +17,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gift.finder.R
+import com.gift.finder.domain.manager.HapticEngine
 import com.gift.finder.domain.model.Person
 import com.gift.finder.domain.model.SpecialDate
+import com.gift.finder.domain.model.SpecialDateType
 import com.gift.finder.ui.theme.*
+import com.gift.finder.ui.viewmodels.HapticViewModel
 import com.gift.finder.ui.viewmodels.PersonUiState
 import com.gift.finder.ui.viewmodels.PersonViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
@@ -41,18 +48,20 @@ fun PersonDetailScreen(
     viewModel: PersonViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToSuggestions: () -> Unit,
-    onNavigateToRoulette: () -> Unit,
-    onNavigateToWishlist: () -> Unit
+    onNavigateToRoulette: (Long) -> Unit,
+    onNavigateToWishlist: (Long) -> Unit,
+    hapticEngine: HapticEngine = hiltViewModel<HapticViewModel>().hapticEngine
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val dominantArchetype by viewModel.dominantArchetype.collectAsState()
+    val personaSummary by viewModel.personaSummary.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { 
+                title = {
                     when (val state = uiState) {
                         is PersonUiState.Loaded -> Text(state.person.name, fontWeight = FontWeight.ExtraBold)
                         else -> Text("")
@@ -75,7 +84,7 @@ fun PersonDetailScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
             AnimatedMeshBackground()
-            
+
             when (val state = uiState) {
                 is PersonUiState.Loading -> {
                     Box(
@@ -91,13 +100,22 @@ fun PersonDetailScreen(
                         modifier = Modifier.fillMaxSize().padding(padding),
                         person = state.person,
                         dominantArchetype = dominantArchetype,
+                        personaSummary = personaSummary,
+                        onAddSpecialDate = { title, type, month, day ->
+                            scope.launch {
+                                viewModel.addSpecialDate(title, type, month, day)
+                                hapticEngine.success()
+                            }
+                        },
+                        onDeleteSpecialDate = { date ->
+                            scope.launch {
+                                viewModel.deleteSpecialDate(date)
+                                hapticEngine.tap()
+                            }
+                        },
                         onNavigateToSuggestions = onNavigateToSuggestions,
-                        onNavigateToRoulette = onNavigateToRoulette,
-                        onNavigateToWishlist = onNavigateToWishlist,
-                        onNavigateToWishlist = onNavigateToWishlist,
-                        onDeleteSpecialDate = { specialDate ->
-                            scope.launch { viewModel.deleteSpecialDate(specialDate) }
-                        }
+                        onNavigateToRoulette = { onNavigateToRoulette(personId) },
+                        onNavigateToWishlist = { onNavigateToWishlist(personId) }
                     )
                 }
 
@@ -142,10 +160,12 @@ private fun PersonDetailContent(
     modifier: Modifier = Modifier,
     person: Person,
     dominantArchetype: com.gift.finder.domain.model.Archetype?,
+    personaSummary: String?,
+    onAddSpecialDate: (String, SpecialDateType, Int, Int) -> Unit,
+    onDeleteSpecialDate: (SpecialDate) -> Unit,
     onNavigateToSuggestions: () -> Unit,
     onNavigateToRoulette: () -> Unit,
-    onNavigateToWishlist: () -> Unit,
-    onDeleteSpecialDate: (SpecialDate) -> Unit
+    onNavigateToWishlist: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -169,7 +189,12 @@ private fun PersonDetailContent(
                         Text(person.avatarEmoji, style = MaterialTheme.typography.displayMedium)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text(person.name, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                    Text(
+                        person.name,
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                     val relationshipStringId = remember(person.relationshipType) {
                         val field = R.string::class.java.getField(person.relationshipType.displayKey)
                         field.getInt(null)
@@ -179,7 +204,18 @@ private fun PersonDetailContent(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    
+
+                    if (personaSummary != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            personaSummary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontStyle = FontStyle.Italic,
+                            modifier = Modifier.graphicsLayer { alpha = 0.8f }
+                        )
+                    }
+
                     if (dominantArchetype != null) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Surface(

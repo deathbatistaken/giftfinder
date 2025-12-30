@@ -61,7 +61,8 @@ fun GiftSuggestionsScreen(
     viewModel: GiftSuggestionsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToRoulette: () -> Unit,
-    onNavigateToPaywall: () -> Unit
+    onNavigateToPaywall: () -> Unit,
+    hapticEngine: com.gift.finder.domain.manager.HapticEngine = hiltViewModel<com.gift.finder.ui.viewmodels.HapticViewModel>().hapticEngine
 ) {
     val haptic = LocalHapticFeedback.current
     val uiState by viewModel.uiState.collectAsState()
@@ -139,11 +140,11 @@ fun GiftSuggestionsScreen(
                             selectedStyle = selectedStyle,
                             selectedBudget = selectedBudget,
                             onStyleSelected = {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                scope.launch { hapticEngine.tap() }
                                 viewModel.setStyle(it)
                             },
                             onBudgetSelected = {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                scope.launch { hapticEngine.tap() }
                                 viewModel.setBudget(it)
                             }
                         )
@@ -162,10 +163,12 @@ fun GiftSuggestionsScreen(
                                         suggestion = topSuggestion,
                                         onSwipedLeft = { reason ->
                                             viewModel.rejectSuggestion(topSuggestion.category.id, reason)
+                                            scope.launch { hapticEngine.tap() }
                                         },
                                         onSwipedRight = {
                                             viewModel.saveToWishlist(topSuggestion.category.id)
                                             scope.launch {
+                                                hapticEngine.matchOccurred()
                                                 snackbarHostState.showSnackbar(
                                                     message = "${topSuggestion.category.title} saved to Wishlist ✨",
                                                     duration = SnackbarDuration.Short

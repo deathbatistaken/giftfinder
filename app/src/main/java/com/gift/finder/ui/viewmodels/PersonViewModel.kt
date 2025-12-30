@@ -7,6 +7,9 @@ import com.gift.finder.data.manager.LocalNotificationManager
 import com.gift.finder.data.manager.PreferencesManager
 import com.gift.finder.data.repository.GiftRepository
 import com.gift.finder.data.repository.PersonRepository
+import com.gift.finder.data.repository.SavedGiftRepository
+import com.gift.finder.domain.manager.ArchetypeManager
+import com.gift.finder.domain.manager.PersonaEngine
 import com.gift.finder.domain.model.Archetype
 import com.gift.finder.domain.model.GiftHistoryItem
 import com.gift.finder.domain.model.Person
@@ -32,10 +35,12 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(
     private val personRepository: PersonRepository,
-    private val giftRepository: GiftRepository,
+    private val savedGiftRepository: SavedGiftRepository,
     private val notificationManager: LocalNotificationManager,
     private val preferencesManager: PreferencesManager,
-    private val archetypeManager: com.gift.finder.domain.manager.ArchetypeManager,
+    private val archetypeManager: ArchetypeManager,
+    private val personaEngine: PersonaEngine,
+    private val giftRepository: GiftRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -66,6 +71,18 @@ class PersonViewModel @Inject constructor(
                 it.collect { state ->
                     if (state is PersonUiState.Loaded) {
                         value = archetypeManager.findDominantArchetype(state.person)
+                    }
+                }
+            }
+        }
+    }
+
+    val personaSummary = _uiState.asStateFlow().let {
+        MutableStateFlow<String?>(null).apply {
+            viewModelScope.launch {
+                it.collect { state ->
+                    if (state is PersonUiState.Loaded) {
+                        value = personaEngine.generatePersonaSummary(state.person)
                     }
                 }
             }
