@@ -209,4 +209,42 @@
     <string name="more_ideas">more ideas remaining</string>
     <string name="interested">Interested</string>
     <string name="not_interested_swipe">Not Interested</string>
+
+    <!-- Persona Engine -->
+    <string name="persona_mysterious_soul">The Mysterious Soul</string>
+    <string name="persona_keyword_tech">Visionary</string>
+    <string name="persona_keyword_creative">Inspired</string>
+    <string name="persona_keyword_outdoor">Fearless</string>
+    <string name="persona_keyword_intellectual">Erudite</string>
+    <string name="persona_keyword_lifestyle">Sophisticated</string>
+    <string name="persona_keyword_eclectic">Eclectic</string>
+    <string name="persona_keyword_dynamic">Dynamic</string>
+    <string name="persona_keyword_captivating">Captivating</string>
+    <string name="persona_template_archetype">The %1$s %2$s</string>
+    <string name="persona_template_enthusiast">The %1$s Enthusiast</string>
+
+    <!-- Export Manager -->
+    <string name="share_empty_wishlist">My wishlist for %1$s is empty... for now! 🎁</string>
+    <string name="share_header">✨ GIFT PORTAL: %1$s ✨\nCurated ideas found via GiftFinder 🌠\n━━━━━━━━━━━━━━━━━━━━\n\n</string>
+    <string name="share_store_link">🛒 Get it here: %1$s\n\n</string>
+    <string name="share_footer">━━━━━━━━━━━━━━━━━━━━\nGenerated with ✨ GiftFinder ✨\nFind the perfect gift for everyone.</string>
+
+    <!-- Widgets -->
+    <string name="widget_upcoming_title">✨ UPCOMING</string>
+    <string name="widget_no_events">No Upcoming Events</string>
+    <string name="widget_no_events_desc">No upcoming events found.</string>
+    <string name="widget_tap_to_add">Tap to add dates</string>
+    <string name="widget_today">TODAY!</string>
+    <string name="widget_days_left">%1$d days left</string>
+    <string name="widget_actions_title">⚡ ACTIONS</string>
+    <string name="widget_action_add">Add</string>
+    <string name="widget_action_play">Play</string>
+
+    <!-- Quick Tags -->
+    <string name="tag_tech">Tech</string>
+    <string name="tag_art">Art</string>
+    <string name="tag_outdoor">Outdoor</string>
+    <string name="tag_books">Books</string>
+    <string name="tag_gaming">Gaming</string>
+    <string name="tag_wellness">Wellness</string>
 </resources>

@@ -51,16 +51,16 @@ class UpcomingEventWidgetReceiver : GlanceAppWidgetReceiver() {
                 val manager = GlanceAppWidgetManager(context)
                 val glanceIds = manager.getGlanceIds(UpcomingEventWidget::class.java)
 
-                glanceIds.forEach { glanceId ->
+                    glanceIds.forEach { glanceId ->
                     updateAppWidgetState(context, glanceId) { prefs ->
                         if (nextEvent != null) {
                             prefs[stringPreferencesKey("eventName")] = nextEvent.type.name
                             prefs[stringPreferencesKey("personName")] = nextEvent.personName
                             val days = nextEvent.getDaysUntil()
-                            prefs[stringPreferencesKey("daysInfo")] = if (days == 0) "TODAY!" else "$days days left"
+                            prefs[stringPreferencesKey("daysInfo")] = if (days == 0) context.getString(com.gift.finder.R.string.widget_today) else context.getString(com.gift.finder.R.string.widget_days_left, days)
                             prefs[stringPreferencesKey("emoji")] = nextEvent.personEmoji
                         } else {
-                            prefs[stringPreferencesKey("eventName")] = "No upcoming events"
+                            prefs[stringPreferencesKey("eventName")] = context.getString(com.gift.finder.R.string.widget_no_events)
                             prefs[stringPreferencesKey("personName")] = ""
                             prefs[stringPreferencesKey("daysInfo")] = ""
                             prefs[stringPreferencesKey("emoji")] = "📅"

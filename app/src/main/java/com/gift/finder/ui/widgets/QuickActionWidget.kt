@@ -35,6 +35,7 @@ class QuickActionWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             GlanceTheme {
+                val context = androidx.glance.LocalContext.current
                 Box(
                     modifier = GlanceModifier
                         .fillMaxSize()
@@ -45,7 +46,7 @@ class QuickActionWidget : GlanceAppWidget() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "⚡ ACTIONS",
+                            text = context.getString(com.gift.finder.R.string.widget_actions_title),
                             style = TextStyle(
                                 color = ColorProvider(NeonPurple),
                                 fontSize = 11.sp,
@@ -68,7 +69,7 @@ class QuickActionWidget : GlanceAppWidget() {
                                     Text("➕", style = TextStyle(fontSize = 16.sp))
                                     Spacer(modifier = GlanceModifier.width(8.dp))
                                     Text(
-                                        "Add",
+                                        context.getString(com.gift.finder.R.string.widget_action_add),
                                         style = TextStyle(
                                             color = ColorProvider(androidx.compose.ui.graphics.Color.White),
                                             fontSize = 14.sp
@@ -91,7 +92,7 @@ class QuickActionWidget : GlanceAppWidget() {
                                     Text("🎲", style = TextStyle(fontSize = 16.sp))
                                     Spacer(modifier = GlanceModifier.width(8.dp))
                                     Text(
-                                        "Play",
+                                        context.getString(com.gift.finder.R.string.widget_action_play),
                                         style = TextStyle(
                                             color = ColorProvider(androidx.compose.ui.graphics.Color.White),
                                             fontSize = 14.sp

@@ -71,16 +71,8 @@ class WishlistViewModel @Inject constructor(
             savedGiftRepository.removeGift(personId, categoryId)
         }
     }
-
-    fun getShareText(): String {
-        val state = _uiState.value
-        return if (state is WishlistUiState.Success) {
-            ExportManager.formatWishlist(state.person.name, state.savedGifts)
-        } else {
-            ""
-        }
-    }
 }
+
 
 sealed class WishlistUiState {
     data object Loading : WishlistUiState()

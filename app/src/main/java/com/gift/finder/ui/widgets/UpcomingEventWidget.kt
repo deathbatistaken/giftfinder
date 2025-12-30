@@ -45,7 +45,8 @@ class UpcomingEventWidget : GlanceAppWidget() {
 
     @Composable
     private fun WidgetContent() {
-        val eventName = currentState(stringPreferencesKey("eventName")) ?: "No Upcoming Events"
+        val context = androidx.glance.LocalContext.current
+        val eventName = currentState(stringPreferencesKey("eventName")) ?: context.getString(com.gift.finder.R.string.widget_no_events)
         val personName = currentState(stringPreferencesKey("personName")) ?: ""
         val daysInfo = currentState(stringPreferencesKey("daysInfo")) ?: ""
         val emoji = currentState(stringPreferencesKey("emoji")) ?: "📅"
@@ -67,7 +68,7 @@ class UpcomingEventWidget : GlanceAppWidget() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "✨ UPCOMING",
+                        text = context.getString(com.gift.finder.R.string.widget_upcoming_title),
                         style = TextStyle(
                             color = ColorProvider(NeonPurple),
                             fontSize = 11.sp,
@@ -123,7 +124,7 @@ class UpcomingEventWidget : GlanceAppWidget() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "No upcoming events found.",
+                            text = context.getString(com.gift.finder.R.string.widget_no_events_desc),
                             style = TextStyle(
                                 color = ColorProvider(androidx.compose.ui.graphics.Color.Gray),
                                 fontSize = 14.sp
@@ -131,7 +132,7 @@ class UpcomingEventWidget : GlanceAppWidget() {
                         )
                         Spacer(modifier = GlanceModifier.height(4.dp))
                         Text(
-                            text = "Tap to add dates",
+                            text = context.getString(com.gift.finder.R.string.widget_tap_to_add),
                             style = TextStyle(
                                 color = ColorProvider(androidx.compose.ui.graphics.Color.LightGray),
                                 fontSize = 12.sp

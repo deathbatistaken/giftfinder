@@ -58,7 +58,14 @@ fun SearchScreen(
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
 
-    val quickTags = listOf("Tech", "Art", "Outdoor", "Books", "Gaming", "Wellness")
+    val quickTags = listOf(
+        stringResource(R.string.tag_tech),
+        stringResource(R.string.tag_art),
+        stringResource(R.string.tag_outdoor),
+        stringResource(R.string.tag_books),
+        stringResource(R.string.tag_gaming),
+        stringResource(R.string.tag_wellness)
+    )
 
     Scaffold(
         topBar = {

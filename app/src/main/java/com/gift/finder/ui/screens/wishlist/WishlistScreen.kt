@@ -34,6 +34,7 @@ import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.theme.GiftGreen
 import com.gift.finder.ui.viewmodels.WishlistUiState
 import com.gift.finder.ui.viewmodels.WishlistViewModel
+import com.gift.finder.utils.ExportManager
 
 /**
  * Wishlist screen to manage saved gifts for a person.
@@ -67,14 +68,15 @@ fun WishlistScreen(
                     }
                 },
                 actions = {
-                    val shareText = viewModel.getShareText()
-                    if (shareText.isNotBlank()) {
+                    val currentState = uiState
+                    if (currentState is WishlistUiState.Success) {
                         IconButton(onClick = {
+                            val shareText = ExportManager.formatWishlist(context, currentState.person.name, currentState.savedGifts)
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)
                             }
-                            context.startActivity(Intent.createChooser(intent, "Share Wishlist"))
+                            context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_header, currentState.person.name)))
                         }) {
                             Icon(Icons.Default.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.primary)
                         }

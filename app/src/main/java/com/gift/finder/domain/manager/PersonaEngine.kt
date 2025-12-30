@@ -10,6 +10,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class PersonaEngine @Inject constructor(
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
     private val archetypeManager: ArchetypeManager
 ) {
 
@@ -21,14 +22,14 @@ class PersonaEngine @Inject constructor(
         val interests = person.interests
         
         return when {
-            interests.isEmpty() -> "The Mysterious Soul"
+            interests.isEmpty() -> context.getString(com.gift.finder.R.string.persona_mysterious_soul)
             archetype != null -> {
                 val adjective = getAdjective(interests)
-                "The $adjective ${archetype.title}"
+                context.getString(com.gift.finder.R.string.persona_template_archetype, adjective, archetype.title)
             }
             else -> {
                 val adjective = getAdjective(interests)
-                "The $adjective Enthusiast"
+                context.getString(com.gift.finder.R.string.persona_template_enthusiast, adjective)
             }
         }
     }
@@ -40,15 +41,17 @@ class PersonaEngine @Inject constructor(
         val intellectualKeywords = listOf("reading", "science", "history", "learning", "books", "philosophy", "physics")
         val lifestyleKeywords = listOf("cooking", "fashion", "decor", "wellness", "coffee", "wine", "dining")
 
-        return when {
-            interests.any { i -> techKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Visionary"
-            interests.any { i -> creativeKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Inspired"
-            interests.any { i -> outdoorKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Fearless"
-            interests.any { i -> intellectualKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Erudite"
-            interests.any { i -> lifestyleKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> "Sophisticated"
-            interests.size > 5 -> "Eclectic"
-            interests.size > 3 -> "Dynamic"
-            else -> "Captivating"
+        val resId = when {
+            interests.any { i -> techKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> com.gift.finder.R.string.persona_keyword_tech
+            interests.any { i -> creativeKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> com.gift.finder.R.string.persona_keyword_creative
+            interests.any { i -> outdoorKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> com.gift.finder.R.string.persona_keyword_outdoor
+            interests.any { i -> intellectualKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> com.gift.finder.R.string.persona_keyword_intellectual
+            interests.any { i -> lifestyleKeywords.any { k -> i.contains(k, ignoreCase = true) } } -> com.gift.finder.R.string.persona_keyword_lifestyle
+            interests.size > 5 -> com.gift.finder.R.string.persona_keyword_eclectic
+            interests.size > 3 -> com.gift.finder.R.string.persona_keyword_dynamic
+            else -> com.gift.finder.R.string.persona_keyword_captivating
         }
+        
+        return context.getString(resId)
     }
 }

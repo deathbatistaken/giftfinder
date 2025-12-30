@@ -16,73 +16,73 @@
     <string name="get_started">Başla</string>
     
     <!-- Onboarding -->
-    <string name="onboarding_title_1">Hep Aynı Hediyeleri Almaktan Sıkıldın mı?</string>
-    <string name="onboarding_desc_1">Hediye stresine elveda de. Her seferinde mükemmel hediyeyi bul.</string>
-    <string name="onboarding_title_2">Detayları Kaydet</string>
-    <string name="onboarding_desc_2">Sevdiklerinin nelerden hoşlandığını not al, asla unutma.</string>
-    <string name="onboarding_title_3">Özel Günleri Asla Kaçırma</string>
-    <string name="onboarding_desc_3">Doğum günleri, yıl dönümleri ve daha fazlası için zamanında hatırlatma al.</string>
-    <string name="onboarding_title_4">Mükemmel Hediye Fikirlerini Bul</string>
+    <string name="onboarding_title_1">Aynı Hediyeleri Vermekten Sıkıldın mı?</string>
+    <string name="onboarding_desc_1">Hediye seçme stresine veda et. Her zaman mükemmel hediyeyi bul.</string>
+    <string name="onboarding_title_2">Detayları Unutma</string>
+    <string name="onboarding_desc_2">Sevdiklerinin neleri sevdiğini not et, asla unutma.</string>
+    <string name="onboarding_title_3">Özel Günleri Kaçıma</string>
+    <string name="onboarding_desc_3">Doğum günleri, yıldönümleri ve daha fazlası için zamanında hatırlatıcılar al.</string>
+    <string name="onboarding_title_4">Mükemmel Hediye Fikirleri Bul</string>
     <string name="onboarding_desc_4">İlgi alanlarına göre saniyeler içinde kişiselleştirilmiş öneriler al.</string>
     
     <!-- Paywall -->
-    <string name="paywall_title">GiftFinder Pro\'yu Aç</string>
-    <string name="paywall_subtitle">Her seferinde mükemmel hediyeyi bul</string>
-    <string name="feature_unlimited_persons">Sınırsız kişi takibi</string>
+    <string name="paywall_title">GiftFinder Pro'nun Kilidini Aç</string>
+    <string name="paywall_subtitle">Her zaman mükemmel hediyeyi bul</string>
+    <string name="feature_unlimited_persons">Sınırsız kişi takip et</string>
     <string name="feature_unlimited_dates">Sınırsız özel gün</string>
-    <string name="feature_all_suggestions">Tüm hediye önerileri</string>
-    <string name="feature_advanced_reminders">Gelişmiş hatırlatıcılar</string>
+    <string name="feature_all_suggestions">Tüm hediye önerileri açık</string>
+    <string name="feature_advanced_reminders">Gelişmiş hatırlatıcı seçenekleri</string>
     <string name="feature_no_ads">Reklamsız deneyim</string>
-    <string name="best_value">En İyi Fırsat</string>
+    <string name="best_value">En İyi Değer</string>
     <string name="restore_purchases">Satın Alımları Geri Yükle</string>
-    <string name="subscription_terms">Abonelikler otomatik yenilenir. İstediğiniz zaman iptal edebilirsiniz.</string>
+    <string name="subscription_terms">Abonelikler otomatik yenilenir. İstediğin zaman iptal et.</string>
     <string name="yearly_plan">Yıllık Plan</string>
     <string name="weekly_plan">Haftalık Plan</string>
     
     <!-- Home -->
     <string name="upcoming_events">Yaklaşan Etkinlikler</string>
-    <string name="your_people">Kişileriniz</string>
+    <string name="your_people">Kişilerin</string>
     <string name="add_person">Kişi Ekle</string>
     <string name="empty_home_title">Hediye Yolculuğuna Başla</string>
     <string name="empty_home_subtitle">Mükemmel hediyeyi bulmak istediğin birini ekle</string>
     <string name="add_first_person">İlk Kişiyi Ekle</string>
     <string name="today">Bugün</string>
     <string name="tomorrow">Yarın</string>
-    <string name="in_days">%1$d gün sonra</string>
+    <string name="in_days">%1$d gün içinde</string>
     
     <!-- Person -->
     <string name="name">İsim</string>
-    <string name="relationship">İlişki</string>
+    <string name="relationship">Yakınlık</string>
     <string name="choose_emoji">Bir emoji seç</string>
     <string name="quick_profiles">Hızlı Profiller</string>
     <string name="interests">İlgi Alanları</string>
     <string name="add_interest">İlgi alanı ekle</string>
-    <string name="dislikes">Sevmediği Şeyler</string>
-    <string name="add_dislike">Sevmediği şey ekle</string>
+    <string name="dislikes">Beğenmedikleri</string>
+    <string name="add_dislike">Ekle</string>
     <string name="notes">Notlar</string>
     <string name="special_dates">Özel Günler</string>
     <string name="gift_history">Hediye Geçmişi</string>
     <string name="find_gift">Hediye Bul</string>
     <string name="roulette">Rulet</string>
     <string name="person_not_found">Kişi bulunamadı</string>
-    <string name="delete_person_title">Kişi Silinsin mi?</string>
-    <string name="delete_person_message">Bu kişiye ait tüm özel günler ve hediye geçmişi silinecektir.</string>
+    <string name="delete_person_title">Kişiyi Sil?</string>
+    <string name="delete_person_message">Bu kişiye ait tüm veriler (özel günler ve hediye geçmişi) silinecek.</string>
     
     <!-- Suggestions -->
     <string name="gift_ideas">Hediye Fikirleri</string>
-    <string name="style">Stil</string>
+    <string name="style">Tarz</string>
     <string name="budget">Bütçe</string>
     <string name="not_interested">İlgilenmiyorum</string>
-    <string name="unlock_pro">Pro\'yu Aç</string>
-    <string name="why_not">Neden bu hediye değil?</string>
+    <string name="unlock_pro">Pro Kilidini Aç</string>
+    <string name="why_not">Neden bu hediye olmasın?</string>
     
     <!-- Roulette -->
     <string name="gift_roulette">Hediye Ruleti</string>
     <string name="spinning">Dönüyor...</string>
-    <string name="tap_to_spin">Döndürmek için Dokun!</string>
-    <string name="roulette_description">Karar veremiyor musun? Kaderin senin için mükemmel hediyeyi seçmesine izin ver!</string>
-    <string name="spin">Çarkı Döndür</string>
-    <string name="spin_again">Tekrar Döndür</string>
+    <string name="tap_to_spin">Çevirmek için Dokun!</string>
+    <string name="roulette_description">Karar veremedin mi? Bırak kader senin için mükemmel hediyeyi seçsin!</string>
+    <string name="spin">Çarkı Çevir</string>
+    <string name="spin_again">Tekrar Çevir</string>
     <string name="shop_now">Şimdi Al</string>
     
     <!-- Settings -->
@@ -90,14 +90,14 @@
     <string name="theme">Tema</string>
     <string name="haptic_feedback">Dokunsal Geri Bildirim</string>
     <string name="notifications">Bildirimler</string>
-    <string name="reminder_notifications">Hatırlatma Bildirimleri</string>
+    <string name="reminder_notifications">Hatırlatıcı Bildirimleri</string>
     <string name="get_notified_events">Özel günlerden önce bildirim al</string>
     <string name="account">Hesap</string>
     <string name="delete_all_data">Tüm Verileri Sil</string>
-    <string name="delete_data_warning">Bu işlem tüm kişilerinizi, özel günlerinizi ve tercihlerinizi kalıcı olarak silecektir. Bu işlem geri alınamaz.</string>
+    <string name="delete_data_warning">Tüm kişilerini, özel günlerini ve tercihlerini kalıcı olarak silecek. Bu işlem geri alınamaz.</string>
     <string name="version">Sürüm</string>
-    <string name="upgrade_to_pro">Pro\'ya Yükselt</string>
-    <string name="unlock_all_features">Sınırsız kişi ve önerilerin kilidini aç</string>
+    <string name="upgrade_to_pro">Pro'ya Yükselt</string>
+    <string name="unlock_all_features">Sınırsız kişi ve öneri kilidini aç</string>
     <string name="subscription_active">Abonelik Aktif</string>
     <string name="pro_member">Pro Üye</string>
     
@@ -109,6 +109,142 @@
     <string name="notification_title_today">Bugün Özel Bir Gün!</string>
     <string name="notification_title_tomorrow">Yarın Özel Bir Gün!</string>
     <string name="notification_title_days">Özel Güne %1$d Gün Kaldı</string>
-    <string name="notification_message_today">%1$s için %2$s bugün! Kutlama zamanı!</string>
-    <string name="notification_message_upcoming">Unutma: %1$s için %2$s yaklaşıyor!</string>
+    <string name="notification_message_today">%1$s kişisinin %2$s günü bugün! Kutlama zamanı!</string>
+    <string name="notification_message_upcoming">Unutma: %1$s kişisinin %2$s günü yaklaşıyor!</string>
+    
+    <!-- Relationships -->
+    <string name="relationship_partner">Partner</string>
+    <string name="relationship_spouse">Eş</string>
+    <string name="relationship_family">Aile</string>
+    <string name="relationship_friend">Arkadaş</string>
+    <string name="relationship_colleague">İş Arkadaşı</string>
+    <string name="relationship_boss">Patron</string>
+    <string name="relationship_child">Çocuk</string>
+    <string name="relationship_parent">Ebeveyn</string>
+    <string name="relationship_sibling">Kardeş</string>
+    <string name="relationship_other">Diğer</string>
+    
+    <!-- Budget Tracker -->
+    <string name="budget_tracker">Bütçe Takibi</string>
+    <string name="this_month">Bu Ay</string>
+    <string name="this_year">Bu Yıl</string>
+    <string name="all_time">Tüm Zamanlar</string>
+    <string name="total_spent">Toplam Harcama</string>
+    <string name="gifts_given">Verilen Hediyeler</string>
+    <string name="avg_per_person">Kişi Başı Ort.</string>
+    <string name="top_spending">En Çok Harcanan</string>
+    <string name="recent_gifts">Son Hediyeler</string>
+    <string name="gifts">hediye</string>
+    <string name="no_spending_data">Henüz harcama verisi yok</string>
+    <string name="mark_gifts_purchased">Bütçeni takip etmek için hediyeleri satın alındı olarak işaretle</string>
+    <string name="track_your_spending">Hediye harcamalarını takip et</string>
+    
+    <!-- Special Date Dialog -->
+    <string name="add_special_date">Özel Gün Ekle</string>
+    <string name="event_title">Etkinlik Başlığı</string>
+    <string name="event_type">Etkinlik Türü</string>
+    <string name="date">Tarih</string>
+    <string name="birthday">Doğum Günü</string>
+    <string name="anniversary">Yıldönümü</string>
+    <string name="holiday">Bayram/Tatil</string>
+    <string name="other">Diğer</string>
+    
+    <!-- Mark as Purchased Dialog -->
+    <string name="mark_as_purchased">Satın Alındı İşaretle</string>
+    <string name="price_optional">Fiyat (isteğe bağlı)</string>
+    <string name="occasion_optional">Sebep (isteğe bağlı)</string>
+    <string name="occasion_placeholder">örn: Doğum Günü, Yılbaşı</string>
+    
+    <!-- Edit Person -->
+    <string name="edit_person">Kişiyi Düzenle</string>
+    
+    <!-- Calendar -->
+    <string name="calendar">Takvim</string>
+    <string name="no_upcoming_dates">Yaklaşan etkinlik yok</string>
+    <string name="add_special_dates_hint">Önemli etkinlikleri takip etmek için özel günler ekle</string>
+    
+    <!-- Special Dates Screen -->
+    <string name="no_special_dates">Henüz özel gün yok</string>
+    <string name="delete_date_title">Tarihi Sil?</string>
+    <string name="delete_date_message">%1$s silinsin mi? Bu işlem geri alınamaz.</string>
+    
+    <!-- Search -->
+    <string name="search_placeholder">Kişi veya ilgi alanı ara...</string>
+    <string name="search_hint">Aramak için bir isim veya ilgi alanı yaz</string>
+    <string name="no_results">Sonuç bulunamadı</string>
+    <!-- Budget -->
+    <string name="budget_low_tier">Bütçe (&lt;$25)</string>
+    <string name="budget_low">Düşük ($25-$50)</string>
+    <string name="budget_medium">Orta ($50-$100)</string>
+    <string name="budget_high">Yüksek ($100-$250)</string>
+    <string name="budget_luxury">Lüks ($250+)</string>
+
+    <!-- Styles -->
+    <string name="style_practical">Pratik</string>
+    <string name="style_romantic">Romantik</string>
+    <string name="style_fun">Eğlenceli</string>
+    <string name="style_creative">Yaratıcı</string>
+    <string name="style_luxurious">Lüks</string>
+    <string name="style_sentimental">Duygusal</string>
+    <string name="style_experiential">Deneyimsel</string>
+    <string name="style_tech">Teknolojik</string>
+
+    <!-- Events -->
+    <string name="event_wedding">Düğün</string>
+    <string name="event_valentine">Sevgililer Günü</string>
+    <string name="event_mothers_day">Anneler Günü</string>
+    <string name="event_fathers_day">Babalar Günü</string>
+    <string name="event_christmas">Noel</string>
+    <string name="event_new_year">Yılbaşı</string>
+    <string name="event_graduation">Mezuniyet</string>
+
+    <!-- Rejection Reasons -->
+    <string name="rejection_expensive">Çok Pahalı</string>
+    <string name="rejection_not_style">Tarzı Değil</string>
+    <string name="rejection_already_have">Zaten Var</string>
+    <string name="rejection_not_interested">İlgilenmiyor</string>
+    <string name="rejection_other">Diğer Sebep</string>
+    <string name="discovery_mode">Keşif Modu</string>
+    <string name="grid_view">Liste Görünümü</string>
+    <string name="more_ideas">fikir daha var</string>
+    <string name="interested">İlgileniyorum</string>
+    <string name="not_interested_swipe">İlgilenmiyorum</string>
+
+    <!-- Persona Engine -->
+    <string name="persona_mysterious_soul">Gizemli Ruh</string>
+    <string name="persona_keyword_tech">Vizyoner</string>
+    <string name="persona_keyword_creative">İlham Dolu</string>
+    <string name="persona_keyword_outdoor">Korkusuz</string>
+    <string name="persona_keyword_intellectual">Bilge</string>
+    <string name="persona_keyword_lifestyle">Sofistike</string>
+    <string name="persona_keyword_eclectic">Eklektik</string>
+    <string name="persona_keyword_dynamic">Dinamik</string>
+    <string name="persona_keyword_captivating">Büyüleyici</string>
+    <string name="persona_template_archetype">%1$s %2$s</string>
+    <string name="persona_template_enthusiast">%1$s Tutkunu</string>
+
+    <!-- Export Manager -->
+    <string name="share_empty_wishlist">%1$s için dilek listem şimdilik boş... ama yakında dolacak! 🎁</string>
+    <string name="share_header">✨ HEDİYE PORTALI: %1$s ✨\nGiftFinder ile bulunan özel fikirler 🌠\n━━━━━━━━━━━━━━━━━━━━\n\n</string>
+    <string name="share_store_link">🛒 Hemen al: %1$s\n\n</string>
+    <string name="share_footer">━━━━━━━━━━━━━━━━━━━━\n✨ GiftFinder ✨ ile oluşturuldu\nHerkes için mükemmel hediyeyi bul.</string>
+
+    <!-- Widgets -->
+    <string name="widget_upcoming_title">✨ YAKLAŞAN</string>
+    <string name="widget_no_events">Yaklaşan Etkinlik Yok</string>
+    <string name="widget_no_events_desc">Yaklaşan etkinlik bulunamadı.</string>
+    <string name="widget_tap_to_add">Eklemek için dokun</string>
+    <string name="widget_today">BUGÜN!</string>
+    <string name="widget_days_left">%1$d gün kaldı</string>
+    <string name="widget_actions_title">⚡ KISAYOLLAR</string>
+    <string name="widget_action_add">Ekle</string>
+    <string name="widget_action_play">Oyna</string>
+
+    <!-- Quick Tags -->
+    <string name="tag_tech">Teknoloji</string>
+    <string name="tag_art">Sanat</string>
+    <string name="tag_outdoor">Outdoor</string>
+    <string name="tag_books">Kitap</string>
+    <string name="tag_gaming">Oyun</string>
+    <string name="tag_wellness">Sağlık</string>
 </resources>
