@@ -29,4 +29,8 @@ sealed class Screen(val route: String) {
     }
     data object Calendar : Screen("calendar")
     data object Search : Screen("search")
+    data object Wishlist : Screen("wishlist/{personId}") {
+        fun createRoute(personId: Long) = "wishlist/$personId"
+        const val ARG_PERSON_ID = "personId"
+    }
 }

@@ -3,13 +3,12 @@ package com.gift.finder.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.gift.finder.data.local.dao.GiftHistoryDao
-import com.gift.finder.data.local.dao.PersonDao
-import com.gift.finder.data.local.dao.RejectedGiftDao
+import com.gift.finder.data.local.dao.SavedGiftDao
 import com.gift.finder.data.local.dao.SpecialDateDao
 import com.gift.finder.data.local.entities.GiftHistoryEntity
 import com.gift.finder.data.local.entities.PersonEntity
 import com.gift.finder.data.local.entities.RejectedGiftEntity
+import com.gift.finder.data.local.entities.SavedGiftEntity
 import com.gift.finder.data.local.entities.SpecialDateEntity
 
 /**
@@ -20,7 +19,8 @@ import com.gift.finder.data.local.entities.SpecialDateEntity
         PersonEntity::class,
         SpecialDateEntity::class,
         GiftHistoryEntity::class,
-        RejectedGiftEntity::class
+        RejectedGiftEntity::class,
+        SavedGiftEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -32,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun specialDateDao(): SpecialDateDao
     abstract fun giftHistoryDao(): GiftHistoryDao
     abstract fun rejectedGiftDao(): RejectedGiftDao
+    abstract fun savedGiftDao(): SavedGiftDao
     
     companion object {
         const val DATABASE_NAME = "gift_finder_database"

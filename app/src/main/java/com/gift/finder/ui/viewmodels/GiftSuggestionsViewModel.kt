@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gift.finder.data.manager.PreferencesManager
 import com.gift.finder.data.repository.GiftRepository
 import com.gift.finder.data.repository.PersonRepository
+import com.gift.finder.data.repository.SavedGiftRepository
 import com.gift.finder.domain.model.BudgetRange
 import com.gift.finder.domain.model.GiftStyle
 import com.gift.finder.domain.model.GiftSuggestion
@@ -30,6 +31,7 @@ import javax.inject.Inject
 class GiftSuggestionsViewModel @Inject constructor(
     private val giftRepository: GiftRepository,
     private val personRepository: PersonRepository,
+    private val savedGiftRepository: SavedGiftRepository,
     private val preferencesManager: PreferencesManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -111,6 +113,13 @@ class GiftSuggestionsViewModel @Inject constructor(
         viewModelScope.launch {
             giftRepository.rejectSuggestion(personId, categoryId, reason)
             loadSuggestions() // Reload to remove rejected
+        }
+    }
+
+    fun saveToWishlist(categoryId: String) {
+        viewModelScope.launch {
+            savedGiftRepository.saveGift(personId, categoryId)
+            // Optional: Show success snackbar or haptic in UI
         }
     }
 

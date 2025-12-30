@@ -41,7 +41,8 @@ fun PersonDetailScreen(
     viewModel: PersonViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
     onNavigateToSuggestions: () -> Unit,
-    onNavigateToRoulette: () -> Unit
+    onNavigateToRoulette: () -> Unit,
+    onNavigateToWishlist: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -90,6 +91,7 @@ fun PersonDetailScreen(
                         person = state.person,
                         onNavigateToSuggestions = onNavigateToSuggestions,
                         onNavigateToRoulette = onNavigateToRoulette,
+                        onNavigateToWishlist = onNavigateToWishlist,
                         onDeleteSpecialDate = { specialDate ->
                             scope.launch { viewModel.deleteSpecialDate(specialDate) }
                         }
@@ -138,6 +140,7 @@ private fun PersonDetailContent(
     person: Person,
     onNavigateToSuggestions: () -> Unit,
     onNavigateToRoulette: () -> Unit,
+    onNavigateToWishlist: () -> Unit,
     onDeleteSpecialDate: (SpecialDate) -> Unit
 ) {
     LazyColumn(
@@ -194,6 +197,13 @@ private fun PersonDetailContent(
                 ) {
                     Text("🎰 " + stringResource(R.string.roulette))
                 }
+            }
+            
+            OutlinedButton(
+                onClick = onNavigateToWishlist,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("🔖 Wishlist")
             }
         }
 

@@ -6,6 +6,7 @@ import com.gift.finder.data.local.AppDatabase
 import com.gift.finder.data.local.dao.GiftHistoryDao
 import com.gift.finder.data.local.dao.PersonDao
 import com.gift.finder.data.local.dao.RejectedGiftDao
+import com.gift.finder.data.local.dao.SavedGiftDao
 import com.gift.finder.data.local.dao.SpecialDateDao
 import dagger.Module
 import dagger.Provides
@@ -57,5 +58,11 @@ object DatabaseModule {
     @Singleton
     fun provideRejectedGiftDao(database: AppDatabase): RejectedGiftDao {
         return database.rejectedGiftDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSavedGiftDao(database: AppDatabase): SavedGiftDao {
+        return database.savedGiftDao()
     }
 }

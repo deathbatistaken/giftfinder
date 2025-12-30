@@ -68,9 +68,12 @@ fun GiftSuggestionsScreen(
     val selectedStyle by viewModel.selectedStyle.collectAsState()
     val selectedBudget by viewModel.selectedBudget.collectAsState()
     var isDiscoveryMode by remember { mutableStateOf(true) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { 
@@ -161,8 +164,13 @@ fun GiftSuggestionsScreen(
                                             viewModel.rejectSuggestion(topSuggestion.category.id, reason)
                                         },
                                         onSwipedRight = {
-                                            // Handle Save/Interest
-                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                            viewModel.saveToWishlist(topSuggestion.category.id)
+                                            scope.launch {
+                                                snackbarHostState.showSnackbar(
+                                                    message = "${topSuggestion.category.title} saved to Wishlist ✨",
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
                                         },
                                         modifier = Modifier.fillMaxWidth()
                                     )
@@ -213,9 +221,15 @@ fun GiftSuggestionsScreen(
                                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                             viewModel.rejectSuggestion(suggestion.category.id, reason) 
                                         },
-                                        onOpenStore = {
                                             if (!suggestion.isPremiumLocked) {
                                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                                viewModel.saveToWishlist(suggestion.category.id)
+                                                scope.launch {
+                                                    snackbarHostState.showSnackbar(
+                                                        message = "Saved to Wishlist ✨",
+                                                        duration = SnackbarDuration.Short
+                                                    )
+                                                }
                                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
                                                 context.startActivity(intent)
                                             }

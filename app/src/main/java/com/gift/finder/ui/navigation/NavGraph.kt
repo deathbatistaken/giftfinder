@@ -11,14 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import com.gift.finder.ui.screens.home.HomeScreen
-import com.gift.finder.ui.screens.onboarding.OnboardingScreen
-import com.gift.finder.ui.screens.paywall.PaywallScreen
-import com.gift.finder.ui.screens.person.AddPersonScreen
-import com.gift.finder.ui.screens.person.PersonDetailScreen
-import com.gift.finder.ui.screens.settings.SettingsScreen
-import com.gift.finder.ui.screens.suggestions.GiftRouletteScreen
 import com.gift.finder.ui.screens.suggestions.GiftSuggestionsScreen
+import com.gift.finder.ui.screens.wishlist.WishlistScreen
 import com.gift.finder.ui.viewmodels.MainViewModel
 
 /**
@@ -126,6 +120,9 @@ fun GiftFinderNavHost(
                 },
                 onNavigateToRoulette = {
                     navController.navigate(Screen.GiftRoulette.createRoute(personId))
+                },
+                onNavigateToWishlist = {
+                    navController.navigate(Screen.Wishlist.createRoute(personId))
                 }
             )
         }
@@ -224,6 +221,23 @@ fun GiftFinderNavHost(
                 onNavigateToPersonDetail = { personId ->
                     navController.navigate(Screen.PersonDetail.createRoute(personId))
                 }
+            )
+        }
+
+        // Wishlist
+        composable(
+            route = Screen.Wishlist.route,
+            arguments = listOf(
+                navArgument(Screen.Wishlist.ARG_PERSON_ID) {
+                    type = NavType.LongType
+                }
+            )
+        ) { backStackEntry ->
+            val personId = backStackEntry.arguments?.getLong(Screen.Wishlist.ARG_PERSON_ID) ?: return@composable
+            WishlistScreen(
+                personId = personId,
+                windowSizeClass = windowSizeClass,
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }
