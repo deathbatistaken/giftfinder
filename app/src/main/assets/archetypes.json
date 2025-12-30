@@ -1,0 +1,290 @@
+{
+    "archetypes": [
+        {
+            "id": "gamer_sibling",
+            "title": "Gamer Sibling",
+            "emoji": "🎮",
+            "description": "Loves video games, streaming, and gaming culture",
+            "defaultInterests": [
+                "gaming",
+                "video games",
+                "esports",
+                "streaming",
+                "technology",
+                "anime"
+            ],
+            "suggestedStyles": [
+                "FUN",
+                "TECH"
+            ],
+            "category": "ENTERTAINMENT"
+        },
+        {
+            "id": "corporate_dad",
+            "title": "Corporate Dad",
+            "emoji": "👔",
+            "description": "Business professional who appreciates quality and practicality",
+            "defaultInterests": [
+                "business",
+                "golf",
+                "wine",
+                "technology",
+                "reading",
+                "travel"
+            ],
+            "suggestedStyles": [
+                "PRACTICAL",
+                "LUXURIOUS"
+            ],
+            "category": "PROFESSIONAL"
+        },
+        {
+            "id": "nature_lover",
+            "title": "Nature Lover",
+            "emoji": "🌿",
+            "description": "Passionate about outdoors, hiking, and environmental sustainability",
+            "defaultInterests": [
+                "outdoors",
+                "hiking",
+                "camping",
+                "nature",
+                "plants",
+                "gardening",
+                "sustainability"
+            ],
+            "suggestedStyles": [
+                "EXPERIENTIAL",
+                "PRACTICAL"
+            ],
+            "category": "ACTIVE"
+        },
+        {
+            "id": "fitness_enthusiast",
+            "title": "Fitness Enthusiast",
+            "emoji": "💪",
+            "description": "Dedicated to health, fitness, and active lifestyle",
+            "defaultInterests": [
+                "fitness",
+                "gym",
+                "workout",
+                "health",
+                "sports",
+                "nutrition",
+                "running"
+            ],
+            "suggestedStyles": [
+                "PRACTICAL"
+            ],
+            "category": "ACTIVE"
+        },
+        {
+            "id": "bookworm",
+            "title": "Bookworm",
+            "emoji": "📚",
+            "description": "Loves reading, literature, and intellectual pursuits",
+            "defaultInterests": [
+                "reading",
+                "books",
+                "literature",
+                "learning",
+                "writing",
+                "poetry"
+            ],
+            "suggestedStyles": [
+                "CREATIVE",
+                "SENTIMENTAL"
+            ],
+            "category": "CREATIVE"
+        },
+        {
+            "id": "creative_artist",
+            "title": "Creative Artist",
+            "emoji": "🎨",
+            "description": "Expresses through art, music, or other creative outlets",
+            "defaultInterests": [
+                "art",
+                "painting",
+                "drawing",
+                "music",
+                "crafts",
+                "design",
+                "photography"
+            ],
+            "suggestedStyles": [
+                "CREATIVE"
+            ],
+            "category": "CREATIVE"
+        },
+        {
+            "id": "tech_enthusiast",
+            "title": "Tech Enthusiast",
+            "emoji": "💻",
+            "description": "Early adopter who loves gadgets and technology",
+            "defaultInterests": [
+                "technology",
+                "gadgets",
+                "smart home",
+                "electronics",
+                "coding",
+                "innovation"
+            ],
+            "suggestedStyles": [
+                "TECH",
+                "PRACTICAL"
+            ],
+            "category": "TECH"
+        },
+        {
+            "id": "foodie",
+            "title": "Foodie",
+            "emoji": "🍳",
+            "description": "Passionate about cooking, restaurants, and culinary experiences",
+            "defaultInterests": [
+                "cooking",
+                "food",
+                "restaurants",
+                "baking",
+                "wine",
+                "coffee",
+                "travel"
+            ],
+            "suggestedStyles": [
+                "EXPERIENTIAL",
+                "PRACTICAL"
+            ],
+            "category": "HOME"
+        },
+        {
+            "id": "fashionista",
+            "title": "Fashionista",
+            "emoji": "👗",
+            "description": "Loves fashion, style, and keeping up with trends",
+            "defaultInterests": [
+                "fashion",
+                "style",
+                "accessories",
+                "beauty",
+                "shopping",
+                "jewelry"
+            ],
+            "suggestedStyles": [
+                "LUXURIOUS",
+                "ROMANTIC"
+            ],
+            "category": "CREATIVE"
+        },
+        {
+            "id": "traveler",
+            "title": "World Traveler",
+            "emoji": "✈️",
+            "description": "Loves exploring new places and cultures",
+            "defaultInterests": [
+                "travel",
+                "adventure",
+                "exploring",
+                "culture",
+                "photography",
+                "languages"
+            ],
+            "suggestedStyles": [
+                "EXPERIENTIAL"
+            ],
+            "category": "ACTIVE"
+        },
+        {
+            "id": "wellness_guru",
+            "title": "Wellness Guru",
+            "emoji": "🧘",
+            "description": "Focused on mental and physical wellness, mindfulness",
+            "defaultInterests": [
+                "wellness",
+                "yoga",
+                "meditation",
+                "self-care",
+                "spa",
+                "health",
+                "mindfulness"
+            ],
+            "suggestedStyles": [
+                "ROMANTIC",
+                "EXPERIENTIAL"
+            ],
+            "category": "HOME"
+        },
+        {
+            "id": "pet_parent",
+            "title": "Pet Parent",
+            "emoji": "🐕",
+            "description": "Devoted to their furry companions",
+            "defaultInterests": [
+                "pets",
+                "dogs",
+                "cats",
+                "animals",
+                "nature",
+                "outdoors"
+            ],
+            "suggestedStyles": [
+                "FUN",
+                "SENTIMENTAL"
+            ],
+            "category": "HOME"
+        },
+        {
+            "id": "music_lover",
+            "title": "Music Lover",
+            "emoji": "🎵",
+            "description": "Passionate about music, concerts, and instruments",
+            "defaultInterests": [
+                "music",
+                "concerts",
+                "instruments",
+                "vinyl",
+                "audio",
+                "festivals"
+            ],
+            "suggestedStyles": [
+                "CREATIVE",
+                "FUN"
+            ],
+            "category": "ENTERTAINMENT"
+        },
+        {
+            "id": "home_decorator",
+            "title": "Home Decorator",
+            "emoji": "🏠",
+            "description": "Loves interior design and making spaces beautiful",
+            "defaultInterests": [
+                "home decor",
+                "interior design",
+                "plants",
+                "crafts",
+                "diy",
+                "furniture"
+            ],
+            "suggestedStyles": [
+                "CREATIVE",
+                "PRACTICAL"
+            ],
+            "category": "HOME"
+        },
+        {
+            "id": "sports_fan",
+            "title": "Sports Fan",
+            "emoji": "⚽",
+            "description": "Enthusiastic about sports teams and athletic events",
+            "defaultInterests": [
+                "sports",
+                "football",
+                "basketball",
+                "soccer",
+                "fitness",
+                "gaming"
+            ],
+            "suggestedStyles": [
+                "FUN"
+            ],
+            "category": "ENTERTAINMENT"
+        }
+    ]
+}

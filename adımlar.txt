@@ -1,0 +1,342 @@
+GiftFinder – Android Uygulama Spesifikasyonu (v1)
+1. Proje Özeti
+GiftFinder, hediye seçmekte zorlanan, sürekli kendini tekrar eden veya özel günleri unutan kullanıcılar için geliştirilmiş, Offline-First (Önce Yerel) çalışan bir Android uygulamasıdır.
+
+Uygulama:
+
+Kullanıcının kaydettiği kişiler ve onlara dair notlar üzerinden çalışır.
+
+Manuel + kural tabanlı (Rule-based) hediye önerileri sunar.
+
+Özel günleri hatırlatır.
+
+Karar verme sürecini hızlandırır.
+
+Teknik Kısıtlar:
+
+AI (Yapay Zeka) modellemesi kullanılmaz.
+
+Tüm veriler yalnızca cihazın yerel veritabanında saklanır.
+
+Harici bir Backend, Firebase Database veya Cloud hizmeti yoktur.
+
+2. Temel Değer Önerisi
+"Ne alacağım?" stresini ve karar yorgunluğunu ortadan kaldırır.
+
+Aynı kişiye sürekli aynı tarz hediyeleri almayı engeller.
+
+Son dakika hediye krizlerini çözer.
+
+Kullanıcıyı düşünmeye değil, seçmeye odaklar.
+
+Privacy-first: Kişisel veriler Google sunucularına dahi gitmez.
+
+3. Hedef Kitle
+Hediye seçimi konusunda kararsızlık yaşayanlar.
+
+Partnerine veya arkadaşlarına sürekli benzer şeyler alanlar.
+
+Özel günleri takvimde kaybetmek istemeyenler.
+
+Gizliliğe önem veren Android kullanıcıları.
+
+Öncelikli Pazar: ABD, Avrupa, Türkiye.
+
+4. Platform & Teknoloji Yığını
+Bu bölüm Android ekosistemi için modernize edilmiştir:
+
+Platform: Android (Phone & Tablet)
+
+Dil: Kotlin (100%)
+
+UI Framework: Jetpack Compose (Material Design 3)
+
+Minimum SDK: Android 8.0 (API Level 26) ve üzeri
+
+Mimari: MVVM (Model-View-ViewModel) + Clean Architecture Prensipleri
+
+Asenkron İşlemler: Kotlin Coroutines & Flow
+
+State Management: StateFlow / collectAsStateWithLifecycle
+
+Storage (Veritabanı): Room Database (SQLite abstraction)
+
+Preferences: Jetpack DataStore (Proto veya Preferences)
+
+Dependency Injection: Hilt (veya Koin)
+
+Backend: Yok (Offline-First)
+
+Notifications: Android WorkManager & AlarmManager
+
+In-App Purchase: Google Play Billing Library 6.0+
+
+Navigation: Jetpack Compose Navigation
+
+Dark Mode: Sistem temasına duyarlı (Auto/Dark/Light)
+
+5. Proje Yapısı (Android MVVM)
+Plaintext
+
+com.example.giftfinder/
+│
+├── GiftFinderApplication.kt
+├── MainActivity.kt
+│
+├── data/
+│   ├── local/
+│   │   ├── AppDatabase.kt
+│   │   ├── dao/ (PersonDao, GiftDao)
+│   │   └── entities/ (PersonEntity, GiftCategoryEntity)
+│   ├── repository/
+│   │   ├── PersonRepository.kt
+│   │   └── GiftRepository.kt
+│   └── manager/
+│       ├── LocalNotificationManager.kt
+│       └── BillingManager.kt
+│
+├── di/ (Dependency Injection Modules)
+│   ├── DatabaseModule.kt
+│   └── RepositoryModule.kt
+│
+├── domain/ (Opsiyonel - UseCases)
+│   ├── model/ (UI bağımsız modeller)
+│   └── usecase/ (GetSuggestionsUseCase)
+│
+├── ui/
+│   ├── theme/ (Color, Type, Theme - Material 3)
+│   ├── components/ (Custom Cards, Buttons, Inputs)
+│   ├── navigation/ (NavGraph, ScreenRoutes)
+│   ├── screens/
+│   │   ├── onboarding/
+│   │   ├── paywall/
+│   │   ├── home/
+│   │   ├── persondetail/
+│   │   ├── giftsuggestions/
+│   │   └── settings/
+│   └── viewmodels/
+│
+└── utils/
+    ├── Constants.kt
+    ├── Extensions.kt
+    └── ResourceProvider.kt
+6. Veri Modelleri (Room Entities)
+PersonEntity
+id: Long (PrimaryKey, AutoGenerate)
+
+uuid: String (Benzersiz ID)
+
+name: String
+
+relationshipType: Enum (Partner, Arkadaş, Aile, İş vb.)
+
+interests: List<String> (TypeConverter ile JSON olarak saklanır)
+
+dislikes: List<String>
+
+notes: String
+
+specialDates: List<SpecialDate> (Relation ile bağlanabilir veya JSON)
+
+giftedHistory: List<GiftHistoryItem>
+
+SpecialDate
+id: String (UUID)
+
+title: String (Doğum Günü, Yıldönümü, vb.)
+
+date: Long (Timestamp)
+
+notificationOffsets: List<Int> (Gün cinsinden: 7, 3, 0)
+
+GiftCategory (Statik/Local JSON'dan parse edilir)
+id: String
+
+title: String
+
+interestTags: List<String>
+
+styleTags: List<String>
+
+budgetRange: Enum (Low, Mid, High)
+
+description: String
+
+searchQuery: String (Amazon/Google arama linki oluşturmak için)
+
+7. Hediye Öneri Sistemi (Logic)
+Android tarafında assets klasöründeki JSON dosyasından beslenir.
+
+Mantık
+Kullanıcı bir kişi için profil oluşturur (İlgi alanları: Kahve, Teknoloji).
+
+Stil seçer (Pratik, Romantik, Eğlenceli).
+
+Bütçe seçer.
+
+Sistem, Person verilerini GiftData.json içindeki etiketlerle (tags) eşleştirir.
+
+Eşleşme skoru en yüksek olan kategorileri listeler.
+
+Örnek Akış
+Girdi: Interest: "Gaming", Style: "Fun", Budget: "High"
+
+Filtre: Gaming etiketli ürünleri bul -> "Fun" olanları öne çıkar -> Bütçesi uyanları getir.
+
+Çıktı: "Retro Arcade Machine", "VR Headset Accessories".
+
+8. Ek İş Mantıkları
+Tekrar Engelleyici: Kullanıcı bir hediyeyi "Alındı" olarak işaretlerse, o kategori 1 yıl boyunca önerilmez.
+
+Mevsimsellik: JSON verisinde season: ["winter", "all"] gibi flagler bulunur. Yazın "Atkı" önerilmez.
+
+Affiliate Hazırlığı: Ürün detayına tıklandığında Intent ile tarayıcı açılır: https://www.amazon.com/s?k={searchQuery}.
+
+9. Satın Alma & Paywall (Google Play Billing)
+Free (Ücretsiz) Kullanıcı
+Maksimum 1 Kişi profili.
+
+Maksimum 1 Özel gün takibi.
+
+Sınırlı hediye önerisi (Sadece ilk 1-2 öneri açık, diğerleri blur/kilitli).
+
+Pro (Premium) Kullanıcı
+Sınırsız Kişi & Özel Gün.
+
+Tüm hediye önerileri açık.
+
+Gelişmiş Hatırlatıcılar (Bildirimler).
+
+Reklamsız (Eğer ileride reklam eklenirse).
+
+Abonelik Modeli
+Haftalık: (Daha yüksek marjlı)
+
+Yıllık: (Önerilen - İndirimli etiketli)
+
+Fiyatlandırma Google Play Console üzerinden yönetilir.
+
+10. Onboarding Akışı (Pager Layout)
+Hoşgeldin: "Sürekli aynı hediyeyi almaktan sıkıldın mı?" (Lottie Animasyonu).
+
+Kaydet: "Sevdiklerinin nelerden hoşlandığını unutmadan not al."
+
+Hatırla: "Özel günleri asla kaçırma, zamanında bildirim al."
+
+Öneri Al: "Saniyeler içinde nokta atışı hediye fikirleri bul."
+
+Paywall: Abonelik seçenekleri ve "Ücretsiz Deneme" (varsa) vurgusu.
+
+11. Bildirim Sistemi (Android WorkManager)
+WorkManager kullanılarak periyodik kontroller yapılır veya AlarmManager ile kesin zamanlı alarmlar kurulur.
+
+Android 13+ (Tiramisu) için POST_NOTIFICATIONS izni istenir.
+
+Senaryolar:
+
+Özel günden 1 hafta önce.
+
+3 gün önce.
+
+Olay günü sabah 09:00.
+
+12. Localization (Yerelleştirme)
+Android res/values/strings.xml yapısı kullanılır.
+
+values/strings.xml (Default - English)
+
+values-tr/strings.xml (Türkçe)
+
+values-de/strings.xml (Almanca)
+
+values-es/strings.xml (İspanyolca)
+
+values-fr/strings.xml (Fransızca)
+
+values-ja/strings.xml (Japonca)
+
+Tüm metinler kod içinde stringResource(R.string.key) şeklinde çağrılır. Hardcoded string kesinlikle yasaktır.
+
+13. UI / UX Prensipleri (Material Design 3)
+Material You: Cihazın duvar kağıdına uyumlu dinamik renkler (Dynamic Colors) desteklenir (Android 12+).
+
+Bileşenler: Material 3 Card, FloatingActionButton, TopAppBar, BottomSheet.
+
+Navigasyon: Alt menü (BottomNavigation) değil, akış bazlı veya ana ekranda Dashboard yapısı.
+
+Haptics: Buton tıklamalarında ve seçimlerde hafif titreşim geri bildirimi.
+
+Adaptive Layout: Tabletler ve katlanabilir cihazlar için BoxWithConstraints veya AdaptiveScaffold kullanımı.
+
+14. Google Play Store Güvenliği & Politikalar
+Data Safety Form: Verilerin cihazda kaldığı, sunucuya gönderilmediği beyan edilir ("Data is encrypted in transit" seçeneği işaretlenmez çünkü transit yok, ama "Data collection" kısmında "No data collected" seçilir).
+
+User Data Policy: Kişi listesi hassas veri sayılmaz çünkü cihaz dışına çıkmıyor.
+
+Permissions: Sadece POST_NOTIFICATIONS ve gerekirse SCHEDULE_EXACT_ALARM. Kişi rehberine (Contacts) erişim izni istenmez (Kullanıcı manuel ekler, bu güven hissini artırır).
+
+15. Gizlilik (Privacy)
+Veri tamamen AppDatabase (Room) içindedir.
+
+Kullanıcı uygulamayı silerse veriler silinir.
+
+Google Analytics for Firebase kullanılabilir (Sadece crash raporları ve anonim kullanım istatistikleri için, kişisel veri hariç).
+
+16. V1 Kapsamı (MVP)
+Onboarding ekranları & Paywall entegrasyonu.
+
+Kişi Ekleme / Düzenleme / Silme (CRUD).
+
+Basit Hediye Öneri Algoritması (Tag eşleştirme).
+
+Yerel Veritabanı kurulumu.
+
+Bildirim Planlayıcı.
+
+Çoklu Dil Desteği.
+
+Ayarlar Sayfası (Abonelik Yönetimi, Verileri Sil).
+
+17. Sonuç
+GiftFinder Android, Google Play Store'daki "Lifestyle" ve "Productivity" kategorilerinde yer alacak; kullanıcı verisine saygılı, Material Design 3 standartlarında şık ve performanslı bir yerel uygulamadır. Karmaşık sunucu maliyetleri olmadan, sürdürülebilir bir gelir modeli (Abonelik) üzerine kuruludur.
+
+(Feature Enhancements)
+Bu özellikleri spesifikasyonun ilgili bölümlerine serpiştireceğiz.
+
+A. "Persona Archetypes" (Hızlı Profilleme)
+Kullanıcıların tek tek ilgi alanı girmesi sıkıcıdır.
+
+Fikir: "Arketipler" sunun. Kullanıcı "Gamer Kardeş", "Kurumsal Baba", "Doğa Aşığı Sevgili" gibi hazır şablonları seçsin.
+
+Teknik Karşılık: Archetype.json. Seçildiğinde arka planda otomatik olarak 20-30 tag'i (interests) kişiye atar. Kullanıcı daha sonra bunları düzenleyebilir.
+
+Değer: Onboarding sürecini 10 saniyeye düşürür.
+
+B. "Shadow Learning" (Yalancı Yapay Zeka)
+AI yoksa, "Eleme Mantığı" (Elimination Logic) vardır.
+
+Fikir: Kullanıcı önerilen bir hediyeyi reddettiğinde (Swipe Left), uygulama sorsun: "Neden? (Pahalı / Tarzı Değil / Zaten Var)".
+
+Teknik Karşılık: Dislike tablosuna bu veriyi işleyin. Bir sonraki öneride bu tag'leri filtreleyin. Kullanıcıya "Seni anlıyorum" hissi verirsiniz.
+
+C. "Gift Roulette" (Karar Felci Kırıcı)
+Kullanıcı hala seçemiyorsa?
+
+Fikir: "Şansına Bırak" butonu. Slot makinesi animasyonuyla eldeki kriterlere uygun TEK bir seçenek gösterir.
+
+E. "Smart Deep Links" (Akıllı Yönlendirme)
+Sadece Amazon araması yapmak tembelce olabilir.
+
+Fikir: Kategoriye göre mağaza yönlendirmesi.
+
+Kitap kategorisi -> Amazon Books veya yerel kitapçı araması.
+
+El yapımı/Sanat -> Etsy araması (URL query parametreleriyle).
+
+Oyun -> Steam Store araması.
+
+F. "Gift Budget Tracker" (Yıllık Bütçe Analizi)
+Fikir: Sadece hediye önerme değil, "Kime ne kadar harcadım?" takibi.
+
+Değer: Finansal farkındalık yaratır ve uygulamayı sadece özel günlerde değil, tüm yıl telefonda tutmalarını sağlar.
+

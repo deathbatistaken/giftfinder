@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">GiftFinder</string>
+    
+    <!-- Common -->
+    <string name="skip">Atla</string>
+    <string name="back">Geri</string>
+    <string name="next">İleri</string>
+    <string name="save">Kaydet</string>
+    <string name="cancel">İptal</string>
+    <string name="delete">Sil</string>
+    <string name="close">Kapat</string>
+    <string name="all">Tümü</string>
+    <string name="settings">Ayarlar</string>
+    <string name="get_started">Başla</string>
+    
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Hep Aynı Hediyeleri Almaktan Sıkıldın mı?</string>
+    <string name="onboarding_desc_1">Hediye stresine elveda de. Her seferinde mükemmel hediyeyi bul.</string>
+    <string name="onboarding_title_2">Detayları Kaydet</string>
+    <string name="onboarding_desc_2">Sevdiklerinin nelerden hoşlandığını not al, asla unutma.</string>
+    <string name="onboarding_title_3">Özel Günleri Asla Kaçırma</string>
+    <string name="onboarding_desc_3">Doğum günleri, yıl dönümleri ve daha fazlası için zamanında hatırlatma al.</string>
+    <string name="onboarding_title_4">Mükemmel Hediye Fikirlerini Bul</string>
+    <string name="onboarding_desc_4">İlgi alanlarına göre saniyeler içinde kişiselleştirilmiş öneriler al.</string>
+    
+    <!-- Paywall -->
+    <string name="paywall_title">GiftFinder Pro\'yu Aç</string>
+    <string name="paywall_subtitle">Her seferinde mükemmel hediyeyi bul</string>
+    <string name="feature_unlimited_persons">Sınırsız kişi takibi</string>
+    <string name="feature_unlimited_dates">Sınırsız özel gün</string>
+    <string name="feature_all_suggestions">Tüm hediye önerileri</string>
+    <string name="feature_advanced_reminders">Gelişmiş hatırlatıcılar</string>
+    <string name="feature_no_ads">Reklamsız deneyim</string>
+    <string name="best_value">En İyi Fırsat</string>
+    <string name="restore_purchases">Satın Alımları Geri Yükle</string>
+    <string name="subscription_terms">Abonelikler otomatik yenilenir. İstediğiniz zaman iptal edebilirsiniz.</string>
+    <string name="yearly_plan">Yıllık Plan</string>
+    <string name="weekly_plan">Haftalık Plan</string>
+    
+    <!-- Home -->
+    <string name="upcoming_events">Yaklaşan Etkinlikler</string>
+    <string name="your_people">Kişileriniz</string>
+    <string name="add_person">Kişi Ekle</string>
+    <string name="empty_home_title">Hediye Yolculuğuna Başla</string>
+    <string name="empty_home_subtitle">Mükemmel hediyeyi bulmak istediğin birini ekle</string>
+    <string name="add_first_person">İlk Kişiyi Ekle</string>
+    <string name="today">Bugün</string>
+    <string name="tomorrow">Yarın</string>
+    <string name="in_days">%1$d gün sonra</string>
+    
+    <!-- Person -->
+    <string name="name">İsim</string>
+    <string name="relationship">İlişki</string>
+    <string name="choose_emoji">Bir emoji seç</string>
+    <string name="quick_profiles">Hızlı Profiller</string>
+    <string name="interests">İlgi Alanları</string>
+    <string name="add_interest">İlgi alanı ekle</string>
+    <string name="dislikes">Sevmediği Şeyler</string>
+    <string name="add_dislike">Sevmediği şey ekle</string>
+    <string name="notes">Notlar</string>
+    <string name="special_dates">Özel Günler</string>
+    <string name="gift_history">Hediye Geçmişi</string>
+    <string name="find_gift">Hediye Bul</string>
+    <string name="roulette">Rulet</string>
+    <string name="person_not_found">Kişi bulunamadı</string>
+    <string name="delete_person_title">Kişi Silinsin mi?</string>
+    <string name="delete_person_message">Bu kişiye ait tüm özel günler ve hediye geçmişi silinecektir.</string>
+    
+    <!-- Suggestions -->
+    <string name="gift_ideas">Hediye Fikirleri</string>
+    <string name="style">Stil</string>
+    <string name="budget">Bütçe</string>
+    <string name="not_interested">İlgilenmiyorum</string>
+    <string name="unlock_pro">Pro\'yu Aç</string>
+    <string name="why_not">Neden bu hediye değil?</string>
+    
+    <!-- Roulette -->
+    <string name="gift_roulette">Hediye Ruleti</string>
+    <string name="spinning">Dönüyor...</string>
+    <string name="tap_to_spin">Döndürmek için Dokun!</string>
+    <string name="roulette_description">Karar veremiyor musun? Kaderin senin için mükemmel hediyeyi seçmesine izin ver!</string>
+    <string name="spin">Çarkı Döndür</string>
+    <string name="spin_again">Tekrar Döndür</string>
+    <string name="shop_now">Şimdi Al</string>
+    
+    <!-- Settings -->
+    <string name="appearance">Görünüm</string>
+    <string name="theme">Tema</string>
+    <string name="haptic_feedback">Dokunsal Geri Bildirim</string>
+    <string name="notifications">Bildirimler</string>
+    <string name="reminder_notifications">Hatırlatma Bildirimleri</string>
+    <string name="get_notified_events">Özel günlerden önce bildirim al</string>
+    <string name="account">Hesap</string>
+    <string name="delete_all_data">Tüm Verileri Sil</string>
+    <string name="delete_data_warning">Bu işlem tüm kişilerinizi, özel günlerinizi ve tercihlerinizi kalıcı olarak silecektir. Bu işlem geri alınamaz.</string>
+    <string name="version">Sürüm</string>
+    <string name="upgrade_to_pro">Pro\'ya Yükselt</string>
+    <string name="unlock_all_features">Sınırsız kişi ve önerilerin kilidini aç</string>
+    <string name="subscription_active">Abonelik Aktif</string>
+    <string name="pro_member">Pro Üye</string>
+    
+    <!-- Notifications -->
+    <string name="notification_channel_reminders">Hatırlatıcılar</string>
+    <string name="notification_channel_reminders_desc">Özel gün hatırlatıcıları</string>
+    <string name="notification_channel_general">Genel</string>
+    <string name="notification_channel_general_desc">Genel bildirimler</string>
+    <string name="notification_title_today">Bugün Özel Bir Gün!</string>
+    <string name="notification_title_tomorrow">Yarın Özel Bir Gün!</string>
+    <string name="notification_title_days">Özel Güne %1$d Gün Kaldı</string>
+    <string name="notification_message_today">%1$s için %2$s bugün! Kutlama zamanı!</string>
+    <string name="notification_message_upcoming">Unutma: %1$s için %2$s yaklaşıyor!</string>
+</resources>

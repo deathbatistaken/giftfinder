@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">GiftFinder</string>
+    
+    <!-- Common -->
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="close">Close</string>
+    <string name="all">All</string>
+    <string name="settings">Settings</string>
+    <string name="get_started">Get Started</string>
+    
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Tired of Giving the Same Gifts?</string>
+    <string name="onboarding_desc_1">Say goodbye to gift-giving stress. Find the perfect present every time.</string>
+    <string name="onboarding_title_2">Keep Track of Details</string>
+    <string name="onboarding_desc_2">Save notes about what your loved ones like, so you never forget.</string>
+    <string name="onboarding_title_3">Never Miss a Special Day</string>
+    <string name="onboarding_desc_3">Get timely reminders before birthdays, anniversaries, and more.</string>
+    <string name="onboarding_title_4">Find Perfect Gift Ideas</string>
+    <string name="onboarding_desc_4">Get personalized suggestions in seconds based on their interests.</string>
+    
+    <!-- Paywall -->
+    <string name="paywall_title">Unlock GiftFinder Pro</string>
+    <string name="paywall_subtitle">Find the perfect gift every time</string>
+    <string name="feature_unlimited_persons">Unlimited people to track</string>
+    <string name="feature_unlimited_dates">Unlimited special dates</string>
+    <string name="feature_all_suggestions">All gift suggestions unlocked</string>
+    <string name="feature_advanced_reminders">Advanced reminder options</string>
+    <string name="feature_no_ads">Ad-free experience</string>
+    <string name="best_value">Best Value</string>
+    <string name="restore_purchases">Restore Purchases</string>
+    <string name="subscription_terms">Subscriptions renew automatically. Cancel anytime.</string>
+    <string name="yearly_plan">Yearly Plan</string>
+    <string name="weekly_plan">Weekly Plan</string>
+    
+    <!-- Home -->
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="your_people">Your People</string>
+    <string name="add_person">Add Person</string>
+    <string name="empty_home_title">Start Your Gift Journey</string>
+    <string name="empty_home_subtitle">Add someone you want to find the perfect gift for</string>
+    <string name="add_first_person">Add First Person</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="in_days">In %1$d days</string>
+    
+    <!-- Person -->
+    <string name="name">Name</string>
+    <string name="relationship">Relationship</string>
+    <string name="choose_emoji">Choose an emoji</string>
+    <string name="quick_profiles">Quick Profiles</string>
+    <string name="interests">Interests</string>
+    <string name="add_interest">Add interest</string>
+    <string name="dislikes">Dislikes</string>
+    <string name="add_dislike">Add dislike</string>
+    <string name="notes">Notes</string>
+    <string name="special_dates">Special Dates</string>
+    <string name="gift_history">Gift History</string>
+    <string name="find_gift">Find Gift</string>
+    <string name="roulette">Roulette</string>
+    <string name="person_not_found">Person not found</string>
+    <string name="delete_person_title">Delete Person?</string>
+    <string name="delete_person_message">This will remove all data for this person including special dates and gift history.</string>
+    
+    <!-- Suggestions -->
+    <string name="gift_ideas">Gift Ideas</string>
+    <string name="style">Style</string>
+    <string name="budget">Budget</string>
+    <string name="not_interested">Not interested</string>
+    <string name="unlock_pro">Unlock Pro</string>
+    <string name="why_not">Why not this gift?</string>
+    
+    <!-- Roulette -->
+    <string name="gift_roulette">Gift Roulette</string>
+    <string name="spinning">Spinning...</string>
+    <string name="tap_to_spin">Tap to Spin!</string>
+    <string name="roulette_description">Can\'t decide? Let fate choose the perfect gift for you!</string>
+    <string name="spin">Spin the Wheel</string>
+    <string name="spin_again">Spin Again</string>
+    <string name="shop_now">Shop Now</string>
+    
+    <!-- Settings -->
+    <string name="appearance">Appearance</string>
+    <string name="theme">Theme</string>
+    <string name="haptic_feedback">Haptic Feedback</string>
+    <string name="notifications">Notifications</string>
+    <string name="reminder_notifications">Reminder Notifications</string>
+    <string name="get_notified_events">Get notified before special events</string>
+    <string name="account">Account</string>
+    <string name="delete_all_data">Delete All Data</string>
+    <string name="delete_data_warning">This will permanently delete all your people, special dates, and preferences. This action cannot be undone.</string>
+    <string name="version">Version</string>
+    <string name="upgrade_to_pro">Upgrade to Pro</string>
+    <string name="unlock_all_features">Unlock unlimited people and suggestions</string>
+    <string name="subscription_active">Subscription Active</string>
+    <string name="pro_member">Pro Member</string>
+    
+    <!-- Notifications -->
+    <string name="notification_channel_reminders">Reminders</string>
+    <string name="notification_channel_reminders_desc">Special date reminders</string>
+    <string name="notification_channel_general">General</string>
+    <string name="notification_channel_general_desc">General notifications</string>
+    <string name="notification_title_today">Special Day Today!</string>
+    <string name="notification_title_tomorrow">Special Day Tomorrow!</string>
+    <string name="notification_title_days">%1$d Days Until Special Day</string>
+    <string name="notification_message_today">%1$s\'s %2$s is today! Time to celebrate!</string>
+    <string name="notification_message_upcoming">Don\'t forget: %1$s\'s %2$s is coming up!</string>
+    
+    <!-- Relationships -->
+    <string name="relationship_partner">Partner</string>
+    <string name="relationship_spouse">Spouse</string>
+    <string name="relationship_family">Family</string>
+    <string name="relationship_friend">Friend</string>
+    <string name="relationship_colleague">Colleague</string>
+    <string name="relationship_boss">Boss</string>
+    <string name="relationship_child">Child</string>
+    <string name="relationship_parent">Parent</string>
+    <string name="relationship_sibling">Sibling</string>
+    <string name="relationship_other">Other</string>
+    
+    <!-- Budget Tracker -->
+    <string name="budget_tracker">Budget Tracker</string>
+    <string name="this_month">This Month</string>
+    <string name="this_year">This Year</string>
+    <string name="all_time">All Time</string>
+    <string name="total_spent">Total Spent</string>
+    <string name="gifts_given">Gifts Given</string>
+    <string name="avg_per_person">Average per Person</string>
+    <string name="top_spending">Top Spending</string>
+    <string name="recent_gifts">Recent Gifts</string>
+    <string name="gifts">gifts</string>
+    <string name="no_spending_data">No spending data yet</string>
+    <string name="mark_gifts_purchased">Mark gifts as purchased to track your budget</string>
+    <string name="track_your_spending">Track your gift spending</string>
+    
+    <!-- Special Date Dialog -->
+    <string name="add_special_date">Add Special Date</string>
+    <string name="event_title">Event Title</string>
+    <string name="event_type">Event Type</string>
+    <string name="date">Date</string>
+    <string name="birthday">Birthday</string>
+    <string name="anniversary">Anniversary</string>
+    <string name="holiday">Holiday</string>
+    <string name="other">Other</string>
+    
+    <!-- Mark as Purchased Dialog -->
+    <string name="mark_as_purchased">Mark as Purchased</string>
+    <string name="price_optional">Price (optional)</string>
+    <string name="occasion_optional">Occasion (optional)</string>
+    <string name="occasion_placeholder">e.g., Birthday, Christmas</string>
+    
+    <!-- Edit Person -->
+    <string name="edit_person">Edit Person</string>
+    
+    <!-- Calendar -->
+    <string name="calendar">Calendar</string>
+    <string name="no_upcoming_dates">No upcoming dates</string>
+    <string name="add_special_dates_hint">Add special dates to track important events</string>
+    
+    <!-- Special Dates Screen -->
+    <string name="no_special_dates">No special dates yet</string>
+    <string name="delete_date_title">Delete Date?</string>
+    <string name="delete_date_message">Delete %1$s? This cannot be undone.</string>
+    
+    <!-- Search -->
+    <string name="search_placeholder">Search people or interests...</string>
+    <string name="search_hint">Type a name or interest to search</string>
+    <string name="no_results">No results found</string>
+    <!-- Budget -->
+    <string name="budget_low_tier">Budget (&lt;$25)</string>
+    <string name="budget_low">Low ($25-$50)</string>
+    <string name="budget_medium">Medium ($50-$100)</string>
+    <string name="budget_high">High ($100-$250)</string>
+    <string name="budget_luxury">Luxury ($250+)</string>
+
+    <!-- Styles -->
+    <string name="style_practical">Practical</string>
+    <string name="style_romantic">Romantic</string>
+    <string name="style_fun">Fun</string>
+    <string name="style_creative">Creative</string>
+    <string name="style_luxurious">Luxurious</string>
+    <string name="style_sentimental">Sentimental</string>
+    <string name="style_experiential">Experiential</string>
+    <string name="style_tech">Tech</string>
+
+    <!-- Events -->
+    <string name="event_wedding">Wedding</string>
+    <string name="event_valentine">Valentine\'s Day</string>
+    <string name="event_mothers_day">Mother\'s Day</string>
+    <string name="event_fathers_day">Father\'s Day</string>
+    <string name="event_christmas">Christmas</string>
+    <string name="event_new_year">New Year</string>
+    <string name="event_graduation">Graduation</string>
+
+    <!-- Rejection Reasons -->
+    <string name="rejection_expensive">Too Expensive</string>
+    <string name="rejection_not_style">Not Their Style</string>
+    <string name="rejection_already_have">Already Has This</string>
+    <string name="rejection_not_interested">Not Interested</string>
+    <string name="rejection_other">Other Reason</string>
+</resources>

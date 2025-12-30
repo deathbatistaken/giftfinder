@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Include DataStore preferences -->
+    <include domain="file" path="datastore/" />
+    <!-- Include Room database -->
+    <include domain="database" path="gift_finder.db" />
+    <include domain="database" path="gift_finder.db-shm" />
+    <include domain="database" path="gift_finder.db-wal" />
+</full-backup-content>

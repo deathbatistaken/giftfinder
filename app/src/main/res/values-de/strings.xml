@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GiftFinder</string>
+    <string name="skip">Überspringen</string>
+    <string name="back">Zurück</string>
+    <string name="next">Weiter</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="delete">Löschen</string>
+    <string name="close">Schließen</string>
+    <string name="all">Alle</string>
+    <string name="settings">Einstellungen</string>
+    <string name="get_started">Los geht\'s</string>
+    
+    <string name="onboarding_title_1">Immer die gleichen Geschenke?</string>
+    <string name="onboarding_desc_1">Verabschiede dich vom Geschenkstress. Finde jedes Mal das perfekte Geschenk.</string>
+    <string name="onboarding_title_2">Details merken</string>
+    <string name="onboarding_desc_2">Notiere, was deine Liebsten mögen, damit du es nie vergisst.</string>
+    <string name="onboarding_title_3">Besondere Tage nie verpassen</string>
+    <string name="onboarding_desc_3">Erhalte rechtzeitige Erinnerungen vor Geburtstagen, Jahrestagen und mehr.</string>
+    <string name="onboarding_title_4">Perfekte Geschenkideen finden</string>
+    <string name="onboarding_desc_4">Erhalte in Sekunden personalisierte Vorschläge basierend auf Interessen.</string>
+    
+    <string name="paywall_title">GiftFinder Pro freischalten</string>
+    <string name="paywall_subtitle">Finde jedes Mal das perfekte Geschenk</string>
+    <string name="feature_unlimited_persons">Unbegrenzte Personen</string>
+    <string name="feature_unlimited_dates">Unbegrenzte besondere Tage</string>
+    <string name="feature_all_suggestions">Alle Geschenkvorschläge</string>
+    <string name="feature_advanced_reminders">Erweiterte Erinnerungen</string>
+    <string name="feature_no_ads">Werbefreies Erlebnis</string>
+    <string name="best_value">Bester Wert</string>
+    <string name="restore_purchases">Käufe wiederherstellen</string>
+    <string name="subscription_terms">Abonnements werden automatisch verlängert. Jederzeit kündbar.</string>
+    <string name="yearly_plan">Jahresplan</string>
+    <string name="weekly_plan">Wochenplan</string>
+    
+    <string name="upcoming_events">Kommende Ereignisse</string>
+    <string name="your_people">Deine Personen</string>
+    <string name="add_person">Person hinzufügen</string>
+    <string name="empty_home_title">Starte deine Geschenkreise</string>
+    <string name="empty_home_subtitle">Füge jemanden hinzu, für den du das perfekte Geschenk finden möchtest</string>
+    <string name="add_first_person">Erste Person hinzufügen</string>
+    <string name="today">Heute</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="in_days">In %1$d Tagen</string>
+    
+    <string name="name">Name</string>
+    <string name="relationship">Beziehung</string>
+    <string name="choose_emoji">Wähle ein Emoji</string>
+    <string name="quick_profiles">Schnellprofile</string>
+    <string name="interests">Interessen</string>
+    <string name="add_interest">Interesse hinzufügen</string>
+    <string name="dislikes">Abneigungen</string>
+    <string name="add_dislike">Abneigung hinzufügen</string>
+    <string name="notes">Notizen</string>
+    <string name="special_dates">Besondere Tage</string>
+    <string name="gift_history">Geschenkverlauf</string>
+    <string name="find_gift">Geschenk finden</string>
+    <string name="roulette">Roulette</string>
+    <string name="person_not_found">Person nicht gefunden</string>
+    <string name="delete_person_title">Person löschen?</string>
+    <string name="delete_person_message">Alle Daten zu dieser Person werden gelöscht.</string>
+    
+    <string name="gift_ideas">Geschenkideen</string>
+    <string name="style">Stil</string>
+    <string name="budget">Budget</string>
+    <string name="not_interested">Nicht interessiert</string>
+    <string name="unlock_pro">Pro freischalten</string>
+    <string name="why_not">Warum nicht dieses Geschenk?</string>
+    
+    <string name="gift_roulette">Geschenk-Roulette</string>
+    <string name="spinning">Dreht sich...</string>
+    <string name="tap_to_spin">Tippe zum Drehen!</string>
+    <string name="roulette_description">Kannst du dich nicht entscheiden? Lass das Schicksal das perfekte Geschenk wählen!</string>
+    <string name="spin">Rad drehen</string>
+    <string name="spin_again">Nochmal drehen</string>
+    <string name="shop_now">Jetzt kaufen</string>
+    
+    <string name="appearance">Erscheinung</string>
+    <string name="theme">Design</string>
+    <string name="haptic_feedback">Haptisches Feedback</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="reminder_notifications">Erinnerungsbenachrichtigungen</string>
+    <string name="get_notified_events">Vor besonderen Ereignissen benachrichtigt werden</string>
+    <string name="account">Konto</string>
+    <string name="delete_all_data">Alle Daten löschen</string>
+    <string name="delete_data_warning">Alle Personen, besonderen Tage und Einstellungen werden dauerhaft gelöscht.</string>
+    <string name="version">Version</string>
+    <string name="upgrade_to_pro">Auf Pro upgraden</string>
+    <string name="unlock_all_features">Unbegrenzte Personen und Vorschläge freischalten</string>
+    <string name="subscription_active">Abonnement aktiv</string>
+    <string name="pro_member">Pro-Mitglied</string>
+    
+    <string name="notification_channel_reminders">Erinnerungen</string>
+    <string name="notification_channel_reminders_desc">Erinnerungen für besondere Tage</string>
+    <string name="notification_channel_general">Allgemein</string>
+    <string name="notification_channel_general_desc">Allgemeine Benachrichtigungen</string>
+    <string name="notification_title_today">Heute ist ein besonderer Tag!</string>
+    <string name="notification_title_tomorrow">Morgen ist ein besonderer Tag!</string>
+    <string name="notification_title_days">Noch %1$d Tage bis zum besonderen Tag</string>
+    <string name="notification_message_today">%1$s hat heute %2$s! Zeit zu feiern!</string>
+    <string name="notification_message_upcoming">Vergiss nicht: %1$s hat bald %2$s!</string>
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GiftFinder</string>
+    <string name="skip">スキップ</string>
+    <string name="back">戻る</string>
+    <string name="next">次へ</string>
+    <string name="save">保存</string>
+    <string name="cancel">キャンセル</string>
+    <string name="delete">削除</string>
+    <string name="close">閉じる</string>
+    <string name="all">すべて</string>
+    <string name="settings">設定</string>
+    <string name="get_started">始める</string>
+    
+    <string name="onboarding_title_1">同じプレゼントに飽きた？</string>
+    <string name="onboarding_desc_1">プレゼント選びのストレスにさようなら。いつでも完璧なギフトを見つけよう。</string>
+    <string name="onboarding_title_2">詳細を記録</string>
+    <string name="onboarding_desc_2">大切な人の好みをメモして、忘れないように。</string>
+    <string name="onboarding_title_3">特別な日を逃さない</string>
+    <string name="onboarding_desc_3">誕生日や記念日の前にリマインダーを受け取ろう。</string>
+    <string name="onboarding_title_4">完璧なギフトアイデアを見つける</string>
+    <string name="onboarding_desc_4">興味に基づいてパーソナライズされた提案を数秒で。</string>
+    
+    <string name="paywall_title">GiftFinder Proをアンロック</string>
+    <string name="paywall_subtitle">いつでも完璧なプレゼントを見つけよう</string>
+    <string name="feature_unlimited_persons">無制限の人数</string>
+    <string name="feature_unlimited_dates">無制限の特別な日</string>
+    <string name="feature_all_suggestions">すべてのギフト提案</string>
+    <string name="feature_advanced_reminders">高度なリマインダー</string>
+    <string name="feature_no_ads">広告なし</string>
+    <string name="best_value">お得</string>
+    <string name="restore_purchases">購入を復元</string>
+    <string name="subscription_terms">サブスクリプションは自動更新されます。いつでもキャンセル可能。</string>
+    <string name="yearly_plan">年間プラン</string>
+    <string name="weekly_plan">週間プラン</string>
+    
+    <string name="upcoming_events">今後のイベント</string>
+    <string name="your_people">あなたの人々</string>
+    <string name="add_person">人を追加</string>
+    <string name="empty_home_title">ギフトの旅を始めよう</string>
+    <string name="empty_home_subtitle">完璧なプレゼントを見つけたい人を追加しよう</string>
+    <string name="add_first_person">最初の人を追加</string>
+    <string name="today">今日</string>
+    <string name="tomorrow">明日</string>
+    <string name="in_days">%1$d日後</string>
+    
+    <string name="name">名前</string>
+    <string name="relationship">関係</string>
+    <string name="choose_emoji">絵文字を選択</string>
+    <string name="quick_profiles">クイックプロファイル</string>
+    <string name="interests">興味・関心</string>
+    <string name="add_interest">興味を追加</string>
+    <string name="dislikes">嫌いなもの</string>
+    <string name="add_dislike">嫌いなものを追加</string>
+    <string name="notes">メモ</string>
+    <string name="special_dates">特別な日</string>
+    <string name="gift_history">ギフト履歴</string>
+    <string name="find_gift">ギフトを探す</string>
+    <string name="roulette">ルーレット</string>
+    <string name="person_not_found">人が見つかりません</string>
+    <string name="delete_person_title">この人を削除しますか？</string>
+    <string name="delete_person_message">この人のすべてのデータが削除されます。</string>
+    
+    <string name="gift_ideas">ギフトアイデア</string>
+    <string name="style">スタイル</string>
+    <string name="budget">予算</string>
+    <string name="not_interested">興味なし</string>
+    <string name="unlock_pro">Proをアンロック</string>
+    <string name="why_not">なぜこのギフトではない？</string>
+    
+    <string name="gift_roulette">ギフトルーレット</string>
+    <string name="spinning">回転中...</string>
+    <string name="tap_to_spin">タップして回す！</string>
+    <string name="roulette_description">決められない？運命に完璧なギフトを選んでもらおう！</string>
+    <string name="spin">ホイールを回す</string>
+    <string name="spin_again">もう一度回す</string>
+    <string name="shop_now">今すぐ購入</string>
+    
+    <string name="appearance">外観</string>
+    <string name="theme">テーマ</string>
+    <string name="haptic_feedback">触覚フィードバック</string>
+    <string name="notifications">通知</string>
+    <string name="reminder_notifications">リマインダー通知</string>
+    <string name="get_notified_events">特別なイベントの前に通知を受け取る</string>
+    <string name="account">アカウント</string>
+    <string name="delete_all_data">すべてのデータを削除</string>
+    <string name="delete_data_warning">すべての人、日付、設定が完全に削除されます。</string>
+    <string name="version">バージョン</string>
+    <string name="upgrade_to_pro">Proにアップグレード</string>
+    <string name="unlock_all_features">無制限の人数と提案をアンロック</string>
+    <string name="subscription_active">サブスクリプション有効</string>
+    <string name="pro_member">Proメンバー</string>
+    
+    <string name="notification_channel_reminders">リマインダー</string>
+    <string name="notification_channel_reminders_desc">特別な日のリマインダー</string>
+    <string name="notification_channel_general">一般</string>
+    <string name="notification_channel_general_desc">一般的な通知</string>
+    <string name="notification_title_today">今日は特別な日です！</string>
+    <string name="notification_title_tomorrow">明日は特別な日です！</string>
+    <string name="notification_title_days">特別な日まであと%1$d日</string>
+    <string name="notification_message_today">%1$sの%2$sは今日です！お祝いの時間！</string>
+    <string name="notification_message_upcoming">忘れないで：%1$sの%2$sがもうすぐです！</string>
+</resources>
