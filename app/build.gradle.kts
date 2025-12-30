@@ -85,6 +85,10 @@ dependencies {
     // WorkManager
     implementation(libs.work.runtime.ktx)
 
+    // Glance Widgets
+    implementation(libs.glance.appwidget)
+    implementation(libs.glance.material3)
+
     // JSON Parsing
     implementation(libs.gson)
 

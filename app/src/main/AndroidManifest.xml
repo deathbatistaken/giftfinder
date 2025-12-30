@@ -49,10 +49,37 @@
             </intent-filter>
         </receiver>
         
+
         <!-- Notification Receiver -->
         <receiver
             android:name=".data.receiver.NotificationReceiver"
             android:exported="false" />
+
+        <!-- Upcoming Event Widget -->
+        <receiver
+            android:name=".ui.widgets.UpcomingEventWidgetReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/upcoming_event_widget_info" />
+        </receiver>
+
+        <!-- Quick Action Widget -->
+        <receiver
+            android:name=".ui.widgets.QuickActionWidgetReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/quick_action_widget_info" />
+        </receiver>
 
     </application>
 
