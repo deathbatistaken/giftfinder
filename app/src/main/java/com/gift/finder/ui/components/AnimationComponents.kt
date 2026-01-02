@@ -5,6 +5,12 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessAlarm
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -17,6 +23,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -159,11 +166,11 @@ fun CountdownDisplay(
     days: Int,
     modifier: Modifier = Modifier
 ) {
-    val (urgencyColor, emoji) = when {
-        days == 0 -> GiftRed to "🎉"
-        days <= 3 -> GiftOrange to "⏰"
-        days <= 7 -> GiftBlue to "📅"
-        else -> GiftGreen to "🎁"
+    val (urgencyColor, icon) = when {
+        days == 0 -> GiftRed to Icons.Default.Celebration
+        days <= 3 -> GiftOrange to Icons.Default.AccessAlarm
+        days <= 7 -> GiftBlue to Icons.Default.CalendarMonth
+        else -> GiftGreen to Icons.Default.CardGiftcard
     }
 
     Row(
@@ -174,7 +181,12 @@ fun CountdownDisplay(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        Text(text = emoji, style = MaterialTheme.typography.titleMedium)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = urgencyColor,
+            modifier = Modifier.size(20.dp)
+        )
         Text(
             text = when (days) {
                 0 -> "Today!"

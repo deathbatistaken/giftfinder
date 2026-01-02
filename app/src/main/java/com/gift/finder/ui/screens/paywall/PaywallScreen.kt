@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
@@ -91,12 +92,17 @@ fun PaywallScreen(
                     modifier = Modifier.size(120.dp),
                     shape = CircleShape,
                     color = aura.primaryColor.copy(alpha = 0.15f),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
-                ) {}
-                Text(
-                    text = "🎁",
-                    style = MaterialTheme.typography.displayLarge
-                )
+                    border = androidx.compose.foundation.BorderStroke(2.dp, aura.primaryColor.copy(alpha = 0.3f))
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.CardGiftcard,
+                            contentDescription = stringResource(R.string.cd_gift_icon),
+                            tint = aura.primaryColor,
+                            modifier = Modifier.size(56.dp)
+                        )
+                    }
+                }
             }
 
             Text(
@@ -130,7 +136,7 @@ fun PaywallScreen(
                             auraColor = aura.primaryColor,
                             onClick = {
                                 (context as? Activity)?.let { activity ->
-                                    // billingManager.launchPurchase would be called here
+                                    viewModel.launchPurchase(activity, product)
                                 }
                             }
                         )

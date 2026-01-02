@@ -7,7 +7,8 @@ data class GiftSuggestion(
     val category: GiftCategory,
     val matchScore: Double,
     val matchReasons: List<String> = emptyList(),
-    val isPremiumLocked: Boolean = false
+    val isPremiumLocked: Boolean = false,
+    val priceDropPercentage: Int? = null
 ) {
     /**
      * Check if this suggestion is a good match (score > 0.5).

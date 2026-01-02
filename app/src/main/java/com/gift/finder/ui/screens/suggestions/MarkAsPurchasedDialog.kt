@@ -18,6 +18,7 @@ import com.gift.finder.domain.model.GiftSuggestion
 fun MarkAsPurchasedDialog(
     suggestion: GiftSuggestion,
     occasion: String = "",
+    appCurrency: String = "USD",
     onDismiss: () -> Unit,
     onConfirm: (price: Double?, occasion: String) -> Unit
 ) {
@@ -47,7 +48,7 @@ fun MarkAsPurchasedDialog(
                         }
                     },
                     label = { Text(stringResource(R.string.price_optional)) },
-                    prefix = { Text("$") },
+                    prefix = { Text(com.gift.finder.util.CurrencyUtils.getSymbol(appCurrency)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)

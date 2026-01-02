@@ -77,9 +77,42 @@ class HapticEngine @Inject constructor(
     }
 
     /**
+     * Triggers a spin haptic pattern (vibrates with increasing intensity).
+     */
+    suspend fun spin() {
+        if (!preferencesManager.hapticsEnabled.first()) return
+        
+        // A single short pulse for each tick of the wheel
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(10, 100))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(10)
+        }
+    }
+
+    /**
+     * Triggers a celebration haptic pattern (a series of joyful pulses).
+     */
+    suspend fun celebration() {
+        if (!preferencesManager.hapticsEnabled.first()) return
+        
+        val pattern = longArrayOf(0, 40, 40, 40, 40, 100)
+        val amplitudes = intArrayOf(0, 150, 0, 200, 0, 255)
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, amplitudes, -1))
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(pattern, -1)
+        }
+    }
+
+    /**
      * Triggers an error/warning pattern.
      */
     suspend fun error() {
+
         if (!preferencesManager.hapticsEnabled.first()) return
         
         val pattern = longArrayOf(0, 100, 50, 300)

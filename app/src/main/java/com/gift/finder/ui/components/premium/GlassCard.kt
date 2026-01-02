@@ -37,6 +37,12 @@ fun GlassCard(
             )
     ) {
         // Blur Background Effect
+        val glassColor = if (androidx.compose.foundation.isSystemInDarkTheme()) {
+            Color.White.copy(alpha = 0.05f)
+        } else {
+            Color.White.copy(alpha = 0.4f)
+        }
+        
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -44,8 +50,8 @@ fun GlassCard(
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(
-                            GlassWhite.copy(alpha = 0.4f),
-                            GlassWhite.copy(alpha = 0.1f)
+                            glassColor,
+                            glassColor.copy(alpha = 0.1f)
                         )
                     )
                 )

@@ -8,6 +8,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
@@ -37,7 +41,15 @@ import com.gift.finder.ui.viewmodels.PersonUiState
 import com.gift.finder.ui.viewmodels.PersonViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.PersonaBadge
+import com.gift.finder.ui.components.premium.PremiumButton
+import com.gift.finder.ui.components.premium.PremiumOutlinedButton
+import com.gift.finder.ui.components.premium.SkeletonPersonCard
+import com.gift.finder.ui.components.premium.SkeletonCard
+import com.gift.finder.ui.components.premium.SkeletonText
 import kotlinx.coroutines.launch
+import androidx.compose.animation.core.*
+import androidx.compose.animation.animateColorAsState
 
 /**
  * Person detail screen.
@@ -48,6 +60,7 @@ fun PersonDetailScreen(
     personId: Long,
     viewModel: PersonViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
+    onNavigateToEdit: (Long) -> Unit = {},
     onNavigateToSuggestions: () -> Unit,
     onNavigateToRoulette: (Long) -> Unit,
     onNavigateToWishlist: (Long) -> Unit,
@@ -74,6 +87,9 @@ fun PersonDetailScreen(
                     }
                 },
                 actions = {
+                    IconButton(onClick = { onNavigateToEdit(personId) }) {
+                        Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit_person))
+                    }
                     IconButton(onClick = { showDeleteDialog = true }) {
                         Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.error)
                     }
@@ -88,11 +104,20 @@ fun PersonDetailScreen(
 
             when (val state = uiState) {
                 is PersonUiState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize().padding(padding),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        CircularProgressIndicator()
+                        // Person card skeleton
+                        SkeletonPersonCard()
+                        // Action buttons skeleton
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            SkeletonText(modifier = Modifier.weight(1f), width = 100.dp, height = 44.dp)
+                            SkeletonText(modifier = Modifier.weight(1f), width = 100.dp, height = 44.dp)
+                        }
+                        // Details skeleton
+                        SkeletonCard(height = 120.dp)
+                        SkeletonCard(height = 80.dp)
                     }
                 }
 
@@ -116,7 +141,8 @@ fun PersonDetailScreen(
                         },
                         onNavigateToSuggestions = onNavigateToSuggestions,
                         onNavigateToRoulette = { onNavigateToRoulette(personId) },
-                        onNavigateToWishlist = { onNavigateToWishlist(personId) }
+                        onNavigateToWishlist = { onNavigateToWishlist(personId) },
+                        onAddToCalendar = viewModel::addToCalendar
                     )
                 }
 
@@ -139,9 +165,11 @@ fun PersonDetailScreen(
             text = { Text(stringResource(R.string.delete_person_message)) },
             confirmButton = {
                 TextButton(onClick = {
-                    // Delete would be handled by HomeViewModel
-                    showDeleteDialog = false
-                    onNavigateBack()
+                    scope.launch {
+                        viewModel.deletePerson(personId)
+                        showDeleteDialog = false
+                        onNavigateBack()
+                    }
                 }) {
                     Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error)
                 }
@@ -166,8 +194,22 @@ private fun PersonDetailContent(
     onDeleteSpecialDate: (SpecialDate) -> Unit,
     onNavigateToSuggestions: () -> Unit,
     onNavigateToRoulette: () -> Unit,
-    onNavigateToWishlist: () -> Unit
+    onNavigateToWishlist: () -> Unit,
+    onAddToCalendar: (SpecialDate) -> Unit
 ) {
+    var showAddDateDialog by remember { mutableStateOf(false) }
+
+    // Add Special Date Dialog
+    if (showAddDateDialog) {
+        AddSpecialDateDialog(
+            onDismiss = { showAddDateDialog = false },
+            onConfirm = { title, dateType, month, day ->
+                onAddSpecialDate(title, dateType, month, day)
+                showAddDateDialog = false
+            }
+        )
+    }
+
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
@@ -176,6 +218,28 @@ private fun PersonDetailContent(
         // Persona Card
         item {
             val aura = LocalCosmicAura.current
+            val infiniteTransition = rememberInfiniteTransition(label = "avatar_aura")
+            
+            val auraScale by infiniteTransition.animateFloat(
+                initialValue = 1f,
+                targetValue = 1.25f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(2500, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "scale"
+            )
+
+            val auraAlpha by infiniteTransition.animateFloat(
+                initialValue = 0.2f,
+                targetValue = 0.5f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(2500, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "alpha"
+            )
+
             GlassCard(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -183,48 +247,55 @@ private fun PersonDetailContent(
                         Modifier.background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
-                                    aura.primaryColor.copy(alpha = 0.1f),
+                                    aura.primaryColor.copy(alpha = 0.15f),
                                     Color.Transparent
                                 )
                             ),
-                            shape = RoundedCornerShape(24.dp)
-                        )
-                    ),
-                border = androidx.compose.foundation.BorderStroke(
-                    1.dp,
-                    Brush.linearGradient(
-                        colors = listOf(
-                            aura.primaryColor.copy(alpha = 0.4f),
-                            Color.Transparent,
-                            aura.primaryColor.copy(alpha = 0.2f)
+                            shape = RoundedCornerShape(32.dp)
                         )
                     )
-                )
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    // Avatar with Halo
+                    // Avatar with Pulsating Halo
                     Box(
                         contentAlignment = Alignment.Center,
-                        modifier = Modifier.padding(top = 8.dp)
+                        modifier = Modifier.padding(top = 16.dp)
                     ) {
+                        // Multi-layered Aura
                         Surface(
-                            modifier = Modifier.size(108.dp),
+                            modifier = Modifier
+                                .size(120.dp)
+                                .graphicsLayer {
+                                    scaleX = auraScale
+                                    scaleY = auraScale
+                                    alpha = auraAlpha
+                                },
                             shape = CircleShape,
-                            color = aura.primaryColor.copy(alpha = 0.15f),
-                            border = androidx.compose.foundation.BorderStroke(2.dp, aura.primaryColor.copy(alpha = 0.3f))
+                            color = aura.primaryColor.copy(alpha = 0.1f),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
                         ) {}
-                        Text(person.avatarEmoji, style = MaterialTheme.typography.displayMedium)
+                        
+                        Surface(
+                            modifier = Modifier.size(110.dp),
+                            shape = CircleShape,
+                            color = aura.primaryColor.copy(alpha = 0.2f),
+                            border = androidx.compose.foundation.BorderStroke(2.dp, aura.primaryColor.copy(alpha = 0.4f))
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(person.avatarEmoji, style = MaterialTheme.typography.displayMedium)
+                            }
+                        }
                     }
                     
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
                     
                     Text(
                         person.name,
                         style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.ExtraBold,
+                        fontWeight = FontWeight.Black,
                         color = MaterialTheme.colorScheme.primary
                     )
                     
@@ -232,53 +303,47 @@ private fun PersonDetailContent(
                         val field = R.string::class.java.getField(person.relationshipType.displayKey)
                         field.getInt(null)
                     }
-                    Text(
-                        stringResource(relationshipStringId).uppercase(),
-                        style = MaterialTheme.typography.labelMedium,
-                        letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
-                    )
-
-                    if (personaSummary != null) {
-                        Spacer(modifier = Modifier.height(12.dp))
+                    Surface(
+                        color = aura.primaryColor.copy(alpha = 0.1f),
+                        shape = RoundedCornerShape(16.dp),
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
                         Text(
-                            personaSummary,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontStyle = FontStyle.Italic,
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                            modifier = Modifier
-                                .padding(horizontal = 24.dp)
-                                .graphicsLayer { alpha = 0.9f }
+                            stringResource(relationshipStringId).uppercase(),
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = aura.primaryColor,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
 
-                    if (dominantArchetype != null) {
+                    if (personaSummary != null) {
                         Spacer(modifier = Modifier.height(16.dp))
-                        Surface(
-                            color = aura.primaryColor.copy(alpha = 0.2f),
-                            shape = RoundedCornerShape(12.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.4f))
+                        GlassCard(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            cornerRadius = 16.dp,
+                            border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.1f))
                         ) {
-                            Row(
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(dominantArchetype.emoji, style = MaterialTheme.typography.titleSmall)
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    dominantArchetype.title,
-                                    style = MaterialTheme.typography.labelLarge,
-                                    fontWeight = FontWeight.ExtraBold,
-                                    color = aura.primaryColor
-                                )
-                            }
+                            Text(
+                                personaSummary,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontStyle = FontStyle.Italic,
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                modifier = Modifier.padding(12.dp)
+                            )
                         }
+                    }
+
+                    if (dominantArchetype != null) {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        PersonaBadge(archetype = dominantArchetype)
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
         }
+
 
         // Action buttons
         item {
@@ -286,26 +351,29 @@ private fun PersonDetailContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Button(
+                PremiumButton(
+                    text = stringResource(R.string.find_gift),
+                    icon = Icons.Default.CardGiftcard,
                     onClick = onNavigateToSuggestions,
                     modifier = Modifier.weight(1f)
-                ) {
-                    Text("🎁 " + stringResource(R.string.find_gift))
-                }
-                OutlinedButton(
+                )
+                PremiumButton(
+                    text = stringResource(R.string.roulette),
+                    icon = Icons.Default.Casino,
+                    containerColor = GiftPurple,
                     onClick = onNavigateToRoulette,
                     modifier = Modifier.weight(1f)
-                ) {
-                    Text("🎰 " + stringResource(R.string.roulette))
-                }
+                )
             }
             
-            OutlinedButton(
+            Spacer(modifier = Modifier.height(12.dp))
+
+            PremiumOutlinedButton(
+                text = stringResource(R.string.wishlist),
+                icon = Icons.Default.Bookmark,
                 onClick = onNavigateToWishlist,
                 modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("🔖 Wishlist")
-            }
+            )
         }
 
         // Interests
@@ -326,17 +394,35 @@ private fun PersonDetailContent(
         }
 
         // Special dates
-        if (person.specialDates.isNotEmpty()) {
-            item {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(stringResource(R.string.special_dates), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                TextButton(onClick = { showAddDateDialog = true }) {
+                    Text(stringResource(R.string.add_special_date_action))
+                }
             }
+        }
+        if (person.specialDates.isNotEmpty()) {
             items(person.specialDates) { date ->
                 GlassCard(modifier = Modifier.fillMaxWidth()) {
                     SpecialDateCard(
                         specialDate = date,
-                        onDelete = { onDeleteSpecialDate(date) }
+                        onDelete = { onDeleteSpecialDate(date) },
+                        onAddToCalendar = { onAddToCalendar(date) }
                     )
                 }
+            }
+        } else {
+            item {
+                Text(
+                    stringResource(R.string.no_special_dates),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
 
@@ -370,7 +456,8 @@ private fun PersonDetailContent(
 @Composable
 private fun SpecialDateCard(
     specialDate: SpecialDate,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onAddToCalendar: () -> Unit
 ) {
     val daysUntil = specialDate.getDaysUntil()
 
@@ -404,6 +491,9 @@ private fun SpecialDateCard(
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
                 )
+            }
+            IconButton(onClick = onAddToCalendar) {
+                Icon(Icons.Default.CalendarMonth, contentDescription = stringResource(R.string.add_to_calendar), tint = MaterialTheme.colorScheme.primary)
             }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.error)

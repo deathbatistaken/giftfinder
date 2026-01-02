@@ -34,6 +34,8 @@ import com.gift.finder.ui.viewmodels.SearchViewModel
 import com.gift.finder.ui.viewmodels.SearchUiState
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.SkeletonPersonCard
+import com.gift.finder.ui.components.premium.BouncingDotsIndicator
 import com.gift.finder.domain.model.GiftCategory
 import androidx.compose.animation.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -152,7 +154,7 @@ fun SearchScreen(
                         is SearchUiState.Idle -> {
                             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text("🔍", style = MaterialTheme.typography.displayMedium)
+                                    Text(stringResource(R.string.emoji_search), style = MaterialTheme.typography.displayMedium)
                                     Spacer(modifier = Modifier.height(16.dp))
                                     Text(stringResource(R.string.search_hint), color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
@@ -161,7 +163,7 @@ fun SearchScreen(
                         is SearchUiState.NoResults -> {
                             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text("😕", style = MaterialTheme.typography.displayMedium)
+                                    Text(stringResource(R.string.emoji_empty), style = MaterialTheme.typography.displayMedium)
                                     Spacer(modifier = Modifier.height(16.dp))
                                     Text(stringResource(R.string.no_results))
                                 }
@@ -183,7 +185,7 @@ fun SearchScreen(
                             ) {
                                 if (state.persons.isNotEmpty()) {
                                     item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
-                                        Text("PEOPLE", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor)
+                                        Text(stringResource(R.string.people), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor)
                                     }
                                     items(state.persons) { person ->
                                         SearchResultCard(
@@ -197,7 +199,7 @@ fun SearchScreen(
                                 }
                                 if (state.categories.isNotEmpty()) {
                                     item(span = { androidx.compose.foundation.lazy.grid.GridItemSpan(columns) }) {
-                                        Text("GIFT IDEAS", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor, modifier = Modifier.padding(top = 16.dp))
+                                        Text(stringResource(R.string.gift_ideas).uppercase(), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = aura.primaryColor, modifier = Modifier.padding(top = 16.dp))
                                     }
                                     items(state.categories) { category ->
                                         GiftCategoryResultCard(

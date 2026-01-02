@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +26,8 @@ import com.gift.finder.ui.theme.*
 import com.gift.finder.ui.viewmodels.HomeViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.SkeletonPersonCard
+import com.gift.finder.ui.components.premium.UrgencyCountdown
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,12 +74,28 @@ fun CalendarScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("📅", style = MaterialTheme.typography.displayMedium)
-                        Spacer(modifier = Modifier.height(16.dp))
+                        val aura = LocalCosmicAura.current
+                        Surface(
+                            modifier = Modifier.size(80.dp),
+                            shape = CircleShape,
+                            color = aura.primaryColor.copy(alpha = 0.1f)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = Icons.Default.CalendarMonth,
+                                    contentDescription = stringResource(R.string.cd_calendar_icon),
+                                    tint = aura.primaryColor,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
                         Text(
                             stringResource(R.string.no_upcoming_dates),
-                            style = MaterialTheme.typography.titleMedium
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
                         )
+                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             stringResource(R.string.add_special_dates_hint),
                             style = MaterialTheme.typography.bodyMedium,

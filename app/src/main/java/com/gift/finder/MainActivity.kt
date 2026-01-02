@@ -73,6 +73,13 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity() {
                     GiftFinderNavHost(windowSizeClass = windowSizeClass)
                 }
             }
+            
+            // Handle Deep Link
+            val intent = intent
+            if (intent?.action == "com.gift.finder.ACTION_ADD_PERSON") {
+                mainViewModel.setDeepLink("add_person")
+                intent.action = null // Consume
+            }
         }
     }
 }

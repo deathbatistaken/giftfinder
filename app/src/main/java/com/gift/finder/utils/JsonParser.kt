@@ -26,6 +26,7 @@ class JsonParser @Inject constructor(
             val type = object : TypeToken<List<Archetype>>() {}.type
             gson.fromJson(jsonString, type) ?: emptyList()
         } catch (e: Exception) {
+            android.util.Log.e("JsonParser", "Error parsing archetypes", e)
             emptyList()
         }
     }
@@ -39,6 +40,7 @@ class JsonParser @Inject constructor(
             val type = object : TypeToken<List<GiftCategory>>() {}.type
             gson.fromJson(jsonString, type) ?: emptyList()
         } catch (e: Exception) {
+            android.util.Log.e("JsonParser", "Error parsing gift categories", e)
             emptyList()
         }
     }

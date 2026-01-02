@@ -41,6 +41,17 @@ fun GiftFinderNavHost(
     } else {
         Screen.Onboarding.route
     }
+    
+    val pendingDeepLink by mainViewModel.pendingDeepLink.collectAsState(initial = null)
+    
+    androidx.compose.runtime.LaunchedEffect(pendingDeepLink) {
+        pendingDeepLink?.let { deepLink ->
+            if (deepLink == "add_person") {
+                navController.navigate(Screen.AddPerson.route)
+                mainViewModel.clearDeepLink()
+            }
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -94,6 +105,12 @@ fun GiftFinderNavHost(
                 },
                 onNavigateToPaywall = {
                     navController.navigate(Screen.Paywall.route)
+                },
+                onNavigateToCalendar = {
+                    navController.navigate(Screen.Calendar.route)
+                },
+                onNavigateToSearch = {
+                    navController.navigate(Screen.Search.route)
                 }
             )
         }
@@ -105,6 +122,16 @@ fun GiftFinderNavHost(
                 onPersonCreated = { personId ->
                     navController.popBackStack()
                     navController.navigate(Screen.PersonDetail.createRoute(personId))
+                }
+            )
+        }
+
+        // Import Contacts
+        composable(Screen.ImportContacts.route) {
+            com.gift.finder.ui.screens.person.ImportContactsScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onImportSuccess = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -122,6 +149,9 @@ fun GiftFinderNavHost(
             PersonDetailScreen(
                 personId = personId,
                 onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { id ->
+                    navController.navigate(Screen.EditPerson.createRoute(id))
+                },
                 onNavigateToSuggestions = {
                     navController.navigate(Screen.GiftSuggestions.createRoute(personId))
                 },

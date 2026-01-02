@@ -51,6 +51,7 @@
     <string name="in_days">In %1$d days</string>
     
     <!-- Person -->
+    <string name="basic_info">Basic Info</string>
     <string name="name">Name</string>
     <string name="relationship">Relationship</string>
     <string name="choose_emoji">Choose an emoji</string>
@@ -75,6 +76,8 @@
     <string name="not_interested">Not interested</string>
     <string name="unlock_pro">Unlock Pro</string>
     <string name="why_not">Why not this gift?</string>
+    <string name="analyzing_preferences">Analyzing your preferences…</string>
+    <string name="try_different_filters">Try adjusting your filters</string>
     
     <!-- Roulette -->
     <string name="gift_roulette">Gift Roulette</string>
@@ -92,6 +95,11 @@
     <string name="theme_dark">Dark</string>
     <string name="theme_system">System Default</string>
     <string name="language">Language</string>
+    <string name="currency">Currency</string>
+    <string name="select_currency">Select Currency</string>
+    <string name="currency_tl">Turkish Lira (₺)</string>
+    <string name="currency_usd">US Dollar ($)</string>
+    <string name="currency_eur">Euro (€)</string>
     <string name="select_language">Select Language</string>
     <string name="haptic_feedback">Haptic Feedback</string>
     <string name="notifications">Notifications</string>
@@ -136,7 +144,12 @@
     <string name="all_time">All Time</string>
     <string name="total_spent">Total Spent</string>
     <string name="gifts_given">Gifts Given</string>
-    <string name="avg_per_person">Average per Person</string>
+    <string name="avg_per_person">Avg. Per Person</string>
+    <string name="budget_progress">MONTHLY BUDGET STATUS</string>
+    <string name="budget_remaining">%1$s Remaining</string>
+    <string name="budget_exceeded">%1$s Exceeded!</string>
+    <string name="set_monthly_budget">Set Monthly Budget</string>
+    <string name="relationship_breakdown">Relationship Breakdown</string>
     <string name="top_spending">Top Spending</string>
     <string name="recent_gifts">Recent Gifts</string>
     <string name="gifts">gifts</string>
@@ -174,6 +187,7 @@
     <string name="delete_date_message">Delete %1$s? This cannot be undone.</string>
     
     <!-- Search -->
+    <string name="search">Search</string>
     <string name="search_placeholder">Search people or interests...</string>
     <string name="search_hint">Type a name or interest to search</string>
     <string name="no_results">No results found</string>
@@ -207,8 +221,16 @@
     <string name="rejection_expensive">Too Expensive</string>
     <string name="rejection_not_style">Not Their Style</string>
     <string name="rejection_already_have">Already Has This</string>
+    <string name="rejection_bought_before">Bought Before</string>
     <string name="rejection_not_interested">Not Interested</string>
     <string name="rejection_other">Other Reason</string>
+
+    <string name="rejection_expensive_desc">Out of my budget range</string>
+    <string name="rejection_not_style_desc">Doesn\'t fit their taste</string>
+    <string name="rejection_already_have_desc">They already own this</string>
+    <string name="rejection_bought_before_desc">I gave this previously</string>
+    <string name="rejection_not_interested_desc">Not interested in this</string>
+    <string name="rejection_other_desc">Something else</string>
     <string name="discovery_mode">Discovery Mode</string>
     <string name="grid_view">Grid View</string>
     <string name="more_ideas">more ideas remaining</string>
@@ -222,7 +244,11 @@
     <string name="persona_keyword_outdoor">Fearless</string>
     <string name="persona_keyword_intellectual">Erudite</string>
     <string name="persona_keyword_lifestyle">Sophisticated</string>
+    <string name="persona_keyword_celestial">Celestial</string>
+    <string name="persona_keyword_radiant">Radiant</string>
+    <string name="persona_keyword_mystic">Mystic</string>
     <string name="persona_keyword_eclectic">Eclectic</string>
+
     <string name="persona_keyword_dynamic">Dynamic</string>
     <string name="persona_keyword_captivating">Captivating</string>
     <string name="persona_template_archetype">The %1$s %2$s</string>
@@ -261,4 +287,75 @@
     <string name="export_error">Failed to export data</string>
     <string name="import_success">Data imported successfully</string>
     <string name="import_error">Failed to import data</string>
+
+    <!-- Settings Additional -->
+    <string name="cosmic_aura">Cosmic Aura</string>
+    <string name="reminder_schedule">Reminder Schedule</string>
+    <string name="days_before_7">7 days before</string>
+    <string name="days_before_3">3 days before</string>
+    <string name="same_day">Same day</string>
+
+    <!-- Wishlist -->
+    <string name="wishlist">Wishlist</string>
+    <string name="wishlist_empty">Wishlist is Empty</string>
+    <string name="wishlist_hint">Save your favorite cosmic gift ideas here!</string>
+
+    <string name="consulting_stars">CONSULTING THE STARS...</string>
+    <string name="saved_to_wishlist">%1$s saved to Wishlist ✨</string>
+    <string name="gift_marked_purchased">Gift marked as purchased!</string>
+    <string name="visual_analysis">Visual Analysis</string>
+    <string name="rank_cosmic">RANK: COSMIC</string>
+
+    <!-- Contacts Import -->
+    <string name="import_contacts">Import from Contacts</string>
+    <string name="create_manually">Create Manually</string>
+    <string name="permission_required_contacts">Permission required to load contacts.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="import_action">Import (%1$d)</string>
+    <string name="no_contacts_found">No contacts found.</string>
+    <string name="contacts_permission_rationale">We need this permission to import people from your contacts to GiftFinder.</string>
+    <string name="add_to_calendar">Add to Calendar</string>
+
+    <!-- Smart Features Settings -->
+    <string name="smart_features">SMART FEATURES</string>
+    <string name="auto_calendar_sync">Automatic Calendar Sync</string>
+    <string name="auto_calendar_sync_desc">Automatically adds special dates to your system calendar.</string>
+    <string name="persona_creativity">Persona Creativity</string>
+    <string name="persona_creativity_desc">Determines how unusual the gift suggestions will be.</string>
+    <string name="creativity_low">Traditional</string>
+    <string name="creativity_high">Cosmic Explorer</string>
+    <string name="cosmic_summary">COSMIC SUMMARY</string>
+    <string name="cosmic_summary_today">Today is %1$s! ✨</string>
+    <string name="cosmic_summary_upcoming">%1$s in %2$d days.</string>
+
+    <!-- Search Section -->
+    <string name="people">PEOPLE</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_gift_icon">Gift icon</string>
+    <string name="cd_calendar_icon">Calendar icon</string>
+    <string name="cd_celebration_icon">Celebration icon</string>
+    <string name="cd_bookmark_icon">Bookmark icon</string>
+    <string name="cd_price_drop_icon">Price drop indicator</string>
+    <string name="cd_casino_icon">Roulette icon</string>
+    <string name="cd_settings_icon">Settings icon</string>
+    <string name="cd_search_icon">Search icon</string>
+    <string name="cd_refresh_icon">Refresh</string>
+    <string name="cd_shop_icon">Shop now</string>
+    <string name="cd_delete_icon">Delete</string>
+    <string name="cd_close_icon">Close</string>
+    <string name="cd_check_icon">Check</string>
+    <string name="cd_premium_icon">Premium feature</string>
+    <string name="cd_notification_icon">Notifications</string>
+    <string name="cd_export_icon">Export data</string>
+    <string name="cd_import_icon">Import data</string>
+    <string name="cd_loading">Loading</string>
+    
+    <!-- Emojis & UI Text -->
+    <string name="emoji_search">🔍</string>
+    <string name="emoji_empty">😕</string>
+    <string name="emoji_money">💰</string>
+    <string name="emoji_chart">📊</string>
+    <string name="emoji_cake">🎂</string>
+    <string name="add_special_date_action">+ Add Special Date</string>
 </resources>

@@ -26,6 +26,7 @@ class WishlistViewModel @Inject constructor(
     private val savedGiftRepository: SavedGiftRepository,
     private val personRepository: PersonRepository,
     private val giftRepository: GiftRepository,
+    private val preferencesManager: com.gift.finder.data.manager.PreferencesManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -33,6 +34,9 @@ class WishlistViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<WishlistUiState>(WishlistUiState.Loading)
     val uiState: StateFlow<WishlistUiState> = _uiState.asStateFlow()
+
+    val appCurrency = preferencesManager.appCurrency
+        .stateIn(viewModelScope, kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000), "USD")
 
     init {
         loadWishlist()
@@ -50,11 +54,17 @@ class WishlistViewModel @Inject constructor(
                     val categories = giftRepository.getGiftCategories()
                     val suggestions = savedGifts.mapNotNull { saved ->
                         categories.find { it.id == saved.categoryId }?.let { category ->
+                            // Simulate Price Radar for Wishlist: Deterministic per day and category (30% chance)
+                            val daySeed = System.currentTimeMillis() / (24 * 60 * 60 * 1000)
+                            val random = java.util.Random(category.id.hashCode() + daySeed + 1)
+                            val priceDrop = if (random.nextFloat() < 0.3f) (10..40).random(kotlin.random.Random(random.nextLong())) else null
+                            
                             GiftSuggestion(
                                 category = category,
-                                matchScore = 100.0, // Explicitly saved
+                                matchScore = 100.0,
                                 matchReasons = listOf("Saved to Wishlist"),
-                                isPremiumLocked = false
+                                isPremiumLocked = false,
+                                priceDropPercentage = priceDrop
                             )
                         }
                     }
@@ -69,6 +79,20 @@ class WishlistViewModel @Inject constructor(
     fun removeGift(categoryId: String) {
         viewModelScope.launch {
             savedGiftRepository.removeGift(personId, categoryId)
+        }
+    }
+
+    fun purchaseGift(categoryId: String, categoryTitle: String, price: Double?, occasion: String) {
+        viewModelScope.launch {
+            val historyItem = com.gift.finder.domain.model.GiftHistoryItem(
+                personId = personId,
+                categoryId = categoryId,
+                categoryTitle = categoryTitle,
+                price = price,
+                occasion = occasion
+            )
+            personRepository.addGiftToHistory(historyItem)
+            savedGiftRepository.removeGift(personId, categoryId) // Remove from wishlist once bought
         }
     }
 }

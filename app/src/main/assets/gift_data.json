@@ -5,10 +5,21 @@
       "title": "Tech Gadgets",
       "description": "Latest technology accessories and smart devices",
       "emoji": "📱",
-      "interestTags": ["technology", "gadgets", "electronics", "smart home", "innovation"],
-      "styleTags": ["TECH", "PRACTICAL"],
+      "interestTags": [
+        "technology",
+        "gadgets",
+        "electronics",
+        "smart home",
+        "innovation"
+      ],
+      "styleTags": [
+        "TECH",
+        "PRACTICAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "tech gadgets gifts"
     },
@@ -17,10 +28,21 @@
       "title": "Gaming Accessories",
       "description": "Controllers, headsets, and gaming gear",
       "emoji": "🎮",
-      "interestTags": ["gaming", "video games", "esports", "streaming", "pc gaming"],
-      "styleTags": ["FUN", "TECH"],
+      "interestTags": [
+        "gaming",
+        "video games",
+        "esports",
+        "streaming",
+        "pc gaming"
+      ],
+      "styleTags": [
+        "FUN",
+        "TECH"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "gaming accessories gifts"
     },
@@ -29,10 +51,21 @@
       "title": "Bestselling Books",
       "description": "Top-rated books across all genres",
       "emoji": "📚",
-      "interestTags": ["reading", "books", "literature", "learning", "fiction"],
-      "styleTags": ["CREATIVE", "SENTIMENTAL"],
+      "interestTags": [
+        "reading",
+        "books",
+        "literature",
+        "learning",
+        "fiction"
+      ],
+      "styleTags": [
+        "CREATIVE",
+        "SENTIMENTAL"
+      ],
       "budgetRange": "LOW",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "bestseller books 2024"
     },
@@ -41,10 +74,24 @@
       "title": "Outdoor Adventure Gear",
       "description": "Camping, hiking, and outdoor equipment",
       "emoji": "🏕️",
-      "interestTags": ["outdoors", "hiking", "camping", "nature", "adventure", "travel"],
-      "styleTags": ["PRACTICAL", "EXPERIENTIAL"],
+      "interestTags": [
+        "outdoors",
+        "hiking",
+        "camping",
+        "nature",
+        "adventure",
+        "travel"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "EXPERIENTIAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["SPRING", "SUMMER", "FALL"],
+      "seasons": [
+        "SPRING",
+        "SUMMER",
+        "FALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "outdoor adventure gear gifts"
     },
@@ -53,10 +100,21 @@
       "title": "Fitness Equipment",
       "description": "Workout gear and fitness accessories",
       "emoji": "💪",
-      "interestTags": ["fitness", "gym", "workout", "health", "sports", "yoga"],
-      "styleTags": ["PRACTICAL"],
+      "interestTags": [
+        "fitness",
+        "gym",
+        "workout",
+        "health",
+        "sports",
+        "yoga"
+      ],
+      "styleTags": [
+        "PRACTICAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "fitness equipment home gym"
     },
@@ -65,10 +123,20 @@
       "title": "Premium Watches",
       "description": "Elegant timepieces and smartwatches",
       "emoji": "⌚",
-      "interestTags": ["fashion", "accessories", "luxury", "style"],
-      "styleTags": ["LUXURIOUS", "PRACTICAL"],
+      "interestTags": [
+        "fashion",
+        "accessories",
+        "luxury",
+        "style"
+      ],
+      "styleTags": [
+        "LUXURIOUS",
+        "PRACTICAL"
+      ],
       "budgetRange": "LUXURY",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "premium watches gift"
     },
@@ -77,10 +145,20 @@
       "title": "Coffee Lover Set",
       "description": "Specialty coffee and brewing equipment",
       "emoji": "☕",
-      "interestTags": ["coffee", "cafe", "barista", "morning routine"],
-      "styleTags": ["PRACTICAL", "SENTIMENTAL"],
+      "interestTags": [
+        "coffee",
+        "cafe",
+        "barista",
+        "morning routine"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "SENTIMENTAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "coffee lover gift set"
     },
@@ -89,10 +167,20 @@
       "title": "Premium Skincare Set",
       "description": "Luxury skincare and beauty products",
       "emoji": "✨",
-      "interestTags": ["skincare", "beauty", "self-care", "wellness"],
-      "styleTags": ["LUXURIOUS", "ROMANTIC"],
+      "interestTags": [
+        "skincare",
+        "beauty",
+        "self-care",
+        "wellness"
+      ],
+      "styleTags": [
+        "LUXURIOUS",
+        "ROMANTIC"
+      ],
       "budgetRange": "HIGH",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "premium skincare gift set"
     },
@@ -101,10 +189,21 @@
       "title": "Cooking Essentials",
       "description": "Kitchen gadgets and cookware",
       "emoji": "👨‍🍳",
-      "interestTags": ["cooking", "food", "kitchen", "baking", "chef"],
-      "styleTags": ["PRACTICAL", "CREATIVE"],
+      "interestTags": [
+        "cooking",
+        "food",
+        "kitchen",
+        "baking",
+        "chef"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "CREATIVE"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "cooking kitchen gadgets gift"
     },
@@ -113,10 +212,20 @@
       "title": "Art Supplies",
       "description": "Professional art and craft materials",
       "emoji": "🎨",
-      "interestTags": ["art", "painting", "drawing", "crafts", "creative"],
-      "styleTags": ["CREATIVE"],
+      "interestTags": [
+        "art",
+        "painting",
+        "drawing",
+        "crafts",
+        "creative"
+      ],
+      "styleTags": [
+        "CREATIVE"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "professional art supplies set"
     },
@@ -125,10 +234,21 @@
       "title": "Handmade Jewelry",
       "description": "Unique handcrafted jewelry pieces",
       "emoji": "💎",
-      "interestTags": ["jewelry", "fashion", "accessories", "handmade", "artisan"],
-      "styleTags": ["ROMANTIC", "SENTIMENTAL"],
+      "interestTags": [
+        "jewelry",
+        "fashion",
+        "accessories",
+        "handmade",
+        "artisan"
+      ],
+      "styleTags": [
+        "ROMANTIC",
+        "SENTIMENTAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "ETSY",
       "searchQuery": "handmade jewelry gift"
     },
@@ -137,10 +257,21 @@
       "title": "Spa Experience",
       "description": "Relaxation and wellness products",
       "emoji": "🧖",
-      "interestTags": ["spa", "relaxation", "wellness", "self-care", "massage"],
-      "styleTags": ["ROMANTIC", "EXPERIENTIAL"],
+      "interestTags": [
+        "spa",
+        "relaxation",
+        "wellness",
+        "self-care",
+        "massage"
+      ],
+      "styleTags": [
+        "ROMANTIC",
+        "EXPERIENTIAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "spa relaxation gift set"
     },
@@ -149,10 +280,21 @@
       "title": "Music Equipment",
       "description": "Instruments and audio accessories",
       "emoji": "🎵",
-      "interestTags": ["music", "instruments", "audio", "musician", "vinyl"],
-      "styleTags": ["CREATIVE", "FUN"],
+      "interestTags": [
+        "music",
+        "instruments",
+        "audio",
+        "musician",
+        "vinyl"
+      ],
+      "styleTags": [
+        "CREATIVE",
+        "FUN"
+      ],
       "budgetRange": "HIGH",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "music equipment accessories gift"
     },
@@ -161,10 +303,20 @@
       "title": "Wine Enthusiast Set",
       "description": "Wine accessories and tasting sets",
       "emoji": "🍷",
-      "interestTags": ["wine", "drinking", "sommelier", "vineyard"],
-      "styleTags": ["LUXURIOUS", "ROMANTIC"],
+      "interestTags": [
+        "wine",
+        "drinking",
+        "sommelier",
+        "vineyard"
+      ],
+      "styleTags": [
+        "LUXURIOUS",
+        "ROMANTIC"
+      ],
       "budgetRange": "HIGH",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "wine lover gift set"
     },
@@ -173,10 +325,22 @@
       "title": "Plant Lover Set",
       "description": "Indoor plants and gardening tools",
       "emoji": "🌱",
-      "interestTags": ["plants", "gardening", "nature", "green", "home decor"],
-      "styleTags": ["CREATIVE", "PRACTICAL"],
+      "interestTags": [
+        "plants",
+        "gardening",
+        "nature",
+        "green",
+        "home decor"
+      ],
+      "styleTags": [
+        "CREATIVE",
+        "PRACTICAL"
+      ],
       "budgetRange": "LOW",
-      "seasons": ["SPRING", "SUMMER"],
+      "seasons": [
+        "SPRING",
+        "SUMMER"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "indoor plants gift set"
     },
@@ -185,10 +349,21 @@
       "title": "Photography Gear",
       "description": "Camera accessories and photo equipment",
       "emoji": "📸",
-      "interestTags": ["photography", "camera", "photos", "creative", "travel"],
-      "styleTags": ["TECH", "CREATIVE"],
+      "interestTags": [
+        "photography",
+        "camera",
+        "photos",
+        "creative",
+        "travel"
+      ],
+      "styleTags": [
+        "TECH",
+        "CREATIVE"
+      ],
       "budgetRange": "HIGH",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "photography accessories gift"
     },
@@ -197,10 +372,22 @@
       "title": "Cozy Winter Set",
       "description": "Blankets, scarves, and warm accessories",
       "emoji": "🧣",
-      "interestTags": ["cozy", "comfort", "warmth", "winter", "home"],
-      "styleTags": ["SENTIMENTAL", "PRACTICAL"],
+      "interestTags": [
+        "cozy",
+        "comfort",
+        "warmth",
+        "winter",
+        "home"
+      ],
+      "styleTags": [
+        "SENTIMENTAL",
+        "PRACTICAL"
+      ],
       "budgetRange": "LOW",
-      "seasons": ["WINTER", "FALL"],
+      "seasons": [
+        "WINTER",
+        "FALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "cozy winter gift set blanket"
     },
@@ -209,10 +396,21 @@
       "title": "Pet Lover Gifts",
       "description": "Gifts for pet parents and their furry friends",
       "emoji": "🐾",
-      "interestTags": ["pets", "dogs", "cats", "animals", "pet parent"],
-      "styleTags": ["FUN", "SENTIMENTAL"],
+      "interestTags": [
+        "pets",
+        "dogs",
+        "cats",
+        "animals",
+        "pet parent"
+      ],
+      "styleTags": [
+        "FUN",
+        "SENTIMENTAL"
+      ],
       "budgetRange": "LOW",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "pet lover gift set"
     },
@@ -221,10 +419,21 @@
       "title": "Travel Essentials",
       "description": "Luggage, organizers, and travel gadgets",
       "emoji": "✈️",
-      "interestTags": ["travel", "adventure", "vacation", "exploring", "wanderlust"],
-      "styleTags": ["PRACTICAL", "EXPERIENTIAL"],
+      "interestTags": [
+        "travel",
+        "adventure",
+        "vacation",
+        "exploring",
+        "wanderlust"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "EXPERIENTIAL"
+      ],
       "budgetRange": "MEDIUM",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "travel essentials gift set"
     },
@@ -233,12 +442,365 @@
       "title": "Board Games Collection",
       "description": "Strategy games and party games",
       "emoji": "🎲",
-      "interestTags": ["board games", "games", "family", "party", "strategy"],
-      "styleTags": ["FUN"],
+      "interestTags": [
+        "board games",
+        "games",
+        "family",
+        "party",
+        "strategy"
+      ],
+      "styleTags": [
+        "FUN"
+      ],
       "budgetRange": "LOW",
-      "seasons": ["ALL"],
+      "seasons": [
+        "ALL"
+      ],
       "storeType": "AMAZON",
       "searchQuery": "board games gift"
+    },
+    {
+      "id": "noise_canceling",
+      "title": "Noise Canceling Headphones",
+      "description": "Premium audio experience and silence",
+      "emoji": "🎧",
+      "interestTags": [
+        "music",
+        "audio",
+        "travel",
+        "productivity",
+        "technology"
+      ],
+      "styleTags": [
+        "TECH",
+        "LUXURIOUS"
+      ],
+      "budgetRange": "HIGH",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "noise canceling wireless headphones"
+    },
+    {
+      "id": "smart_home_hub",
+      "title": "Smart Home Hub",
+      "description": "Control your cosmic environment with ease",
+      "emoji": "🏠",
+      "interestTags": [
+        "technology",
+        "gadgets",
+        "smart home",
+        "home life",
+        "innovation"
+      ],
+      "styleTags": [
+        "TECH",
+        "PRACTICAL"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "smart home hub controller"
+    },
+    {
+      "id": "custom_star_map",
+      "title": "Custom Star Map",
+      "description": "The cosmic alignment of a special moment",
+      "emoji": "🌌",
+      "interestTags": [
+        "astronomy",
+        "memories",
+        "sentimental",
+        "art"
+      ],
+      "styleTags": [
+        "SENTIMENTAL",
+        "CREATIVE"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "ETSY",
+      "searchQuery": "custom star map anniversary gift"
+    },
+    {
+      "id": "mechanical_keyboard",
+      "title": "Custom Mechanical Keyboard",
+      "description": "Satisfying tactile cosmic typing",
+      "emoji": "⌨️",
+      "interestTags": [
+        "technology",
+        "coding",
+        "gaming",
+        "customization",
+        "desk setup"
+      ],
+      "styleTags": [
+        "TECH",
+        "CREATIVE"
+      ],
+      "budgetRange": "HIGH",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "mechanical gaming keyboard rgb"
+    },
+    {
+      "id": "virtual_reality",
+      "title": "Virtual Reality Headset",
+      "description": "Enter new dimensions of cosmic fun",
+      "emoji": "🥽",
+      "interestTags": [
+        "gaming",
+        "technology",
+        "exploration",
+        "innovation",
+        "fun"
+      ],
+      "styleTags": [
+        "TECH",
+        "FUN"
+      ],
+      "budgetRange": "LUXURY",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "vr headset meta quest 3"
+    },
+    {
+      "id": "e_reader",
+      "title": "Cosmic E-Reader",
+      "description": "A pocket library for the intellectual explorer",
+      "emoji": "📖",
+      "interestTags": [
+        "reading",
+        "books",
+        "learning",
+        "technology",
+        "minimalism"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "TECH"
+      ],
+      "budgetRange": "HIGH",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "kindle paperwhite e-reader"
+    },
+    {
+      "id": "air_fryer",
+      "title": "High-Efficiency Air Fryer",
+      "description": "Healthy and fast cooking for modern explorers",
+      "emoji": "🍗",
+      "interestTags": [
+        "cooking",
+        "health",
+        "fitness",
+        "convenience",
+        "home"
+      ],
+      "styleTags": [
+        "PRACTICAL"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "digital air fryer cooker"
+    },
+    {
+      "id": "weighted_blanket",
+      "title": "Deep Sleep Weighted Blanket",
+      "description": "Cosmic comfort for better rest and anxiety relief",
+      "emoji": "🛌",
+      "interestTags": [
+        "wellness",
+        "sleep",
+        "health",
+        "relaxation",
+        "home"
+      ],
+      "styleTags": [
+        "SENTIMENTAL",
+        "PRACTICAL"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "WINTER",
+        "FALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "weighted blanket for anxiety"
+    },
+    {
+      "id": "leather_journal",
+      "title": "Refillable Leather Journal",
+      "description": "For sketching destiny or logging cosmic thoughts",
+      "emoji": "📓",
+      "interestTags": [
+        "writing",
+        "art",
+        "creative",
+        "travel",
+        "vintage"
+      ],
+      "styleTags": [
+        "SENTIMENTAL",
+        "CREATIVE"
+      ],
+      "budgetRange": "LOW",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "ETSY",
+      "searchQuery": "personalized leather journal refillable"
+    },
+    {
+      "id": "smart_garden",
+      "title": "Indoor Smart Garden",
+      "description": "Grow fresh herbs in any dimension (indoors)",
+      "emoji": "🌿",
+      "interestTags": [
+        "plants",
+        "gardening",
+        "nature",
+        "cooking",
+        "technology"
+      ],
+      "styleTags": [
+        "TECH",
+        "CREATIVE"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "click and grow smart garden herb"
+    },
+    {
+      "id": "massage_gun",
+      "title": "Percussive Therapy Device",
+      "description": "Rapid muscle recovery for the active soul",
+      "emoji": "🔫",
+      "interestTags": [
+        "fitness",
+        "gym",
+        "health",
+        "sports",
+        "wellness"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "TECH"
+      ],
+      "budgetRange": "HIGH",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "massage gun deep tissue"
+    },
+    {
+      "id": "portable_projector",
+      "title": "Cinema Dimension Projector",
+      "description": "Turn any wall into a cosmic theater",
+      "emoji": "📽️",
+      "interestTags": [
+        "movies",
+        "entertainment",
+        "family",
+        "camping",
+        "technology"
+      ],
+      "styleTags": [
+        "TECH",
+        "FUN"
+      ],
+      "budgetRange": "HIGH",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "portable mini projector 4k"
+    },
+    {
+      "id": "scented_candle_luxury",
+      "title": "Artisan Scented Candle",
+      "description": "Premium aromatherapy to elevate any space",
+      "emoji": "🕯️",
+      "interestTags": [
+        "home decor",
+        "wellness",
+        "relaxation",
+        "luxury"
+      ],
+      "styleTags": [
+        "LUXURIOUS",
+        "ROMANTIC"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "diptyque baies scented candle"
+    },
+    {
+      "id": "reusable_notebook",
+      "title": "Cloud-Synced Notebook",
+      "description": "Everlasting pages for the eco-conscious visionary",
+      "emoji": "📝",
+      "interestTags": [
+        "productivity",
+        "writing",
+        "technology",
+        "sustainability",
+        "work"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "TECH"
+      ],
+      "budgetRange": "LOW",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "rocketbook reusable smart notebook"
+    },
+    {
+      "id": "electric_kettle_pro",
+      "title": "Precision Electric Kettle",
+      "description": "Exact temperatures for the perfect brew",
+      "emoji": "🫖",
+      "interestTags": [
+        "coffee",
+        "tea",
+        "cooking",
+        "home",
+        "gadgets"
+      ],
+      "styleTags": [
+        "PRACTICAL",
+        "TECH"
+      ],
+      "budgetRange": "MEDIUM",
+      "seasons": [
+        "ALL"
+      ],
+      "storeType": "AMAZON",
+      "searchQuery": "fellow stagg ekg electric kettle"
     }
   ]
 }

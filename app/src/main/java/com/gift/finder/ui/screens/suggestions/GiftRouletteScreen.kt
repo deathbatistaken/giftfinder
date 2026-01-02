@@ -9,6 +9,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Casino
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,6 +33,8 @@ import com.gift.finder.ui.viewmodels.GiftSuggestionsViewModel
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.components.premium.ConfettiEffect
+import com.gift.finder.ui.components.premium.SpinningLoadingIcon
+import com.gift.finder.ui.components.premium.GradientText
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.filled.ArrowDropDown
 import kotlinx.coroutines.delay
@@ -41,7 +48,8 @@ import kotlinx.coroutines.launch
 fun GiftRouletteScreen(
     personId: Long,
     viewModel: GiftSuggestionsViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    hapticEngine: com.gift.finder.domain.manager.HapticEngine = hiltViewModel<com.gift.finder.ui.viewmodels.HapticViewModel>().hapticEngine
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -50,15 +58,20 @@ fun GiftRouletteScreen(
     var result by remember { mutableStateOf<GiftSuggestion?>(null) }
     var showResult by remember { mutableStateOf(false) }
 
-    val rotation by rememberInfiniteTransition(label = "spin").animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "rotation"
-    )
+    val rotation = remember { Animatable(0f) }
+
+    // Haptic feedback loop during spin
+    LaunchedEffect(isSpinning) {
+        if (isSpinning) {
+            var delayTime = 50L
+            while (isSpinning) {
+                hapticEngine.spin()
+                delay(delayTime)
+                // Gradually slow down haptics as the wheel slows down
+                if (delayTime < 200) delayTime += 5
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -134,7 +147,7 @@ fun GiftRouletteScreen(
                     Box(
                         modifier = Modifier
                             .size(200.dp)
-                            .then(if (isSpinning) Modifier.rotate(rotation * 5) else Modifier)
+                            .rotate(rotation.value)
                             .background(
                                 brush = Brush.sweepGradient(
                                     colors = listOf(
@@ -163,9 +176,11 @@ fun GiftRouletteScreen(
                                 .background(MaterialTheme.colorScheme.surface, CircleShape),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "🎰",
-                                style = MaterialTheme.typography.displaySmall
+                            Icon(
+                                imageVector = Icons.Default.Casino,
+                                contentDescription = stringResource(R.string.cd_casino_icon),
+                                tint = aura.primaryColor,
+                                modifier = Modifier.size(40.dp)
                             )
                         }
                     }
@@ -204,10 +219,21 @@ fun GiftRouletteScreen(
                 Button(
                     onClick = {
                         if (!isSpinning) {
-                            isSpinning = true
                             scope.launch {
-                                delay(3000) // Spin for 3 seconds for drama
+                                isSpinning = true
+                                // Dramatic spin: fast acceleration, slow deceleration
+                                launch {
+                                    rotation.animateTo(
+                                        targetValue = rotation.value + 360f * 10f, // 10 full rotations
+                                        animationSpec = tween(
+                                            durationMillis = 4000,
+                                            easing = FastOutSlowInEasing
+                                        )
+                                    )
+                                }
+                                delay(4000)
                                 result = viewModel.getRandomGift()
+                                hapticEngine.celebration()
                                 isSpinning = false
                                 showResult = true
                             }
@@ -224,6 +250,7 @@ fun GiftRouletteScreen(
                     )
                 }
             }  // else (roulette wheel)
+
             }  // Column
         }  // Box
     }  // Scaffold
@@ -235,36 +262,67 @@ private fun ResultCard(
     onOpenStore: () -> Unit,
     onSpinAgain: () -> Unit
 ) {
+    val aura = LocalCosmicAura.current
     GlassCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
     ) {
         Column(
-            modifier = Modifier.padding(24.dp),
+            modifier = Modifier.padding(28.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "🎉",
-                style = MaterialTheme.typography.displayLarge
-            )
+            // Celebration icon
+            Surface(
+                modifier = Modifier.size(80.dp),
+                shape = CircleShape,
+                color = GiftGold.copy(alpha = 0.15f),
+                border = androidx.compose.foundation.BorderStroke(2.dp, GiftGold.copy(alpha = 0.3f))
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = Icons.Default.Celebration,
+                        contentDescription = null,
+                        tint = GiftGold,
+                        modifier = Modifier.size(40.dp)
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(20.dp))
+            
+            // Category icon container
+            Surface(
+                modifier = Modifier.size(64.dp),
+                shape = CircleShape,
+                color = aura.primaryColor.copy(alpha = 0.1f)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Text(
+                        text = suggestion.category.emoji,
+                        style = MaterialTheme.typography.headlineLarge
+                    )
+                }
+            }
+            
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = suggestion.category.emoji,
-                style = MaterialTheme.typography.displayMedium
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+            
             Text(
                 text = suggestion.category.title,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.primary
             )
+            
             Spacer(modifier = Modifier.height(8.dp))
+            
             Text(
                 text = suggestion.category.description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            
+            Spacer(modifier = Modifier.height(28.dp))
             
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -272,15 +330,23 @@ private fun ResultCard(
             ) {
                 OutlinedButton(
                     onClick = onSpinAgain,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).height(48.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor)
                 ) {
-                    Text(stringResource(R.string.spin_again))
+                    Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.cd_refresh_icon), modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.spin_again), fontWeight = FontWeight.Bold)
                 }
                 Button(
                     onClick = onOpenStore,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).height(48.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = aura.primaryColor)
                 ) {
-                    Text(stringResource(R.string.shop_now))
+                    Icon(Icons.Default.ShoppingCart, contentDescription = stringResource(R.string.cd_shop_icon), modifier = Modifier.size(18.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.shop_now), fontWeight = FontWeight.Bold)
                 }
             }
         }

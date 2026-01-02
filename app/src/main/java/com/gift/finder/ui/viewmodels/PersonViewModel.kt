@@ -41,6 +41,7 @@ class PersonViewModel @Inject constructor(
     private val archetypeManager: ArchetypeManager,
     private val personaEngine: PersonaEngine,
     private val giftRepository: GiftRepository,
+    private val calendarManager: com.gift.finder.domain.manager.CalendarManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -219,6 +220,10 @@ class PersonViewModel @Inject constructor(
             dayOfMonth = dayOfMonth
         )
 
+        // Save to database
+        personRepository.addSpecialDate(specialDate)
+
+        // Schedule notifications
         val offsets = preferencesManager.reminderOffsets.first()
         notificationManager.scheduleNotificationsForDate(specialDate, currentPerson.name, offsets)
     }
@@ -245,6 +250,30 @@ class PersonViewModel @Inject constructor(
         )
         
         personRepository.addGiftToHistory(historyItem)
+    }
+
+    /**
+     * Delete a person and all related data.
+     */
+    suspend fun deletePerson(personId: Long) {
+        // Cancel all notifications for this person's special dates
+        val person = (uiState.value as? PersonUiState.Loaded)?.person
+        person?.specialDates?.forEach { specialDate ->
+            notificationManager.cancelNotificationsForDate(specialDate.id)
+        }
+        
+        personRepository.deletePerson(personId)
+    }
+
+    fun addToCalendar(specialDate: SpecialDate) {
+        val person = (uiState.value as? PersonUiState.Loaded)?.person ?: return
+        val nextOccurrence = specialDate.getNextOccurrence()
+        
+        calendarManager.addEventToCalendar(
+            title = "${person.name} - ${specialDate.title}",
+            description = "Gift Finder Reminder",
+            dateMillis = nextOccurrence.timeInMillis
+        )
     }
 }
 

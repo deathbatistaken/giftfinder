@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">GiftFinder</string>
+    
+    <!-- Common -->
     <string name="skip">Passer</string>
     <string name="back">Retour</string>
     <string name="next">Suivant</string>
@@ -12,6 +15,7 @@
     <string name="settings">Paramètres</string>
     <string name="get_started">Commencer</string>
     
+    <!-- Onboarding -->
     <string name="onboarding_title_1">Fatigué des mêmes cadeaux?</string>
     <string name="onboarding_desc_1">Dites adieu au stress des cadeaux. Trouvez le cadeau parfait à chaque fois.</string>
     <string name="onboarding_title_2">Gardez une trace des détails</string>
@@ -21,6 +25,7 @@
     <string name="onboarding_title_4">Trouvez des idées cadeaux parfaites</string>
     <string name="onboarding_desc_4">Obtenez des suggestions personnalisées en quelques secondes.</string>
     
+    <!-- Paywall -->
     <string name="paywall_title">Débloquer GiftFinder Pro</string>
     <string name="paywall_subtitle">Trouvez le cadeau parfait à chaque fois</string>
     <string name="feature_unlimited_persons">Personnes illimitées</string>
@@ -34,6 +39,7 @@
     <string name="yearly_plan">Plan annuel</string>
     <string name="weekly_plan">Plan hebdomadaire</string>
     
+    <!-- Home -->
     <string name="upcoming_events">Événements à venir</string>
     <string name="your_people">Vos personnes</string>
     <string name="add_person">Ajouter une personne</string>
@@ -44,6 +50,8 @@
     <string name="tomorrow">Demain</string>
     <string name="in_days">Dans %1$d jours</string>
     
+    <!-- Person -->
+    <string name="basic_info">Infos de base</string>
     <string name="name">Nom</string>
     <string name="relationship">Relation</string>
     <string name="choose_emoji">Choisir un emoji</string>
@@ -61,13 +69,17 @@
     <string name="delete_person_title">Supprimer la personne?</string>
     <string name="delete_person_message">Toutes les données de cette personne seront supprimées.</string>
     
+    <!-- Suggestions -->
     <string name="gift_ideas">Idées cadeaux</string>
     <string name="style">Style</string>
     <string name="budget">Budget</string>
     <string name="not_interested">Pas intéressé</string>
     <string name="unlock_pro">Débloquer Pro</string>
     <string name="why_not">Pourquoi pas ce cadeau?</string>
+    <string name="analyzing_preferences">Analyse de vos préférences…</string>
+    <string name="try_different_filters">Essayez d\'ajuster vos filtres</string>
     
+    <!-- Roulette -->
     <string name="gift_roulette">Roulette des cadeaux</string>
     <string name="spinning">Tourne...</string>
     <string name="tap_to_spin">Appuyez pour tourner!</string>
@@ -76,13 +88,19 @@
     <string name="spin_again">Tourner à nouveau</string>
     <string name="shop_now">Acheter maintenant</string>
     
+    <!-- Settings -->
     <string name="appearance">Apparence</string>
     <string name="theme">Thème</string>
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
     <string name="theme_system">Par défaut du système</string>
     <string name="language">Langue</string>
-    <string name="select_language">Choisir la langue</string>
+    <string name="currency">Devise</string>
+    <string name="select_currency">Sélect. devise</string>
+    <string name="currency_tl">Lire turque (₺)</string>
+    <string name="currency_usd">Dollar US ($)</string>
+    <string name="currency_eur">Euro (€)</string>
+    <string name="select_language">Sélect. langue</string>
     <string name="haptic_feedback">Retour haptique</string>
     <string name="notifications">Notifications</string>
     <string name="reminder_notifications">Notifications de rappel</string>
@@ -96,6 +114,7 @@
     <string name="subscription_active">Abonnement actif</string>
     <string name="pro_member">Membre Pro</string>
     
+    <!-- Notifications -->
     <string name="notification_channel_reminders">Rappels</string>
     <string name="notification_channel_reminders_desc">Rappels de dates spéciales</string>
     <string name="notification_channel_general">Général</string>
@@ -105,4 +124,210 @@
     <string name="notification_title_days">%1$d jours avant le jour spécial</string>
     <string name="notification_message_today">C\'est %2$s de %1$s aujourd\'hui! C\'est l\'heure de fêter!</string>
     <string name="notification_message_upcoming">N\'oubliez pas: %2$s de %1$s arrive bientôt!</string>
+    
+    <!-- Relationships -->
+    <string name="relationship_partner">Partenaire</string>
+    <string name="relationship_spouse">Conjoint</string>
+    <string name="relationship_family">Famille</string>
+    <string name="relationship_friend">Ami</string>
+    <string name="relationship_colleague">Collègue</string>
+    <string name="relationship_boss">Patron</string>
+    <string name="relationship_child">Enfant</string>
+    <string name="relationship_parent">Parent</string>
+    <string name="relationship_sibling">Frère/Sœur</string>
+    <string name="relationship_other">Autre</string>
+    
+    <!-- Budget Tracker -->
+    <string name="budget_tracker">Suivi du budget</string>
+    <string name="this_month">Ce mois-ci</string>
+    <string name="this_year">Cette année</string>
+    <string name="all_time">Tout le temps</string>
+    <string name="total_spent">Total dépensé</string>
+    <string name="gifts_given">Cadeaux offerts</string>
+    <string name="avg_per_person">Moyenne par personne</string>
+    <string name="top_spending">Top dépenses</string>
+    <string name="recent_gifts">Cadeaux récents</string>
+    <string name="gifts">cadeaux</string>
+    <string name="no_spending_data">Pas encore de données de dépenses</string>
+    <string name="mark_gifts_purchased">Marquez les cadeaux comme achetés pour suivre votre budget</string>
+    <string name="track_your_spending">Suivez vos dépenses cadeaux</string>
+    
+    <!-- Special Date Dialog -->
+    <string name="add_special_date">Ajouter une date spéciale</string>
+    <string name="event_title">Titre de l\'événement</string>
+    <string name="event_type">Type d\'événement</string>
+    <string name="date">Date</string>
+    <string name="birthday">Anniversaire</string>
+    <string name="anniversary">Anniversaire de mariage</string>
+    <string name="holiday">Fête</string>
+    <string name="other">Autre</string>
+    
+    <!-- Mark as Purchased Dialog -->
+    <string name="mark_as_purchased">Marquer comme acheté</string>
+    <string name="price_optional">Prix (optionnel)</string>
+    <string name="occasion_optional">Occasion (optionnel)</string>
+    <string name="occasion_placeholder">ex: Anniversaire, Noël</string>
+    
+    <!-- Edit Person -->
+    <string name="edit_person">Modifier la personne</string>
+    
+    <!-- Calendar -->
+    <string name="calendar">Calendrier</string>
+    <string name="no_upcoming_dates">Pas de dates à venir</string>
+    <string name="add_special_dates_hint">Ajoutez des dates spéciales pour suivre les événements importants</string>
+    
+    <!-- Special Dates Screen -->
+    <string name="no_special_dates">Pas encore de dates spéciales</string>
+    <string name="delete_date_title">Supprimer la date?</string>
+    <string name="delete_date_message">Supprimer %1$s? Cette action est irréversible.</string>
+    
+    <!-- Search -->
+    <string name="search">Rechercher</string>
+    <string name="search_placeholder">Rechercher des personnes ou intérêts...</string>
+    <string name="search_hint">Entrez un nom ou un intérêt</string>
+    <string name="no_results">Aucun résultat trouvé</string>
+    
+    <!-- Budget -->
+    <string name="budget_low_tier">Budget (&lt;$25)</string>
+    <string name="budget_low">Bas ($25-$50)</string>
+    <string name="budget_medium">Moyen ($50-$100)</string>
+    <string name="budget_high">Élevé ($100-$250)</string>
+    <string name="budget_luxury">Luxe ($250+)</string>
+
+    <!-- Styles -->
+    <string name="style_practical">Pratique</string>
+    <string name="style_romantic">Romantique</string>
+    <string name="style_fun">Amusant</string>
+    <string name="style_creative">Créatif</string>
+    <string name="style_luxurious">Luxueux</string>
+    <string name="style_sentimental">Sentimental</string>
+    <string name="style_experiential">Expérientiel</string>
+    <string name="style_tech">Tech</string>
+
+    <!-- Events -->
+    <string name="event_wedding">Mariage</string>
+    <string name="event_valentine">Saint-Valentin</string>
+    <string name="event_mothers_day">Fête des mères</string>
+    <string name="event_fathers_day">Fête des pères</string>
+    <string name="event_christmas">Noël</string>
+    <string name="event_new_year">Nouvel an</string>
+    <string name="event_graduation">Remise de diplôme</string>
+
+    <!-- Rejection Reasons -->
+    <string name="rejection_expensive">Trop cher</string>
+    <string name="rejection_not_style">Pas son style</string>
+    <string name="rejection_already_have">A déjà</string>
+    <string name="rejection_not_interested">Pas intéressé</string>
+    <string name="rejection_other">Autre raison</string>
+    <string name="discovery_mode">Mode découverte</string>
+    <string name="grid_view">Vue grille</string>
+    <string name="more_ideas">plus d\'idées</string>
+    <string name="interested">Intéressé</string>
+    <string name="not_interested_swipe">Pas intéressé</string>
+
+    <!-- Persona Engine -->
+    <string name="persona_mysterious_soul">L\'Âme mystérieuse</string>
+    <string name="persona_keyword_tech">Visionnaire</string>
+    <string name="persona_keyword_creative">Inspiré</string>
+    <string name="persona_keyword_outdoor">Intrépide</string>
+    <string name="persona_keyword_intellectual">Érudit</string>
+    <string name="persona_keyword_lifestyle">Sophistiqué</string>
+    <string name="persona_keyword_celestial">Céleste</string>
+    <string name="persona_keyword_radiant">Rayonnant</string>
+    <string name="persona_keyword_mystic">Mystique</string>
+    <string name="persona_keyword_eclectic">Éclectique</string>
+
+    <string name="persona_keyword_dynamic">Dynamique</string>
+    <string name="persona_keyword_captivating">Captivant</string>
+    <string name="persona_template_archetype">Le %1$s %2$s</string>
+    <string name="persona_template_enthusiast">L\'Enthousiaste %1$s</string>
+
+    <!-- Export Manager -->
+    <string name="share_empty_wishlist">Ma liste de souhaits pour %1$s est vide pour l\'instant 🎁</string>
+    <string name="share_header">✨ PORTAIL CADEAUX: %1$s ✨\nIdées trouvées via GiftFinder 🌠\n━━━━━━━━━━━━━━━━━━━━\n\n</string>
+    <string name="share_store_link">🛒 Acheter ici: %1$s\n\n</string>
+    <string name="share_footer">━━━━━━━━━━━━━━━━━━━━\nCréé avec ✨ GiftFinder ✨\nTrouvez le cadeau parfait pour tous.</string>
+
+    <!-- Widgets -->
+    <string name="widget_upcoming_title">✨ À VENIR</string>
+    <string name="widget_no_events">Aucun événement à venir</string>
+    <string name="widget_no_events_desc">Aucun événement à venir trouvé.</string>
+    <string name="widget_tap_to_add">Appuyez pour ajouter</string>
+    <string name="widget_today">AUJOURD\'HUI!</string>
+    <string name="widget_days_left">%1$d jours restants</string>
+    <string name="widget_actions_title">⚡ ACTIONS</string>
+    <string name="widget_action_add">Ajouter</string>
+    <string name="widget_action_play">Jouer</string>
+
+    <!-- Quick Tags -->
+    <string name="tag_tech">Tech</string>
+    <string name="tag_art">Art</string>
+    <string name="tag_outdoor">Plein air</string>
+    <string name="tag_books">Livres</string>
+    <string name="tag_gaming">Jeux</string>
+    <string name="tag_wellness">Bien-être</string>
+
+    <!-- Backup -->
+    <string name="data_management">Gestion des données</string>
+    <string name="export_data">Exporter les données</string>
+    <string name="import_data">Importer les données</string>
+    <string name="export_success">Données exportées avec succès</string>
+    <string name="export_error">Échec de l\'exportation</string>
+    <string name="import_success">Données importées avec succès</string>
+    <string name="import_error">Échec de l\'importation</string>
+
+    <!-- Settings Additional -->
+    <string name="cosmic_aura">Aura Cosmique</string>
+    <string name="reminder_schedule">Calendrier de rappel</string>
+    <string name="days_before_7">7 jours avant</string>
+    <string name="days_before_3">3 jours avant</string>
+    <string name="same_day">Le même jour</string>
+
+    <!-- Wishlist -->
+    <string name="wishlist">Liste de souhaits</string>
+    <string name="wishlist_empty">La liste est vide</string>
+    <string name="wishlist_hint">Enregistrez vos idées de cadeaux ici !</string>
+
+    <string name="import_contacts">Importer depuis les contacts</string>
+    <string name="create_manually">Créer manuellement</string>
+    <string name="import_action">Importer (%1$d)</string>
+    <string name="no_contacts_found">Aucun contact trouvé.</string>
+    <string name="contacts_permission_rationale">Nous avons besoin de cette autorisation pour importer des personnes de vos contacts dans GiftFinder.</string>
+    <string name="add_to_calendar">Ajouter au calendrier</string>
+
+    <!-- Smart Features Settings -->
+    <string name="smart_features">FONCTIONS INTELLIGENTES</string>
+    <string name="auto_calendar_sync">Synchronisation automatique du calendrier</string>
+    <string name="auto_calendar_sync_desc">Ajoute automatiquement les dates importantes à votre calendrier système.</string>
+    <string name="persona_creativity">Créativité de la persona</string>
+    <string name="persona_creativity_desc">Détermine à quel point les suggestions de cadeaux seront inhabituelles.</string>
+    <string name="creativity_low">Traditionnel</string>
+    <string name="creativity_high">Explorateur cosmique</string>
+
+    <string name="cosmic_summary">RÉSUMÉ COSMIQUE</string>
+    <string name="cosmic_summary_today">Aujourd\'hui c\'est %1$s ! ✨</string>
+    <string name="cosmic_summary_upcoming">%1$s dans %2$d jours.</string>
+
+    <!-- Search Section -->
+    <string name="people">PERSONNES</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_gift_icon">Icône cadeau</string>
+    <string name="cd_calendar_icon">Icône calendrier</string>
+    <string name="cd_celebration_icon">Icône célébration</string>
+    <string name="cd_bookmark_icon">Icône signet</string>
+    <string name="cd_price_drop_icon">Indicateur de baisse de prix</string>
+    <string name="cd_casino_icon">Icône roulette</string>
+    <string name="cd_settings_icon">Icône paramètres</string>
+    <string name="cd_search_icon">Icône recherche</string>
+    <string name="cd_refresh_icon">Actualiser</string>
+    <string name="cd_shop_icon">Acheter</string>
+    <string name="cd_delete_icon">Supprimer</string>
+    <string name="cd_close_icon">Fermer</string>
+    <string name="cd_check_icon">Confirmer</string>
+    <string name="cd_premium_icon">Fonction premium</string>
+    <string name="cd_notification_icon">Notifications</string>
+    <string name="cd_export_icon">Exporter les données</string>
+    <string name="cd_import_icon">Importer les données</string>
+    <string name="cd_loading">Chargement</string>
 </resources>

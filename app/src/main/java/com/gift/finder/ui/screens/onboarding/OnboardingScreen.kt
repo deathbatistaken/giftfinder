@@ -27,8 +27,12 @@ import com.gift.finder.R
 import com.gift.finder.ui.viewmodels.OnboardingViewModel
 import com.airbnb.lottie.compose.*
 import com.gift.finder.ui.components.premium.AnimatedMeshBackground
+import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.theme.*
 import kotlinx.coroutines.launch
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.geometry.Offset
 
 /**
  * Onboarding screen with pager layout.
@@ -94,8 +98,22 @@ fun OnboardingScreen(
                 .weight(1f)
                 .fillMaxWidth()
         ) { page ->
-            OnboardingPage(page = page)
+            val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+            
+            OnboardingPage(
+                page = page,
+                modifier = Modifier.graphicsLayer {
+                    // Advanced parallax and depth effect
+                    val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+                    translationX = pageOffset * size.width * 0.5f
+                    scaleX = (1f - Math.abs(pageOffset) * 0.15f).coerceIn(0.85f, 1f)
+                    scaleY = (1f - Math.abs(pageOffset) * 0.15f).coerceIn(0.85f, 1f)
+                    alpha = (1f - Math.abs(pageOffset) * 0.5f).coerceIn(0f, 1f)
+                    rotationY = pageOffset * 20f // Subtle 3D rotation
+                }
+            )
         }
+
 
         // Page indicators
         Row(
@@ -211,7 +229,10 @@ fun OnboardingScreen(
 }
 
 @Composable
-private fun OnboardingPage(page: Int) {
+private fun OnboardingPage(
+    page: Int,
+    modifier: Modifier = Modifier
+) {
     val (emoji, titleRes, descriptionRes) = when (page) {
         0 -> Triple("🎁", R.string.onboarding_title_1, R.string.onboarding_desc_1)
         1 -> Triple("📝", R.string.onboarding_title_2, R.string.onboarding_desc_2)
@@ -231,45 +252,63 @@ private fun OnboardingPage(page: Int) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieRes))
 
     val aura = LocalCosmicAura.current
-    Column(
-        modifier = Modifier
+    
+    Box(
+        modifier = modifier
             .fillMaxSize()
             .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.padding(bottom = 32.dp)
+        GlassCard(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            cornerRadius = 32.dp
         ) {
-            // Cosmic Halo
-            Surface(
-                modifier = Modifier.size(200.dp),
-                shape = CircleShape,
-                color = aura.primaryColor.copy(alpha = 0.15f),
-                border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.3f))
-            ) {}
-            
-            LottieAnimation(
-                composition = composition,
-                iterations = LottieConstants.IterateForever,
-                modifier = Modifier.size(240.dp)
-            )
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.padding(bottom = 24.dp)
+                ) {
+                    // Pulsating Cosmic Halo
+                    Surface(
+                        modifier = Modifier.size(180.dp),
+                        shape = CircleShape,
+                        color = aura.primaryColor.copy(alpha = 0.1f),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, aura.primaryColor.copy(alpha = 0.2f))
+                    ) {}
+                    
+                    LottieAnimation(
+                        composition = composition,
+                        iterations = LottieConstants.IterateForever,
+                        modifier = Modifier.size(220.dp)
+                    )
+                }
+
+                Text(
+                    text = stringResource(titleRes),
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        fontWeight = FontWeight.Black,
+                        shadow = Shadow(
+                            color = Color.Black.copy(alpha = 0.3f),
+                            offset = Offset(0f, 4f),
+                            blurRadius = 8f
+                        )
+                    ),
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+
+                Text(
+                    text = stringResource(descriptionRes),
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    lineHeight = androidx.compose.ui.unit.TextUnit.Unspecified
+                )
+            }
         }
-
-        Text(
-            text = stringResource(titleRes),
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        Text(
-            text = stringResource(descriptionRes),
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }

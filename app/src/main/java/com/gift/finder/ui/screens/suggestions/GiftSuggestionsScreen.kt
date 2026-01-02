@@ -13,11 +13,14 @@ import androidx.compose.animation.core.*
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Style
 import androidx.compose.material.icons.filled.ThumbDown
 import androidx.compose.material.icons.filled.ViewCarousel
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -54,6 +57,8 @@ import com.gift.finder.ui.components.premium.AnimatedMeshBackground
 import com.gift.finder.ui.components.premium.GlassCard
 import com.gift.finder.ui.components.premium.SwipeableGiftCard
 import com.gift.finder.ui.components.premium.ConfettiEffect
+import com.gift.finder.ui.components.premium.SkeletonSuggestionsScreen
+import com.gift.finder.util.CurrencyUtils
 import kotlinx.coroutines.launch
 
 /**
@@ -74,7 +79,9 @@ fun GiftSuggestionsScreen(
     val uiState by viewModel.uiState.collectAsState()
     val selectedStyle by viewModel.selectedStyle.collectAsState()
     val selectedBudget by viewModel.selectedBudget.collectAsState()
+    val appCurrency by viewModel.appCurrency.collectAsState()
     var isDiscoveryMode by remember { mutableStateOf(true) }
+    var purchasingGift by remember { mutableStateOf<GiftSuggestion?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -115,7 +122,12 @@ fun GiftSuggestionsScreen(
                 containerColor = GiftPurple,
                 elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 8.dp)
             ) {
-                Text("🎰", style = MaterialTheme.typography.headlineSmall)
+                Icon(
+                    imageVector = Icons.Default.Casino,
+                    contentDescription = stringResource(R.string.cd_casino_icon),
+                    tint = Color.White,
+                    modifier = Modifier.size(28.dp)
+                )
             }
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -132,15 +144,17 @@ fun GiftSuggestionsScreen(
                 is SuggestionsUiState.Loading -> {
                     val aura = LocalCosmicAura.current
                     val infiniteTransition = rememberInfiniteTransition(label = "crystal_ball")
+                    
                     val pulseScale by infiniteTransition.animateFloat(
-                        initialValue = 0.8f,
-                        targetValue = 1.2f,
+                        initialValue = 0.95f,
+                        targetValue = 1.05f,
                         animationSpec = infiniteRepeatable(
-                            animation = tween(1500, easing = LinearEasing),
+                            animation = tween(1500, easing = FastOutSlowInEasing),
                             repeatMode = RepeatMode.Reverse
                         ),
                         label = "pulse"
                     )
+                    
                     val rotation by infiniteTransition.animateFloat(
                         initialValue = 0f,
                         targetValue = 360f,
@@ -156,35 +170,56 @@ fun GiftSuggestionsScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .graphicsLayer {
-                                        scaleX = pulseScale
-                                        scaleY = pulseScale
-                                        rotationZ = rotation
+                            // Professional Loading Animation
+                            Box(contentAlignment = Alignment.Center) {
+                                // Outer ring
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .size(120.dp)
+                                        .graphicsLayer { rotationZ = rotation },
+                                    color = aura.primaryColor.copy(alpha = 0.3f),
+                                    strokeWidth = 4.dp,
+                                    trackColor = Color.Transparent
+                                )
+                                
+                                // Inner pulsing circle
+                                Surface(
+                                    modifier = Modifier
+                                        .size(80.dp)
+                                        .graphicsLayer {
+                                            scaleX = pulseScale
+                                            scaleY = pulseScale
+                                        },
+                                    shape = CircleShape,
+                                    color = aura.primaryColor.copy(alpha = 0.1f),
+                                    border = androidx.compose.foundation.BorderStroke(2.dp, aura.primaryColor.copy(alpha = 0.3f))
+                                ) {
+                                    Box(contentAlignment = Alignment.Center) {
+                                        Icon(
+                                            imageVector = Icons.Default.AutoAwesome,
+                                            contentDescription = null,
+                                            tint = aura.primaryColor,
+                                            modifier = Modifier.size(36.dp)
+                                        )
                                     }
-                                    .background(
-                                        brush = Brush.radialGradient(
-                                            colors = listOf(
-                                                aura.primaryColor.copy(alpha = 0.8f),
-                                                aura.primaryColor.copy(alpha = 0.2f),
-                                                Color.Transparent
-                                            )
-                                        ),
-                                        shape = CircleShape
-                                    ),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text("🔮", style = MaterialTheme.typography.displayMedium)
+                                }
                             }
-                            Spacer(modifier = Modifier.height(24.dp))
+                            
+                            Spacer(modifier = Modifier.height(32.dp))
+                            
                             Text(
-                                "CONSULTING THE STARS...",
-                                style = MaterialTheme.typography.labelLarge,
+                                stringResource(R.string.consulting_stars),
+                                style = MaterialTheme.typography.titleLarge,
                                 color = aura.primaryColor,
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = androidx.compose.ui.unit.TextUnit.Unspecified
+                                fontWeight = FontWeight.Bold
+                            )
+                            
+                            Spacer(modifier = Modifier.height(8.dp))
+                            
+                            Text(
+                                stringResource(R.string.analyzing_preferences),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                             )
                         }
                     }
@@ -203,6 +238,7 @@ fun GiftSuggestionsScreen(
                         FiltersRow(
                             selectedStyle = selectedStyle,
                             selectedBudget = selectedBudget,
+                            appCurrency = appCurrency,
                             onStyleSelected = {
                                 scope.launch { hapticEngine.tap() }
                                 viewModel.setStyle(it)
@@ -213,111 +249,42 @@ fun GiftSuggestionsScreen(
                             }
                         )
 
-                        if (isDiscoveryMode) {
-                            if (state.suggestions.isNotEmpty()) {
-                                // Discovery Mode Swipe Stack
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(24.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    val topSuggestion = state.suggestions.first()
-                                    SwipeableGiftCard(
-                                        suggestion = topSuggestion,
-                                        onSwipedLeft = { reason ->
-                                            viewModel.rejectSuggestion(topSuggestion.category.id, reason)
-                                            scope.launch { hapticEngine.tap() }
-                                        },
-                                        onSwipedRight = {
-                                            viewModel.saveToWishlist(topSuggestion.category.id)
-                                            scope.launch {
-                                                hapticEngine.matchOccurred()
-                                                snackbarHostState.showSnackbar(
-                                                    message = "${topSuggestion.category.title} saved to Wishlist ✨",
-                                                    duration = SnackbarDuration.Short
-                                                )
-                                            }
-                                        },
-                                        modifier = Modifier.fillMaxWidth()
+                        SuggestionsGrid(
+                            suggestions = state.suggestions,
+                            isDiscoveryMode = isDiscoveryMode,
+                            columns = columns,
+                            appCurrency = appCurrency,
+                            onSuggestionRejected = { suggestion, reason ->
+                                viewModel.rejectSuggestion(suggestion.category.id, reason)
+                                scope.launch { hapticEngine.tap() }
+                            },
+                            onSaveToWishlist = { suggestion ->
+                                viewModel.saveToWishlist(suggestion.category.id)
+                                showConfetti = true
+                                scope.launch {
+                                    hapticEngine.celebration()
+                                    snackbarHostState.showSnackbar(
+                                        message = context.getString(R.string.saved_to_wishlist, suggestion.category.title),
+                                        duration = SnackbarDuration.Short
                                     )
-                                    
-                                    if (state.suggestions.size > 1) {
-                                        Text(
-                                            text = "+${state.suggestions.size - 1} " + stringResource(R.string.more_ideas),
-                                            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
+                                    delay(3000)
+                                    showConfetti = false
                                 }
-                            } else {
-                                // Empty state for Discovery
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        Text("✨", style = MaterialTheme.typography.displayLarge)
-                                        Spacer(modifier = Modifier.height(16.dp))
-                                        Text(
-                                            stringResource(R.string.no_results),
-                                            style = MaterialTheme.typography.headlineSmall,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                        Text(
-                                            "Try changing your style or budget filters!",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
+                            },
+                            onOpenStore = { suggestion ->
+                                if (!suggestion.isPremiumLocked) {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
+                                    context.startActivity(intent)
                                 }
+                            },
+                            onMarkAsPurchased = { suggestion ->
+                                purchasingGift = suggestion
+                            },
+                            onUnlock = {
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                onNavigateToPaywall()
                             }
-                        } else {
-                            // Classic Grid View
-                            LazyVerticalGrid(
-                                columns = GridCells.Fixed(columns),
-                                contentPadding = PaddingValues(16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                items(state.suggestions) { suggestion ->
-                                    androidx.compose.animation.AnimatedVisibility(
-                                        visible = true,
-                                        enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.expandVertically()
-                                    ) {
-                                        GiftSuggestionCard(
-                                            suggestion = suggestion,
-                                            onReject = { reason -> 
-                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                                viewModel.rejectSuggestion(suggestion.category.id, reason) 
-                                            },
-                                            onOpenStore = {
-                                                if (!suggestion.isPremiumLocked) {
-                                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                                    viewModel.saveToWishlist(suggestion.category.id)
-                                                    showConfetti = true
-                                                    scope.launch {
-                                                        snackbarHostState.showSnackbar(
-                                                            message = "Saved to Wishlist ✨",
-                                                            duration = SnackbarDuration.Short
-                                                        )
-                                                        delay(3000)
-                                                        showConfetti = false
-                                                    }
-                                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(suggestion.category.getStoreUrl()))
-                                                    context.startActivity(intent)
-                                                }
-                                            },
-                                            onUnlock = {
-                                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                                onNavigateToPaywall()
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        )
                     }
                 }
 
@@ -330,6 +297,141 @@ fun GiftSuggestionsScreen(
                     }
                 }
             }
+
+            if (purchasingGift != null) {
+                MarkAsPurchasedDialog(
+                    suggestion = purchasingGift!!,
+                    appCurrency = appCurrency,
+                    onDismiss = { purchasingGift = null },
+                    onConfirm = { price, occasion ->
+                        val usdPrice = price?.let { 
+                            com.gift.finder.util.CurrencyUtils.convertToUsd(it, appCurrency) 
+                        }
+                        viewModel.purchaseGift(
+                            purchasingGift!!.category.id,
+                            purchasingGift!!.category.title,
+                            usdPrice,
+                            occasion
+                        )
+                        purchasingGift = null
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = context.getString(R.string.gift_marked_purchased),
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun SuggestionsGrid(
+    suggestions: List<GiftSuggestion>,
+    isDiscoveryMode: Boolean,
+    columns: Int,
+    appCurrency: String,
+    onSuggestionRejected: (GiftSuggestion, RejectionReason) -> Unit,
+    onSaveToWishlist: (GiftSuggestion) -> Unit,
+    onOpenStore: (GiftSuggestion) -> Unit,
+    onMarkAsPurchased: (GiftSuggestion) -> Unit,
+    onUnlock: () -> Unit
+) {
+    if (isDiscoveryMode) {
+        if (suggestions.isNotEmpty()) {
+            // Discovery Mode Swipe Stack
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                val topSuggestion = suggestions.first()
+                SwipeableGiftCard(
+                    suggestion = topSuggestion,
+                    onSwipedLeft = { reason ->
+                        onSuggestionRejected(topSuggestion, reason)
+                    },
+                    onSwipedRight = {
+                        onSaveToWishlist(topSuggestion)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                if (suggestions.size > 1) {
+                    Text(
+                        text = "+${suggestions.size - 1} " + stringResource(R.string.more_ideas),
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        } else {
+            // Empty state for Discovery
+            val aura = LocalCosmicAura.current
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Surface(
+                        modifier = Modifier.size(80.dp),
+                        shape = CircleShape,
+                        color = aura.primaryColor.copy(alpha = 0.1f)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = Icons.Default.SearchOff,
+                                contentDescription = null,
+                                tint = aura.primaryColor,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        stringResource(R.string.no_results),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        stringResource(R.string.try_different_filters),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    } else {
+        // Classic Grid View
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(columns),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(suggestions) { suggestion ->
+                AnimatedVisibility(
+                    visible = true,
+                    enter = fadeIn() + expandVertically()
+                ) {
+                    GiftSuggestionCard(
+                        suggestion = suggestion,
+                        appCurrency = appCurrency,
+                        onSuggestionRejected = { s, reason -> onSuggestionRejected(s, reason) },
+                        onSaveToWishlist = { s -> onSaveToWishlist(s) },
+                        onOpenStore = { s -> onOpenStore(s) },
+                        onMarkAsPurchased = { s -> onMarkAsPurchased(s) },
+                        onUnlock = onUnlock
+                    )
+                }
+            }
         }
     }
 }
@@ -338,6 +440,7 @@ fun GiftSuggestionsScreen(
 private fun FiltersRow(
     selectedStyle: GiftStyle?,
     selectedBudget: BudgetRange?,
+    appCurrency: String,
     onStyleSelected: (GiftStyle?) -> Unit,
     onBudgetSelected: (BudgetRange?) -> Unit
 ) {
@@ -380,14 +483,14 @@ private fun FiltersRow(
                 )
             }
             items(BudgetRange.entries.toList()) { budget ->
-                val stringId = remember(budget) {
-                    val field = R.string::class.java.getField(budget.displayKey)
-                    field.getInt(null)
-                }
                 FilterChip(
                     selected = selectedBudget == budget,
                     onClick = { onBudgetSelected(budget) },
-                    label = { Text(stringResource(stringId)) }
+                    label = { 
+                        Text(
+                            CurrencyUtils.formatRange(budget.minUsd, budget.maxUsd, appCurrency)
+                        ) 
+                    }
                 )
             }
         }
@@ -398,32 +501,63 @@ private fun FiltersRow(
 @Composable
 private fun GiftSuggestionCard(
     suggestion: GiftSuggestion,
-    onReject: (RejectionReason) -> Unit,
-    onOpenStore: () -> Unit,
+    appCurrency: String,
+    onSuggestionRejected: (GiftSuggestion, RejectionReason) -> Unit,
+    onSaveToWishlist: (GiftSuggestion) -> Unit,
+    onOpenStore: (GiftSuggestion) -> Unit,
+    onMarkAsPurchased: (GiftSuggestion) -> Unit,
     onUnlock: () -> Unit
 ) {
     var showRejectDialog by remember { mutableStateOf(false) }
 
+    val aura = LocalCosmicAura.current
+    val infiniteTransition = rememberInfiniteTransition(label = "card_glow")
+    val glowAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.3f,
+        targetValue = 0.6f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(3000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "glow"
+    )
+
     GlassCard(
-        onClick = { if (suggestion.isPremiumLocked) onUnlock() else onOpenStore() },
-        modifier = Modifier.fillMaxWidth()
+        onClick = { if (suggestion.isPremiumLocked) onUnlock() else onOpenStore(suggestion) },
+        modifier = Modifier.fillMaxWidth(),
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            if (suggestion.priceDropPercentage != null) 
+                GiftRed.copy(alpha = glowAlpha) 
+            else 
+                aura.primaryColor.copy(alpha = 0.3f)
+        )
     ) {
         Box {
             Column(
                 modifier = Modifier
                     .then(if (suggestion.isPremiumLocked) Modifier.blur(8.dp) else Modifier)
+                    .padding(16.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = suggestion.category.emoji,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(56.dp)
+                            .background(aura.primaryColor.copy(alpha = 0.1f), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = suggestion.category.emoji,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = suggestion.category.title,
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
                         )
                         Text(
                             text = suggestion.category.description,
@@ -434,8 +568,30 @@ private fun GiftSuggestionCard(
                         )
                     }
                     if (!suggestion.isPremiumLocked) {
-                        IconButton(onClick = { showRejectDialog = true }) {
-                            Icon(Icons.Default.ThumbDown, contentDescription = stringResource(R.string.not_interested))
+                        Column(horizontalAlignment = Alignment.End) {
+                            suggestion.priceDropPercentage?.let { drop ->
+                                Surface(
+                                    color = GiftRed,
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.padding(bottom = 4.dp)
+                                ) {
+                                    Text(
+                                        "-$drop%",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Black,
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                    )
+                                }
+                            }
+                            Row {
+                                IconButton(onClick = { showRejectDialog = true }) {
+                                    Icon(Icons.Default.ThumbDown, contentDescription = stringResource(R.string.not_interested), modifier = Modifier.size(20.dp))
+                                }
+                                IconButton(onClick = { onMarkAsPurchased(suggestion) }) {
+                                    Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.mark_as_purchased), tint = GiftGreen, modifier = Modifier.size(20.dp))
+                                }
+                            }
                         }
                     }
                 }
@@ -481,7 +637,7 @@ private fun GiftSuggestionCard(
             giftTitle = suggestion.category.title,
             onDismiss = { showRejectDialog = false },
             onReasonSelected = { reason ->
-                onReject(reason)
+                onSuggestionRejected(suggestion, reason)
                 showRejectDialog = false
             }
         )

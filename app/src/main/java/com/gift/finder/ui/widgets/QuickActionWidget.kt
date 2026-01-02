@@ -61,7 +61,14 @@ class QuickActionWidget : GlanceAppWidget() {
                                     .defaultWeight()
                                     .height(48.dp)
                                     .background(androidx.compose.ui.graphics.Color(0xFF2D2D2D))
-                                    .clickable(actionStartActivity<MainActivity>()) // TODO: Add deep link
+                                    .clickable(
+                                        actionStartActivity(
+                                            Intent(context, MainActivity::class.java).apply {
+                                                action = "com.gift.finder.ACTION_ADD_PERSON"
+                                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                            }
+                                        )
+                                    )
                                     .padding(8.dp),
                                 contentAlignment = Alignment.Center
                             ) {

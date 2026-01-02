@@ -12,6 +12,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import com.gift.finder.ui.components.premium.GlassCard
+import com.gift.finder.ui.components.premium.LocalCosmicAura
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,191 +52,240 @@ fun PersonForm(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        // Name input
-        OutlinedTextField(
-            value = formState.name,
-            onValueChange = onNameChange,
-            label = { Text(stringResource(R.string.name)) },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            isError = formState.name.isBlank()
-        )
+        val aura = LocalCosmicAura.current
 
-        // Emoji picker
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                stringResource(R.string.choose_emoji),
-                style = MaterialTheme.typography.labelMedium
-            )
-            EmojiPickerRow(
-                selectedEmoji = formState.avatarEmoji,
-                onEmojiSelected = onEmojiChange
-            )
-        }
-
-        // Relationship type
-        Text(
-            stringResource(R.string.relationship),
-            style = MaterialTheme.typography.labelMedium
-        )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            RelationshipType.entries.forEach { type ->
-                val stringId = remember(type) {
-                    val field = R.string::class.java.getField(type.displayKey)
-                    field.getInt(null)
-                }
-                FilterChip(
-                    selected = formState.relationshipType == type,
-                    onClick = { onRelationshipChange(type) },
-                    label = { Text(stringResource(stringId)) }
+        // Basic Info Section
+        GlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(
+                    stringResource(R.string.basic_info).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = aura.primaryColor
                 )
-            }
-        }
+                
+                OutlinedTextField(
+                    value = formState.name,
+                    onValueChange = onNameChange,
+                    label = { Text(stringResource(R.string.name)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    shape = RoundedCornerShape(16.dp),
+                    isError = formState.name.isBlank()
+                )
 
-        HorizontalDivider()
-
-        // Quick profiles
-        if (archetypes.isNotEmpty()) {
-            Text(
-                stringResource(R.string.quick_profiles),
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Medium
-            )
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(archetypes) { archetype ->
-                    ArchetypeChip(
-                        archetype = archetype,
-                        isSelected = formState.selectedArchetypeId == archetype.id,
-                        onClick = { onSelectArchetype(archetype) }
+                // Emoji picker
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        stringResource(R.string.choose_emoji),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    EmojiPickerRow(
+                        selectedEmoji = formState.avatarEmoji,
+                        onEmojiSelected = onEmojiChange
                     )
                 }
             }
         }
 
-        HorizontalDivider()
+        // Relationship Section
+        GlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    stringResource(R.string.relationship).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = aura.primaryColor
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    RelationshipType.entries.forEach { type ->
+                        val stringId = remember(type) {
+                            val field = R.string::class.java.getField(type.displayKey)
+                            field.getInt(null)
+                        }
+                        FilterChip(
+                            selected = formState.relationshipType == type,
+                            onClick = { onRelationshipChange(type) },
+                            label = { Text(stringResource(stringId)) },
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                    }
+                }
+            }
+        }
 
-        // Interests
-        Text(
-            stringResource(R.string.interests),
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Medium
-        )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            formState.interests.forEach { interest ->
-                InputChip(
-                    selected = false,
-                    onClick = { },
-                    label = { Text(interest) },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = { onRemoveInterest(interest) },
-                            modifier = Modifier.size(18.dp)
-                        ) {
-                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.delete))
+        // Quick profiles
+        if (archetypes.isNotEmpty()) {
+            GlassCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        stringResource(R.string.quick_profiles).uppercase(),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = aura.primaryColor
+                    )
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(archetypes) { archetype ->
+                            ArchetypeChip(
+                                archetype = archetype,
+                                isSelected = formState.selectedArchetypeId == archetype.id,
+                                onClick = { onSelectArchetype(archetype) }
+                            )
                         }
                     }
+                }
+            }
+        }
+
+        // Interests Section
+        GlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    stringResource(R.string.interests).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = aura.primaryColor
+                )
+                
+                if (formState.interests.isNotEmpty()) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        formState.interests.forEach { interest ->
+                            InputChip(
+                                selected = false,
+                                onClick = { },
+                                label = { Text(interest) },
+                                shape = RoundedCornerShape(12.dp),
+                                trailingIcon = {
+                                    IconButton(
+                                        onClick = { onRemoveInterest(interest) },
+                                        modifier = Modifier.size(18.dp)
+                                    ) {
+                                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.delete))
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = newInterest,
+                        onValueChange = { newInterest = it },
+                        label = { Text(stringResource(R.string.add_interest)) },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    IconButton(
+                        onClick = {
+                            if (newInterest.isNotBlank()) {
+                                onAddInterest(newInterest.trim())
+                                newInterest = ""
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_interest), tint = aura.primaryColor)
+                    }
+                }
+            }
+        }
+
+        // Dislikes Section
+        GlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    stringResource(R.string.dislikes).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = aura.primaryColor
+                )
+                
+                if (formState.dislikes.isNotEmpty()) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        formState.dislikes.forEach { dislike ->
+                            InputChip(
+                                selected = false,
+                                onClick = { },
+                                label = { Text(dislike) },
+                                shape = RoundedCornerShape(12.dp),
+                                trailingIcon = {
+                                    IconButton(
+                                        onClick = { onRemoveDislike(dislike) },
+                                        modifier = Modifier.size(18.dp)
+                                    ) {
+                                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.delete))
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = newDislike,
+                        onValueChange = { newDislike = it },
+                        label = { Text(stringResource(R.string.add_dislike)) },
+                        modifier = Modifier.weight(1f),
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    IconButton(
+                        onClick = {
+                            if (newDislike.isNotBlank()) {
+                                onAddDislike(newDislike.trim())
+                                newDislike = ""
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_dislike), tint = aura.primaryColor)
+                    }
+                }
+            }
+        }
+
+        // Notes Section
+        GlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    stringResource(R.string.notes).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = aura.primaryColor
+                )
+                OutlinedTextField(
+                    value = formState.notes,
+                    onValueChange = onNotesChange,
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    maxLines = 5,
+                    shape = RoundedCornerShape(16.dp)
                 )
             }
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            OutlinedTextField(
-                value = newInterest,
-                onValueChange = { newInterest = it },
-                label = { Text(stringResource(R.string.add_interest)) },
-                modifier = Modifier.weight(1f),
-                singleLine = true
-            )
-            IconButton(
-                onClick = {
-                    if (newInterest.isNotBlank()) {
-                        onAddInterest(newInterest.trim())
-                        newInterest = ""
-                    }
-                }
-            ) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_interest))
-            }
-        }
-
-        HorizontalDivider()
-
-        // Dislikes
-        Text(
-            stringResource(R.string.dislikes),
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Medium
-        )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            formState.dislikes.forEach { dislike ->
-                InputChip(
-                    selected = false,
-                    onClick = { },
-                    label = { Text(dislike) },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = { onRemoveDislike(dislike) },
-                            modifier = Modifier.size(18.dp)
-                        ) {
-                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.delete))
-                        }
-                    }
-                )
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            OutlinedTextField(
-                value = newDislike,
-                onValueChange = { newDislike = it },
-                label = { Text(stringResource(R.string.add_dislike)) },
-                modifier = Modifier.weight(1f),
-                singleLine = true
-            )
-            IconButton(
-                onClick = {
-                    if (newDislike.isNotBlank()) {
-                        onAddDislike(newDislike.trim())
-                        newDislike = ""
-                    }
-                }
-            ) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_dislike))
-            }
-        }
-
-        HorizontalDivider()
-
-        // Notes
-        OutlinedTextField(
-            value = formState.notes,
-            onValueChange = onNotesChange,
-            label = { Text(stringResource(R.string.notes)) },
-            modifier = Modifier.fillMaxWidth(),
-            minLines = 3,
-            maxLines = 5
-        )
     }
 }
 

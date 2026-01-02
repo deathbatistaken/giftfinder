@@ -54,12 +54,16 @@ fun SettingsScreen(
     val notificationsEnabled by viewModel.notificationsEnabled.collectAsState()
     val cosmicAura by viewModel.cosmicAura.collectAsState()
     val reminderOffsets by viewModel.reminderOffsets.collectAsState()
+    val calendarSyncEnabled by viewModel.calendarSyncEnabled.collectAsState()
+    val personaCreativity by viewModel.personaCreativity.collectAsState()
     
     var showDeleteDialog by remember { mutableStateOf(false) }
     var showThemeDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    var showCurrencyDialog by remember { mutableStateOf(false) }
 
     val appLanguage by viewModel.appLanguage.collectAsState()
+    val appCurrency by viewModel.appCurrency.collectAsState()
 
     val context = androidx.compose.ui.platform.LocalContext.current
     val contentResolver = context.contentResolver
@@ -214,6 +218,19 @@ fun SettingsScreen(
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
 
+                        val currencyMap = mapOf(
+                            "TRY" to stringResource(R.string.currency_tl),
+                            "USD" to stringResource(R.string.currency_usd),
+                            "EUR" to stringResource(R.string.currency_eur)
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.currency)) },
+                            supportingContent = { Text(currencyMap[appCurrency] ?: stringResource(R.string.currency_usd)) },
+                            modifier = Modifier.clickable { showCurrencyDialog = true },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.haptic_feedback)) },
                             trailingContent = {
@@ -231,7 +248,7 @@ fun SettingsScreen(
                         Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
 
                         Text(
-                            text = "Cosmic Aura",
+                            text = stringResource(R.string.cosmic_aura),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary,
@@ -316,7 +333,7 @@ fun SettingsScreen(
                             Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
                             
                             Text(
-                                text = "Reminder Schedule",
+                                text = stringResource(R.string.reminder_schedule),
                                 style = MaterialTheme.typography.labelLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary,
@@ -324,7 +341,12 @@ fun SettingsScreen(
                             )
 
                             Column(modifier = Modifier.padding(horizontal = 8.dp)) {
-                                listOf(7 to "7 days before", 3 to "3 days before", 0 to "Same day").forEach { (days, label) ->
+                                val dayLabels = mapOf(
+                                    7 to stringResource(R.string.days_before_7),
+                                    3 to stringResource(R.string.days_before_3),
+                                    0 to stringResource(R.string.same_day)
+                                )
+                                dayLabels.forEach { (days, label) ->
                                     Row(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -345,6 +367,64 @@ fun SettingsScreen(
                                         Text(label, style = MaterialTheme.typography.bodyMedium)
                                     }
                                 }
+                            }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                GlassCard(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = stringResource(R.string.smart_features),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.auto_calendar_sync)) },
+                            supportingContent = { Text(stringResource(R.string.auto_calendar_sync_desc)) },
+                            trailingContent = {
+                                Switch(
+                                    checked = calendarSyncEnabled,
+                                    onCheckedChange = { 
+                                        scope.launch { hapticEngine.tap() }
+                                        viewModel.setCalendarSyncEnabled(it) 
+                                    }
+                                )
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+
+                        Divider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outlineVariant)
+
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(
+                                text = stringResource(R.string.persona_creativity),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Text(
+                                text = stringResource(R.string.persona_creativity_desc),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            
+                            Spacer(modifier = Modifier.height(16.dp))
+                            
+                            Slider(
+                                value = personaCreativity,
+                                onValueChange = { viewModel.setPersonaCreativity(it) },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(stringResource(R.string.creativity_low), style = MaterialTheme.typography.labelSmall)
+                                Text(stringResource(R.string.creativity_high), style = MaterialTheme.typography.labelSmall)
                             }
                         }
                     }
@@ -402,7 +482,7 @@ fun SettingsScreen(
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.budget_tracker)) },
                             supportingContent = { Text(stringResource(R.string.track_your_spending)) },
-                            leadingContent = { Text("📊", style = MaterialTheme.typography.titleLarge) },
+                            leadingContent = { Text(stringResource(R.string.emoji_chart), style = MaterialTheme.typography.titleLarge) },
                             modifier = Modifier.clickable { onNavigateToBudgetTracker() },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
@@ -512,6 +592,43 @@ fun SettingsScreen(
                         ) {
                             RadioButton(
                                 selected = appLanguage == code,
+                                onClick = null
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(name)
+                        }
+                    }
+                }
+            },
+            confirmButton = { }
+        )
+    }
+
+    if (showCurrencyDialog) {
+        val currencyMap = mapOf(
+            "TRY" to stringResource(R.string.currency_tl),
+            "USD" to stringResource(R.string.currency_usd),
+            "EUR" to stringResource(R.string.currency_eur)
+        )
+        
+        AlertDialog(
+            onDismissRequest = { showCurrencyDialog = false },
+            title = { Text(stringResource(R.string.select_currency)) },
+            text = {
+                Column {
+                    currencyMap.forEach { (code, name) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.setAppCurrency(code)
+                                    showCurrencyDialog = false
+                                }
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = appCurrency == code,
                                 onClick = null
                             )
                             Spacer(modifier = Modifier.width(8.dp))

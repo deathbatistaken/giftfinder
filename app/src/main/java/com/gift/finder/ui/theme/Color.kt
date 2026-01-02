@@ -32,21 +32,21 @@ val OnSurfaceLight = Color(0xFF1C1B1F)
 val SurfaceVariantLight = Color(0xFFE7E0EC)
 val OnSurfaceVariantLight = Color(0xFF49454F)
 
-// Surface colors - Dark
-val SurfaceDark = Color(0xFF1C1B1F)
-val OnSurfaceDark = Color(0xFFE6E1E5)
-val SurfaceVariantDark = Color(0xFF49454F)
-val OnSurfaceVariantDark = Color(0xFFCAC4D0)
+// Surface colors - Dark (Deeper colors for premium feel)
+val SurfaceDark = Color(0xFF0F0F12)
+val OnSurfaceDark = Color(0xFFF0F0F5)
+val SurfaceVariantDark = Color(0xFF1E1E24)
+val OnSurfaceVariantDark = Color(0xFFB0B0B8)
 
 // Background
 val BackgroundLight = Color(0xFFFFFBFE)
 val OnBackgroundLight = Color(0xFF1C1B1F)
-val BackgroundDark = Color(0xFF1C1B1F)
-val OnBackgroundDark = Color(0xFFE6E1E5)
+val BackgroundDark = Color(0xFF0A0A0C)
+val OnBackgroundDark = Color(0xFFF0F0F5)
 
 // Outline
 val OutlineLight = Color(0xFF79747E)
-val OutlineDark = Color(0xFF938F99)
+val OutlineDark = Color(0xFF3F3F46)
 
 // Additional app-specific colors (Vibrant & Premium)
 val GiftPink = Color(0xFFFF6B9D)

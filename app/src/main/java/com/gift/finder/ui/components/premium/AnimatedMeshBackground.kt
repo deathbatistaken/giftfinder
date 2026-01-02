@@ -39,20 +39,67 @@ fun AnimatedMeshBackground(
         label = "c2"
     )
 
+    // Cosmic Stars Logic
+    val starCount = 60
+    val starPositions = remember {
+        List(starCount) {
+            Offset(
+                x = Math.random().toFloat(),
+                y = Math.random().toFloat()
+            )
+        }
+    }
+    
+    val starAlpha by infiniteTransition.animateFloat(
+        initialValue = 0.2f,
+        targetValue = 0.8f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "stars"
+    )
+
     Canvas(modifier = Modifier.fillMaxSize()) {
+        // Base Mesh Gradients
         drawRect(
             brush = Brush.radialGradient(
                 colors = listOf(color1, Color.Transparent),
                 center = center.copy(x = size.width * 0.2f, y = size.height * 0.3f),
-                radius = size.width * 0.8f
+                radius = size.width * 1.2f
             )
         )
         drawRect(
             brush = Brush.radialGradient(
                 colors = listOf(color2, Color.Transparent),
                 center = center.copy(x = size.width * 0.8f, y = size.height * 0.7f),
-                radius = size.width * 0.9f
+                radius = size.width * 1.5f
             )
         )
+        
+        // Render Cosmic Particles (Stars)
+        starPositions.forEachIndexed { index, pos ->
+            val x = pos.x * size.width
+            val y = pos.y * size.height
+            val radius = if (index % 5 == 0) 2.dp.toPx() else 1.dp.toPx()
+            
+            // Twinkle effect variation
+            val individualAlpha = (starAlpha * (0.5f + (index % 10) / 20f)).coerceIn(0f, 1f)
+            
+            drawCircle(
+                color = Color.White.copy(alpha = individualAlpha),
+                radius = radius,
+                center = Offset(x, y)
+            )
+            
+            // Subtle Glow Path
+            if (index % 10 == 0) {
+                drawCircle(
+                    color = aura.primaryColor.copy(alpha = individualAlpha * 0.5f),
+                    radius = radius * 3f,
+                    center = Offset(x, y)
+                )
+            }
+        }
     }
 }

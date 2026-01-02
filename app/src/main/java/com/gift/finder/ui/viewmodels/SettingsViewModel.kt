@@ -48,6 +48,15 @@ class SettingsViewModel @Inject constructor(
     val appLanguage = preferencesManager.appLanguage
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "en")
 
+    val appCurrency = preferencesManager.appCurrency
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "USD")
+
+    val calendarSyncEnabled = preferencesManager.calendarSyncEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val personaCreativity = preferencesManager.personaCreativity
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.5f)
+
     val billingConnectionState: StateFlow<BillingConnectionState> = billingManager.billingConnectionState
 
     val purchaseState: StateFlow<PurchaseState> = billingManager.purchaseState
@@ -94,8 +103,33 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setAppCurrency(currency: String) {
+        viewModelScope.launch {
+            preferencesManager.setAppCurrency(currency)
+        }
+    }
+
+    fun setCalendarSyncEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            preferencesManager.setCalendarSyncEnabled(enabled)
+        }
+    }
+
+    fun setPersonaCreativity(level: Float) {
+        viewModelScope.launch {
+            preferencesManager.setPersonaCreativity(level)
+        }
+    }
+
     fun restorePurchases() {
         billingManager.restorePurchases()
+    }
+
+    /**
+     * Launch purchase flow for a product.
+     */
+    fun launchPurchase(activity: android.app.Activity, productDetails: com.android.billingclient.api.ProductDetails) {
+        billingManager.launchPurchase(activity, productDetails)
     }
 
     fun deleteAllData() {
@@ -115,7 +149,7 @@ class SettingsViewModel @Inject constructor(
                 }
                 onSuccess()
             } catch (e: Exception) {
-                e.printStackTrace()
+                android.util.Log.e("SettingsViewModel", "Error exporting data", e)
                 onError()
             }
         }
@@ -129,7 +163,7 @@ class SettingsViewModel @Inject constructor(
                 }
                 onSuccess()
             } catch (e: Exception) {
-                e.printStackTrace()
+                android.util.Log.e("SettingsViewModel", "Error importing data", e)
                 onError()
             }
         }

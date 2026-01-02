@@ -50,6 +50,7 @@ class GiftRepository @Inject constructor(
             cachedCategories = data.categories.map { it.toDomain() }
             cachedCategories!!
         } catch (e: Exception) {
+            android.util.Log.e("GiftRepository", "Error loading gift categories", e)
             // Return fallback categories if JSON parsing fails
             getFallbackCategories()
         }
@@ -71,6 +72,7 @@ class GiftRepository @Inject constructor(
             cachedArchetypes = data.archetypes.map { it.toDomain() }
             cachedArchetypes!!
         } catch (e: Exception) {
+            android.util.Log.e("GiftRepository", "Error loading archetypes", e)
             getFallbackArchetypes()
         }
     }
@@ -82,6 +84,7 @@ class GiftRepository @Inject constructor(
         person: Person,
         style: GiftStyle?,
         budget: BudgetRange?,
+        creativityLevel: Float = 0.5f,
         maxResults: Int = 20
     ): List<GiftSuggestion> {
         val oneYearAgo = System.currentTimeMillis() - (365L * 24 * 60 * 60 * 1000)
@@ -116,8 +119,22 @@ class GiftRepository @Inject constructor(
                     style,
                     budget
                 )
+                
+                // Apply creativity bonus/penalty
+                // High creativity = more weight on "Random Spark", lower on exact interests
+                val interestMultiplier = (10 * (1.5f - creativityLevel)).coerceIn(5f, 15f)
+                val randomSpark = if (creativityLevel > 0.7f) (0..20).random(java.util.Random(category.id.hashCode() + System.currentTimeMillis() / 100000)) else 0
+                
+                val finalScore = (score * (1.0f - creativityLevel) + randomSpark + (category.interestTags.count { tag -> person.interests.any { it.contains(tag, true) } } * interestMultiplier)).toInt()
+
                 val reasons = buildMatchReasons(category, person, style)
-                GiftSuggestion(category, score.toDouble() / 100.0, reasons)
+                
+                // Simulate Price Radar: Deterministic per day and category (20% chance)
+                val daySeed = System.currentTimeMillis() / (24 * 60 * 60 * 1000)
+                val random = java.util.Random(category.id.hashCode() + daySeed)
+                val priceDrop = if (random.nextFloat() < 0.2f) (5..30).random(kotlin.random.Random(random.nextLong())) else null
+                
+                 GiftSuggestion(category, finalScore.toDouble() / 150.0, reasons, priceDropPercentage = priceDrop)
             }
             .sortedByDescending { it.matchScore }
             .take(maxResults)

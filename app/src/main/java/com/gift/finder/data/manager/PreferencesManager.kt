@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -43,6 +44,12 @@ class PreferencesManager @Inject constructor(
         private val KEY_COSMIC_AURA = stringPreferencesKey("cosmic_aura")
         private val KEY_REMINDER_OFFSETS = stringPreferencesKey("reminder_offsets") // e.g. "0,3,7"
         private val KEY_APP_LANGUAGE = stringPreferencesKey("app_language") // "en", "tr", etc.
+        private val KEY_APP_CURRENCY = stringPreferencesKey("app_currency") // "USD", "TRY", "EUR"
+        
+        // Smart Features
+        private val KEY_CALENDAR_SYNC_ENABLED = booleanPreferencesKey("calendar_sync_enabled")
+        private val KEY_PERSONA_CREATIVITY = floatPreferencesKey("persona_creativity") // 0.0 to 1.0
+        private val KEY_MONTHLY_BUDGET = doublePreferencesKey("monthly_budget")
     }
 
     // Onboarding
@@ -150,6 +157,40 @@ class PreferencesManager @Inject constructor(
         dataStore.edit { prefs ->
             prefs[KEY_APP_LANGUAGE] = language
         }
+    }
+
+    // Currency
+    val appCurrency: Flow<String> = dataStore.data.map { prefs ->
+        prefs[KEY_APP_CURRENCY] ?: "USD"
+    }
+
+    suspend fun setAppCurrency(currency: String) {
+        dataStore.edit { prefs ->
+            prefs[KEY_APP_CURRENCY] = currency
+        }
+    }
+
+    // Calendar Sync
+    val calendarSyncEnabled: Flow<Boolean> = dataStore.data.map { prefs ->
+        prefs[KEY_CALENDAR_SYNC_ENABLED] ?: false
+    }
+
+    suspend fun setCalendarSyncEnabled(enabled: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[KEY_CALENDAR_SYNC_ENABLED] = enabled
+        }
+    }
+
+    // Persona Creativity
+    val personaCreativity: Flow<Float> = dataStore.data.map { it[KEY_PERSONA_CREATIVITY] ?: 0.5f }
+    val monthlyBudget: Flow<Double> = dataStore.data.map { it[KEY_MONTHLY_BUDGET] ?: 1000.0 }
+
+    suspend fun setPersonaCreativity(level: Float) {
+        dataStore.edit { it[KEY_PERSONA_CREATIVITY] = level }
+    }
+
+    suspend fun setMonthlyBudget(limit: Double) {
+        dataStore.edit { it[KEY_MONTHLY_BUDGET] = limit }
     }
 
     // Clear all data

@@ -33,4 +33,5 @@ sealed class Screen(val route: String) {
         fun createRoute(personId: Long) = "wishlist/$personId"
         const val ARG_PERSON_ID = "personId"
     }
+    data object ImportContacts : Screen("import_contacts")
 }

@@ -51,6 +51,7 @@
     <string name="in_days">%1$d gün içinde</string>
     
     <!-- Person -->
+    <string name="basic_info">Temel Bilgiler</string>
     <string name="name">İsim</string>
     <string name="relationship">Yakınlık</string>
     <string name="choose_emoji">Bir emoji seç</string>
@@ -75,6 +76,8 @@
     <string name="not_interested">İlgilenmiyorum</string>
     <string name="unlock_pro">Pro Kilidini Aç</string>
     <string name="why_not">Neden bu hediye olmasın?</string>
+    <string name="analyzing_preferences">Tercihleriniz analiz ediliyor…</string>
+    <string name="try_different_filters">Filtreleri değiştirmeyi deneyin</string>
     
     <!-- Roulette -->
     <string name="gift_roulette">Hediye Ruleti</string>
@@ -92,6 +95,11 @@
     <string name="theme_dark">Koyu</string>
     <string name="theme_system">Sistem Varsayılanı</string>
     <string name="language">Dil</string>
+    <string name="currency">Para Birimi</string>
+    <string name="select_currency">Para Birimi Seç</string>
+    <string name="currency_tl">Türk Lirası (₺)</string>
+    <string name="currency_usd">ABD Doları ($)</string>
+    <string name="currency_eur">Euro (€)</string>
     <string name="select_language">Dil Seçin</string>
     <string name="haptic_feedback">Dokunsal Geri Bildirim</string>
     <string name="notifications">Bildirimler</string>
@@ -137,6 +145,11 @@
     <string name="total_spent">Toplam Harcama</string>
     <string name="gifts_given">Verilen Hediyeler</string>
     <string name="avg_per_person">Kişi Başı Ort.</string>
+    <string name="budget_progress">AYLIK BÜTÇE DURUMU</string>
+    <string name="budget_remaining">%1$s Kaldı</string>
+    <string name="budget_exceeded">%1$s Aşıldı!</string>
+    <string name="set_monthly_budget">Aylık Bütçe Belirle</string>
+    <string name="relationship_breakdown">İlişki Bazlı Dağılım</string>
     <string name="top_spending">En Çok Harcanan</string>
     <string name="recent_gifts">Son Hediyeler</string>
     <string name="gifts">hediye</string>
@@ -174,6 +187,7 @@
     <string name="delete_date_message">%1$s silinsin mi? Bu işlem geri alınamaz.</string>
     
     <!-- Search -->
+    <string name="search">Ara</string>
     <string name="search_placeholder">Kişi veya ilgi alanı ara...</string>
     <string name="search_hint">Aramak için bir isim veya ilgi alanı yaz</string>
     <string name="no_results">Sonuç bulunamadı</string>
@@ -207,8 +221,16 @@
     <string name="rejection_expensive">Çok Pahalı</string>
     <string name="rejection_not_style">Tarzı Değil</string>
     <string name="rejection_already_have">Zaten Var</string>
+    <string name="rejection_bought_before">Daha Önce Aldım</string>
     <string name="rejection_not_interested">İlgilenmiyor</string>
     <string name="rejection_other">Diğer Sebep</string>
+
+    <string name="rejection_expensive_desc">Bütçemin dışında</string>
+    <string name="rejection_not_style_desc">Onun tarzına uymuyor</string>
+    <string name="rejection_already_have_desc">Buna zaten sahip</string>
+    <string name="rejection_bought_before_desc">Bunu daha önce hediye ettim</string>
+    <string name="rejection_not_interested_desc">Bununla ilgilenmiyor</string>
+    <string name="rejection_other_desc">Başka bir sebep</string>
     <string name="discovery_mode">Keşif Modu</string>
     <string name="grid_view">Liste Görünümü</string>
     <string name="more_ideas">fikir daha var</string>
@@ -222,7 +244,11 @@
     <string name="persona_keyword_outdoor">Korkusuz</string>
     <string name="persona_keyword_intellectual">Bilge</string>
     <string name="persona_keyword_lifestyle">Sofistike</string>
+    <string name="persona_keyword_celestial">Göksel</string>
+    <string name="persona_keyword_radiant">Işıltılı</string>
+    <string name="persona_keyword_mystic">Mistik</string>
     <string name="persona_keyword_eclectic">Eklektik</string>
+
     <string name="persona_keyword_dynamic">Dinamik</string>
     <string name="persona_keyword_captivating">Büyüleyici</string>
     <string name="persona_template_archetype">%1$s %2$s</string>
@@ -261,4 +287,75 @@
     <string name="export_error">Dışa aktarma başarısız</string>
     <string name="import_success">Veriler başarıyla yüklendi</string>
     <string name="import_error">İçe aktarma başarısız</string>
+
+    <!-- Settings Additional -->
+    <string name="cosmic_aura">Kozmik Aura</string>
+    <string name="reminder_schedule">Hatırlatıcı Programı</string>
+    <string name="days_before_7">7 gün önce</string>
+    <string name="days_before_3">3 gün önce</string>
+    <string name="same_day">Aynı gün</string>
+
+    <!-- Wishlist -->
+    <string name="wishlist">İstek Listesi</string>
+    <string name="wishlist_empty">İstek Listesi Boş</string>
+    <string name="wishlist_hint">En sevdiğin kozmik hediye fikirlerini buraya kaydet!</string>
+
+    <string name="consulting_stars">YILDIZLARA DANIŞILIYOR...</string>
+    <string name="saved_to_wishlist">%1$s İstek Listesine kaydedildi ✨</string>
+    <string name="gift_marked_purchased">Hediye satın alındı olarak işaretlendi!</string>
+    <string name="visual_analysis">Görsel Analiz</string>
+    <string name="rank_cosmic">RÜTBE: KOZMİK</string>
+
+    <!-- Contacts Import -->
+    <string name="import_contacts">Rehberden İçe Aktar</string>
+    <string name="create_manually">Manuel Ekle</string>
+    <string name="permission_required_contacts">Kişileri yüklemek için izin gerekli.</string>
+    <string name="grant_permission">İzin Ver</string>
+    <string name="import_action">İçe Aktar (%1$d)</string>
+    <string name="no_contacts_found">Kişi bulunamadı.</string>
+    <string name="contacts_permission_rationale">Rehberinizdeki kişileri GiftFinder\'a aktarmak için bu izne ihtiyacımız var.</string>
+    <string name="add_to_calendar">Takvime Ekle</string>
+
+    <!-- Smart Features Settings -->
+    <string name="smart_features">AKILLI ÖZELLİKLER</string>
+    <string name="auto_calendar_sync">Otomatik Takvim Senkronizasyonu</string>
+    <string name="auto_calendar_sync_desc">Özel günleri sistem takviminize otomatik ekler.</string>
+    <string name="persona_creativity">Persona Yaratıcılığı</string>
+    <string name="persona_creativity_desc">Önerilerin ne kadar sıra dışı olacağını belirler.</string>
+    <string name="creativity_low">Geleneksel</string>
+    <string name="creativity_high">Kozmik Kaşif</string>
+    <string name="cosmic_summary">KOZMİK ÖZET</string>
+    <string name="cosmic_summary_today">Bugün %1$s günü! ✨</string>
+    <string name="cosmic_summary_upcoming">%1$s için %2$d gün kaldı.</string>
+
+    <!-- Search Section -->
+    <string name="people">KİŞİLER</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_gift_icon">Hediye ikonu</string>
+    <string name="cd_calendar_icon">Takvim ikonu</string>
+    <string name="cd_celebration_icon">Kutlama ikonu</string>
+    <string name="cd_bookmark_icon">Yer işareti ikonu</string>
+    <string name="cd_price_drop_icon">Fiyat düşüşü göstergesi</string>
+    <string name="cd_casino_icon">Rulet ikonu</string>
+    <string name="cd_settings_icon">Ayarlar ikonu</string>
+    <string name="cd_search_icon">Arama ikonu</string>
+    <string name="cd_refresh_icon">Yenile</string>
+    <string name="cd_shop_icon">Satın al</string>
+    <string name="cd_delete_icon">Sil</string>
+    <string name="cd_close_icon">Kapat</string>
+    <string name="cd_check_icon">Onay</string>
+    <string name="cd_premium_icon">Premium özellik</string>
+    <string name="cd_notification_icon">Bildirimler</string>
+    <string name="cd_export_icon">Verileri dışa aktar</string>
+    <string name="cd_import_icon">Verileri içe aktar</string>
+    <string name="cd_loading">Yükleniyor</string>
+    
+    <!-- Emojis & UI Text -->
+    <string name="emoji_search">🔍</string>
+    <string name="emoji_empty">😕</string>
+    <string name="emoji_money">💰</string>
+    <string name="emoji_chart">📊</string>
+    <string name="emoji_cake">🎂</string>
+    <string name="add_special_date_action">+ Özel Gün Ekle</string>
 </resources>

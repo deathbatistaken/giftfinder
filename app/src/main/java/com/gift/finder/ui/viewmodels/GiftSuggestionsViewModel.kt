@@ -50,6 +50,9 @@ class GiftSuggestionsViewModel @Inject constructor(
     val subscriptionStatus = preferencesManager.subscriptionStatus
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
+    val appCurrency: StateFlow<String> = preferencesManager.appCurrency
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "USD")
+
     private var currentPerson: Person? = null
 
     init {
@@ -84,12 +87,14 @@ class GiftSuggestionsViewModel @Inject constructor(
             val person = currentPerson ?: return@launch
             val subscription = preferencesManager.subscriptionStatus.first()
             val isPremium = subscription.isPremium
+            val creativityLevel = preferencesManager.personaCreativity.first()
             val limits = PremiumFeatures.getLimits(isPremium)
 
             val suggestions = giftRepository.getSuggestions(
                 person = person,
                 style = _selectedStyle.value,
-                budget = _selectedBudget.value
+                budget = _selectedBudget.value,
+                creativityLevel = creativityLevel
             )
 
             // Apply free tier limits
@@ -120,6 +125,20 @@ class GiftSuggestionsViewModel @Inject constructor(
         viewModelScope.launch {
             savedGiftRepository.saveGift(personId, categoryId)
             // Optional: Show success snackbar or haptic in UI
+        }
+    }
+
+    fun purchaseGift(categoryId: String, categoryTitle: String, price: Double?, occasion: String) {
+        viewModelScope.launch {
+            val historyItem = com.gift.finder.domain.model.GiftHistoryItem(
+                personId = personId,
+                categoryId = categoryId,
+                categoryTitle = categoryTitle,
+                price = price,
+                occasion = occasion
+            )
+            personRepository.addGiftToHistory(historyItem)
+            loadSuggestions() // Reload to exclude purchased
         }
     }
 

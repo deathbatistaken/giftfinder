@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App -->
     <string name="app_name">GiftFinder</string>
+    
+    <!-- Common -->
     <string name="skip">スキップ</string>
     <string name="back">戻る</string>
     <string name="next">次へ</string>
@@ -12,6 +15,7 @@
     <string name="settings">設定</string>
     <string name="get_started">始める</string>
     
+    <!-- Onboarding -->
     <string name="onboarding_title_1">同じプレゼントに飽きた？</string>
     <string name="onboarding_desc_1">プレゼント選びのストレスにさようなら。いつでも完璧なギフトを見つけよう。</string>
     <string name="onboarding_title_2">詳細を記録</string>
@@ -21,6 +25,7 @@
     <string name="onboarding_title_4">完璧なギフトアイデアを見つける</string>
     <string name="onboarding_desc_4">興味に基づいてパーソナライズされた提案を数秒で。</string>
     
+    <!-- Paywall -->
     <string name="paywall_title">GiftFinder Proをアンロック</string>
     <string name="paywall_subtitle">いつでも完璧なプレゼントを見つけよう</string>
     <string name="feature_unlimited_persons">無制限の人数</string>
@@ -34,6 +39,7 @@
     <string name="yearly_plan">年間プラン</string>
     <string name="weekly_plan">週間プラン</string>
     
+    <!-- Home -->
     <string name="upcoming_events">今後のイベント</string>
     <string name="your_people">あなたの人々</string>
     <string name="add_person">人を追加</string>
@@ -44,6 +50,8 @@
     <string name="tomorrow">明日</string>
     <string name="in_days">%1$d日後</string>
     
+    <!-- Person -->
+    <string name="basic_info">基本情報</string>
     <string name="name">名前</string>
     <string name="relationship">関係</string>
     <string name="choose_emoji">絵文字を選択</string>
@@ -61,13 +69,17 @@
     <string name="delete_person_title">この人を削除しますか？</string>
     <string name="delete_person_message">この人のすべてのデータが削除されます。</string>
     
+    <!-- Suggestions -->
     <string name="gift_ideas">ギフトアイデア</string>
     <string name="style">スタイル</string>
     <string name="budget">予算</string>
     <string name="not_interested">興味なし</string>
     <string name="unlock_pro">Proをアンロック</string>
     <string name="why_not">なぜこのギフトではない？</string>
+    <string name="analyzing_preferences">設定を分析中…</string>
+    <string name="try_different_filters">フィルターを変更してみてください</string>
     
+    <!-- Roulette -->
     <string name="gift_roulette">ギフトルーレット</string>
     <string name="spinning">回転中...</string>
     <string name="tap_to_spin">タップして回す！</string>
@@ -76,12 +88,18 @@
     <string name="spin_again">もう一度回す</string>
     <string name="shop_now">今すぐ購入</string>
     
+    <!-- Settings -->
     <string name="appearance">外観</string>
     <string name="theme">テーマ</string>
     <string name="theme_light">ライト</string>
     <string name="theme_dark">ダーク</string>
     <string name="theme_system">システムのデフォルト</string>
     <string name="language">言語</string>
+    <string name="currency">通貨</string>
+    <string name="select_currency">通貨を選択</string>
+    <string name="currency_tl">トルコリラ (₺)</string>
+    <string name="currency_usd">米ドル ($)</string>
+    <string name="currency_eur">ユーロ (€)</string>
     <string name="select_language">言語を選択</string>
     <string name="haptic_feedback">触覚フィードバック</string>
     <string name="notifications">通知</string>
@@ -96,6 +114,7 @@
     <string name="subscription_active">サブスクリプション有効</string>
     <string name="pro_member">Proメンバー</string>
     
+    <!-- Notifications -->
     <string name="notification_channel_reminders">リマインダー</string>
     <string name="notification_channel_reminders_desc">特別な日のリマインダー</string>
     <string name="notification_channel_general">一般</string>
@@ -105,4 +124,209 @@
     <string name="notification_title_days">特別な日まであと%1$d日</string>
     <string name="notification_message_today">%1$sの%2$sは今日です！お祝いの時間！</string>
     <string name="notification_message_upcoming">忘れないで：%1$sの%2$sがもうすぐです！</string>
+    
+    <!-- Relationships -->
+    <string name="relationship_partner">パートナー</string>
+    <string name="relationship_spouse">配偶者</string>
+    <string name="relationship_family">家族</string>
+    <string name="relationship_friend">友人</string>
+    <string name="relationship_colleague">同僚</string>
+    <string name="relationship_boss">上司</string>
+    <string name="relationship_child">子供</string>
+    <string name="relationship_parent">親</string>
+    <string name="relationship_sibling">兄弟姉妹</string>
+    <string name="relationship_other">その他</string>
+    
+    <!-- Budget Tracker -->
+    <string name="budget_tracker">予算トラッカー</string>
+    <string name="this_month">今月</string>
+    <string name="this_year">今年</string>
+    <string name="all_time">全期間</string>
+    <string name="total_spent">合計支出</string>
+    <string name="gifts_given">贈ったギフト</string>
+    <string name="avg_per_person">一人あたり平均</string>
+    <string name="top_spending">最大の支出</string>
+    <string name="recent_gifts">最近のギフト</string>
+    <string name="gifts">ギフト</string>
+    <string name="no_spending_data">まだ支出データがありません</string>
+    <string name="mark_gifts_purchased">ギフトを購入済みとしてマークして予算を追跡</string>
+    <string name="track_your_spending">ギフトの支出を追跡</string>
+    
+    <!-- Special Date Dialog -->
+    <string name="add_special_date">特別な日を追加</string>
+    <string name="event_title">イベントタイトル</string>
+    <string name="event_type">イベントタイプ</string>
+    <string name="date">日付</string>
+    <string name="birthday">誕生日</string>
+    <string name="anniversary">記念日</string>
+    <string name="holiday">祝日</string>
+    <string name="other">その他</string>
+    
+    <!-- Mark as Purchased Dialog -->
+    <string name="mark_as_purchased">購入済みとしてマーク</string>
+    <string name="price_optional">価格（任意）</string>
+    <string name="occasion_optional">場面（任意）</string>
+    <string name="occasion_placeholder">例：誕生日、クリスマス</string>
+    
+    <!-- Edit Person -->
+    <string name="edit_person">人を編集</string>
+    
+    <!-- Calendar -->
+    <string name="calendar">カレンダー</string>
+    <string name="no_upcoming_dates">今後の予定なし</string>
+    <string name="add_special_dates_hint">重要なイベントを追跡するために特別な日を追加</string>
+    
+    <!-- Special Dates Screen -->
+    <string name="no_special_dates">まだ特別な日がありません</string>
+    <string name="delete_date_title">日付を削除しますか？</string>
+    <string name="delete_date_message">%1$sを削除しますか？この操作は取り消せません。</string>
+    
+    <!-- Search -->
+    <string name="search">検索</string>
+    <string name="search_placeholder">人や興味を検索...</string>
+    <string name="search_hint">名前や興味を入力</string>
+    <string name="no_results">結果が見つかりません</string>
+    
+    <!-- Budget -->
+    <string name="budget_low_tier">格安 (&lt;$25)</string>
+    <string name="budget_low">低 ($25-$50)</string>
+    <string name="budget_medium">中 ($50-$100)</string>
+    <string name="budget_high">高 ($100-$250)</string>
+    <string name="budget_luxury">高級 ($250+)</string>
+
+    <!-- Styles -->
+    <string name="style_practical">実用的</string>
+    <string name="style_romantic">ロマンチック</string>
+    <string name="style_fun">楽しい</string>
+    <string name="style_creative">クリエイティブ</string>
+    <string name="style_luxurious">高級</string>
+    <string name="style_sentimental">感傷的</string>
+    <string name="style_experiential">体験型</string>
+    <string name="style_tech">テック</string>
+
+    <!-- Events -->
+    <string name="event_wedding">結婚式</string>
+    <string name="event_valentine">バレンタインデー</string>
+    <string name="event_mothers_day">母の日</string>
+    <string name="event_fathers_day">父の日</string>
+    <string name="event_christmas">クリスマス</string>
+    <string name="event_new_year">お正月</string>
+    <string name="event_graduation">卒業式</string>
+
+    <!-- Rejection Reasons -->
+    <string name="rejection_expensive">高すぎる</string>
+    <string name="rejection_not_style">スタイルに合わない</string>
+    <string name="rejection_already_have">すでに持っている</string>
+    <string name="rejection_not_interested">興味がない</string>
+    <string name="rejection_other">その他の理由</string>
+    <string name="discovery_mode">ディスカバリーモード</string>
+    <string name="grid_view">グリッド表示</string>
+    <string name="more_ideas">さらにアイデア</string>
+    <string name="interested">興味あり</string>
+    <string name="not_interested_swipe">興味なし</string>
+
+    <!-- Persona Engine -->
+    <string name="persona_mysterious_soul">神秘的な魂</string>
+    <string name="persona_keyword_tech">先見の明</string>
+    <string name="persona_keyword_creative">インスピレーション</string>
+    <string name="persona_keyword_outdoor">恐れ知らず</string>
+    <string name="persona_keyword_intellectual">博識</string>
+    <string name="persona_keyword_lifestyle">洗練された</string>
+    <string name="persona_keyword_celestial">セレスティアル</string>
+    <string name="persona_keyword_radiant">ラディアント</string>
+    <string name="persona_keyword_mystic">ミスティック</string>
+    <string name="persona_keyword_eclectic">エクレクティック</string>
+    <string name="persona_keyword_dynamic">ダイナミック</string>
+    <string name="persona_keyword_captivating">魅力的</string>
+    <string name="persona_template_archetype">%1$sな%2$s</string>
+    <string name="persona_template_enthusiast">%1$s愛好家</string>
+
+    <!-- Export Manager -->
+    <string name="share_empty_wishlist">%1$sへのウィッシュリストはまだ空です 🎁</string>
+    <string name="share_header">✨ ギフトポータル: %1$s ✨\nGiftFinderで見つけたアイデア 🌠\n━━━━━━━━━━━━━━━━━━━━\n\n</string>
+    <string name="share_store_link">🛒 ここで購入: %1$s\n\n</string>
+    <string name="share_footer">━━━━━━━━━━━━━━━━━━━━\n✨ GiftFinder ✨で作成\nみんなにぴったりのギフトを見つけよう。</string>
+
+    <!-- Widgets -->
+    <string name="widget_upcoming_title">✨ 今後の予定</string>
+    <string name="widget_no_events">今後のイベントなし</string>
+    <string name="widget_no_events_desc">今後のイベントが見つかりません。</string>
+    <string name="widget_tap_to_add">タップして追加</string>
+    <string name="widget_today">今日！</string>
+    <string name="widget_days_left">あと%1$d日</string>
+    <string name="widget_actions_title">⚡ アクション</string>
+    <string name="widget_action_add">追加</string>
+    <string name="widget_action_play">プレイ</string>
+
+    <!-- Quick Tags -->
+    <string name="tag_tech">テック</string>
+    <string name="tag_art">アート</string>
+    <string name="tag_outdoor">アウトドア</string>
+    <string name="tag_books">本</string>
+    <string name="tag_gaming">ゲーム</string>
+    <string name="tag_wellness">ウェルネス</string>
+
+    <!-- Backup -->
+    <string name="data_management">データ管理</string>
+    <string name="export_data">データをエクスポート</string>
+    <string name="import_data">データをインポート</string>
+    <string name="export_success">データのエクスポートに成功</string>
+    <string name="export_error">エクスポートに失敗</string>
+    <string name="import_success">データのインポートに成功</string>
+    <string name="import_error">インポートに失敗</string>
+
+    <!-- Settings Additional -->
+    <string name="cosmic_aura">コズミックオーラ</string>
+    <string name="reminder_schedule">リマインダースケジュール</string>
+    <string name="days_before_7">7日前</string>
+    <string name="days_before_3">3日前</string>
+    <string name="same_day">当日</string>
+
+    <!-- Wishlist -->
+    <string name="wishlist">ほしい物リスト</string>
+    <string name="wishlist_empty">リストは空です</string>
+    <string name="wishlist_hint">お気に入りのギフトアイデアを保存しましょう！</string>
+
+    <string name="import_contacts">連絡先からインポート</string>
+    <string name="create_manually">手動で作成</string>
+    <string name="import_action">インポート (%1$d)</string>
+    <string name="no_contacts_found">連絡先が見つかりませんでした。</string>
+    <string name="contacts_permission_rationale">GiftFinderに連絡先から人をインポートするために、この許可が必要です。</string>
+    <string name="add_to_calendar">カレンダーに追加</string>
+
+    <!-- Smart Features Settings -->
+    <string name="smart_features">スマート機能</string>
+    <string name="auto_calendar_sync">カレンダーの自動同期</string>
+    <string name="auto_calendar_sync_desc">大切な日をシステムのカレンダーに自動的に追加します。</string>
+    <string name="persona_creativity">ペルソナの創造性</string>
+    <string name="persona_creativity_desc">ギフトの提案がどのくらい独創的になるかを決定します。</string>
+    <string name="creativity_low">伝統的</string>
+    <string name="creativity_high">コズミック・エクスプローラー</string>
+
+    <string name="cosmic_summary">コズミック・サマリー</string>
+    <string name="cosmic_summary_today">今日は %1$s です！ ✨</string>
+    <string name="cosmic_summary_upcoming">%1$s まであと %2$d 日です。</string>
+
+    <!-- Search Section -->
+    <string name="people">人</string>
+    
+    <!-- Accessibility Content Descriptions -->
+    <string name="cd_gift_icon">ギフトアイコン</string>
+    <string name="cd_calendar_icon">カレンダーアイコン</string>
+    <string name="cd_celebration_icon">お祝いアイコン</string>
+    <string name="cd_bookmark_icon">ブックマークアイコン</string>
+    <string name="cd_price_drop_icon">値下げ表示</string>
+    <string name="cd_casino_icon">ルーレットアイコン</string>
+    <string name="cd_settings_icon">設定アイコン</string>
+    <string name="cd_search_icon">検索アイコン</string>
+    <string name="cd_refresh_icon">更新</string>
+    <string name="cd_shop_icon">購入</string>
+    <string name="cd_delete_icon">削除</string>
+    <string name="cd_close_icon">閉じる</string>
+    <string name="cd_check_icon">確認</string>
+    <string name="cd_premium_icon">プレミアム機能</string>
+    <string name="cd_notification_icon">通知</string>
+    <string name="cd_export_icon">データをエクスポート</string>
+    <string name="cd_import_icon">データをインポート</string>
+    <string name="cd_loading">読み込み中</string>
 </resources>

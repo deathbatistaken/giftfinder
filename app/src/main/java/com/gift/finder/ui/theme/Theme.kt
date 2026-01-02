@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -88,7 +89,7 @@ fun GiftFinderTheme(
             primary = aura.primaryColor,
             secondary = aura.primaryColor,
             primaryContainer = aura.primaryColor.copy(alpha = 0.2f),
-            onPrimaryContainer = aura.primaryColor
+            onPrimaryContainer = Color.White
         )
         else -> LightColorScheme.copy(
             primary = aura.primaryColor,

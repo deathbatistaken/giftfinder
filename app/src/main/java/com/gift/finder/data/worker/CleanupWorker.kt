@@ -30,6 +30,7 @@ class CleanupWorker @AssistedInject constructor(
             
             Result.success()
         } catch (e: Exception) {
+            android.util.Log.e(WORK_NAME, "Error cleaning up old rejected gifts", e)
             Result.failure()
         }
     }
